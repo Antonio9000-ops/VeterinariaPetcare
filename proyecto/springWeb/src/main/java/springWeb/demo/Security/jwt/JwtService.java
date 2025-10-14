@@ -10,14 +10,18 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.util.Date;
 import springWeb.demo.domain.Modelos.Usuario;
+import java.util.HashMap;
 
 @Service
 public class JwtService {
 
-    private final String SECRET_KEY = "clave-super-secreta-para-petcare"; // Cambia esto en producción!
+    private final String SECRET_KEY = "clave-super-secreta-para-petcare";
 
     public String generateToken(Usuario usuario) {
+        HashMap<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("userId", usuario.getId());
         return Jwts.builder()
+                .setClaims(extraClaims)
                 .setSubject(usuario.getEmail())
                 .claim("rol", usuario.getRol().name())
                 .setIssuedAt(new Date())

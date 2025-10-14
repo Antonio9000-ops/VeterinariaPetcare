@@ -30,9 +30,11 @@ public class HistoriaClinica {
 
     @ManyToOne
     @JoinColumn(name = "mascota_id")
+
     private Mascota mascota;
 
     @ManyToOne
     @JoinColumn(name = "veterinario_id")
+
     private Usuario veterinario;
 }

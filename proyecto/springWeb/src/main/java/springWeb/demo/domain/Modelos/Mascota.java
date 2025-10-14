@@ -2,6 +2,8 @@ package springWeb.demo.domain.Modelos;
 
 import jakarta.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "mascotas")
@@ -35,14 +38,21 @@ public class Mascota {
 
     @ManyToOne
     @JoinColumn(name = "dueno_id")
+    @JsonBackReference("usuario-mascota")
     private Usuario dueno;
 
     @OneToMany(mappedBy = "mascota")
+    @JsonManagedReference("mascota-cita")
+    @ToString.Exclude
     private List<Cita> citas;
 
     @OneToMany(mappedBy = "mascota")
+    @JsonManagedReference("mascota-historia")
+    @ToString.Exclude
     private List<HistoriaClinica> historiaClinica;
 
     @OneToMany(mappedBy = "mascota")
+    @ToString.Exclude
+    @JsonManagedReference("mascota-vacuna")
     private List<Vacuna> vacunas;
 }

@@ -1,6 +1,7 @@
 
 package springWeb.demo.domain.Modelos;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +17,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Table(name = "usuarios")
@@ -40,8 +42,12 @@ public class Usuario {
     private Rol rol;
 
     @OneToMany(mappedBy = "dueno", cascade = CascadeType.ALL)
+    @JsonManagedReference("usuario-mascota")
+    @ToString.Exclude
     private List<Mascota> mascotas;
 
     @OneToMany(mappedBy = "veterinario")
+    @JsonManagedReference("usuario-cita")
+    @ToString.Exclude
     private List<Cita> citasAsignadas;
 }

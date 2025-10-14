@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle de Mascota</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f9f9f9; margin: 20px; }
+        .container { max-width: 900px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .pet-header { border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
+        .section { margin-top: 30px; }
+        h1, h2 { color: #333; }
+        ul { list-style: none; padding: 0; }
+        li { background: #f4f4f4; border: 1px solid #ddd; padding: 10px; margin-bottom: 5px; border-radius: 5px; }
+        .btn { padding: 10px 15px; color: #fff; background-color: #007bff; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px;}
+    </style>
+</head>
+<body>
+<div class="navbar" id="navbar">
+    <a href="/">Inicio</a>
+    <a href="/mascotas">Mis Mascotas</a>
+    <div class="right">
+        <span id="user-email" class="user-email"></span>
+        <a href="#" id="logout-btn">Cerrar Sesión</a>
+    </div>
+</div>
+<div class="container">
+    <div id="pet-header" class="pet-header">
+        <!-- Detalles de la mascota se cargarán aquí -->
+    </div>
+
+    <div id="actions">
+        <!-- Botones de acción se cargarán aquí -->
+    </div>
+
+    <div class="section">
+        <h2>Citas Programadas</h2>
+        <ul id="citas-list"></ul>
+    </div>
+
+    <div class="section">
+        <h2>Historia Clínica</h2>
+        <ul id="historia-list"></ul>
+    </div>
+
+    <div class="section">
+        <h2>Vacunas Aplicadas</h2>
+        <ul id="vacunas-list"></ul>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('jwt_token');
+        if (!token) { window.location.href = '/auth/login'; return; }
+
+        const params = new URLSearchParams(window.location.search);
+        const mascotaId = params.get('id');
+        if (!mascotaId) {
+            alert('No se especificó una mascota.');
+            window.location.href = '/mascotas';
+            return;
+        }
+
+        const headers = { 'Authorization': `Bearer ${token}` };
+
+        // 1. Cargar detalles de la mascota
+        fetch(`/api/mascotas/${mascotaId}`, { headers })
+            .then(res => res.json())
+            .then(mascota => {
+                document.getElementById('pet-header').innerHTML = `
+                    <h1>${mascota.nombre}</h1>
+                    <p><strong>Especie:</strong> ${mascota.especie} | <strong>Raza:</strong> ${mascota.raza} | <strong>Nacimiento:</strong> ${mascota.fechaNacimiento}</p>
+                `;
+                document.getElementById('actions').innerHTML = `
+                    <a href="/cita-formulario?mascotaId=${mascota.id}" class="btn">Agendar Nueva Cita</a>
+                `;
+            });
+
+        // 2. Cargar citas
+        fetch(`/api/citas/mascota/${mascotaId}`, { headers })
+            .then(res => res.json())
+            .then(citas => {
+                const list = document.getElementById('citas-list');
+                list.innerHTML = citas.map(c => `<li>${c.fechaHora}: ${c.motivo} (${c.estado})</li>`).join('');
+            });
+
+        // 3. Cargar historia clínica
+        fetch(`/api/historias/mascota/${mascotaId}`, { headers })
+            .then(res => res.json())
+            .then(historias => {
+                const list = document.getElementById('historia-list');
+                list.innerHTML = historias.map(h => `<li>${h.fecha}: ${h.descripcion}</li>`).join('');
+            });
+
+        // 4. Cargar vacunas
+        fetch(`/api/vacunas/mascota/${mascotaId}`, { headers })
+            .then(res => res.json())
+            .then(vacunas => {
+                const list = document.getElementById('vacunas-list');
+                list.innerHTML = vacunas.map(v => `<li>${v.fechaAplicacion}: ${v.nombre}</li>`).join('');
+            });
+    });
+</script>
+</body>
+</html>

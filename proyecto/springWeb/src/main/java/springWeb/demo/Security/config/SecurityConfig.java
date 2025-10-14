@@ -18,6 +18,10 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import springWeb.demo.Security.jwt.JwtAuthFilter;
 
+import springWeb.demo.Security.jwt.JwtAuthFilter;
+import springWeb.demo.Security.jwt.JwtService;
+import springWeb.demo.domain.Repositorios.UsuarioRepository;
+
 import java.util.Arrays;
 
 @Configuration
@@ -26,7 +30,9 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthFilter jwtAuthFilter;
+
+    private final UsuarioRepository usuarioRepository;
+    private final JwtService jwtService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,6 +43,7 @@ public class SecurityConfig {
                         // --- Rutas Públicas ---
                         // Permite el acceso a la página de inicio, la autenticación y los recursos estáticos.
                         .requestMatchers("/", "/inicio.html", "/auth/**").permitAll()
+                        .requestMatchers("/mascotas", "/mascota-detalle", "/mascota-formulario", "/cita-formulario").permitAll()
                         .requestMatchers("/css/**", "/js/**", "/images/**", "/*.ico").permitAll()
 
                         // --- Rutas Protegidas de la API ---
@@ -53,7 +60,7 @@ public class SecurityConfig {
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthFilter(jwtService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

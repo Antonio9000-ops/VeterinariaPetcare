@@ -14,4 +14,40 @@ public class VistaController {
     public String mostrarPaginaDeInicio() {
         return "inicio"; // Devuelve "inicio.html" desde la carpeta /resources/templates/
     }
+    /**
+     * Muestra la página de inicio de sesión.
+     * @return El nombre de la plantilla "login".
+     */
+    @GetMapping("/auth/login")
+    public String mostrarPaginaLogin() {
+        return "login"; // Devuelve login.html
+    }
+
+    /**
+     * Muestra la página de registro.
+     * @return El nombre de la plantilla "register".
+     */
+    @GetMapping("/auth/register")
+    public String mostrarPaginaRegister() {
+        return "register"; // Devuelve register.html
+    }
+    @GetMapping("/mascotas")
+    public String mostrarPaginaMascotas() {
+        return "mascotas";
+    }
+
+    @GetMapping("/mascota-detalle")
+    public String mostrarPaginaMascotaDetalle() {
+        return "mascota-detalle";
+    }
+
+    @GetMapping("/mascota-formulario")
+    public String mostrarPaginaMascotaFormulario() {
+        return "mascota-formulario";
+    }
+
+    @GetMapping("/cita-formulario")
+    public String mostrarPaginaCitaFormulario() {
+        return "cita-formulario";
+    }
 }

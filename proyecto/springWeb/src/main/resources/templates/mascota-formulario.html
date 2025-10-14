@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Mascota</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .form-container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        h1 { text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; font-size: 1em; cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="navbar" id="navbar">
+    <a href="/">Inicio</a>
+    <a href="/mascotas">Mis Mascotas</a>
+    <div class="right">
+        <span id="user-email" class="user-email"></span>
+        <a href="#" id="logout-btn">Cerrar Sesión</a>
+    </div>
+</div>
+<div class="form-container">
+    <h1 id="form-title">Registrar Nueva Mascota</h1>
+    <form id="pet-form">
+        <input type="hidden" id="id">
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" required>
+        </div>
+        <div class="form-group">
+            <label for="especie">Especie:</label>
+            <input type="text" id="especie" required>
+        </div>
+        <div class="form-group">
+            <label for="raza">Raza:</label>
+            <input type="text" id="raza" required>
+        </div>
+        <div class="form-group">
+            <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+            <input type="date" id="fechaNacimiento" required>
+        </div>
+        <button type="submit">Guardar</button>
+    </form>
+</div>
+
+<script>
+    function parseJwt(token) {
+        try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('jwt_token');
+        if (!token) { window.location.href = '/auth/login'; return; }
+
+        const form = document.getElementById('pet-form');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const userData = parseJwt(token);
+            if (!userData || !userData.userId) {
+                alert('Error de autenticación.');
+                return;
+            }
+
+            const mascotaData = {
+                nombre: document.getElementById('nombre').value,
+                especie: document.getElementById('especie').value,
+                raza: document.getElementById('raza').value,
+                fechaNacimiento: document.getElementById('fechaNacimiento').value,
+                duenoId: userData.userId // Asignamos el dueño automáticamente
+            };
+
+            try {
+                const response = await fetch('/api/mascotas', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(mascotaData)
+                });
+
+                if (response.ok) {
+                    alert('Mascota registrada con éxito!');
+                    window.location.href = '/mascotas'; // Redirige a la lista de mascotas
+                } else {
+                    alert('Error al registrar la mascota.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error de conexión.');
+            }
+        });
+    });
+</script>
+</body>
+</html>
