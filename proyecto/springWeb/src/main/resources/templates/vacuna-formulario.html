@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Registrar Vacuna</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin-top: 60px; }
+        .form-container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
+        .navbar { background-color: #333; overflow: hidden; position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .navbar a { float: left; display: block; color: #f2f2f2; text-align: center; padding: 14px 16px; text-decoration: none; }
+        h1 { text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #17a2b8; color: #fff; border: none; border-radius: 4px; font-size: 1em; cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <a href="/">Inicio</a>
+</div>
+<div class="form-container">
+    <h1>Registrar Vacuna Aplicada</h1>
+    <form id="vaccine-form">
+        <div class="form-group">
+            <label for="nombre">Nombre de la Vacuna:</label>
+            <input type="text" id="nombre" required>
+        </div>
+        <div class="form-group">
+            <label for="fechaAplicacion">Fecha de Aplicación:</label>
+            <input type="date" id="fechaAplicacion" required>
+        </div>
+        <button type="submit">Guardar Vacuna</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('jwt_token');
+        if (!token) { window.location.href = '/login'; return; }
+
+        // Poner la fecha actual por defecto en el campo de fecha
+        document.getElementById('fechaAplicacion').value = new Date().toISOString().split('T')[0];
+
+        const params = new URLSearchParams(window.location.search);
+        const mascotaId = params.get('mascotaId');
+        if (!mascotaId) {
+            alert('ID de mascota no encontrado.');
+            window.history.back();
+            return;
+        }
+
+        const form = document.getElementById('vaccine-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const vaccineData = {
+                nombre: document.getElementById('nombre').value,
+                fechaAplicacion: document.getElementById('fechaAplicacion').value,
+                mascotaId: mascotaId
+            };
+
+            try {
+                const response = await fetch('/api/vacunas', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(vaccineData)
+                });
+
+                if (response.ok) {
+                    alert('Vacuna registrada con éxito.');
+                    window.location.href = `/mascota-detalle?id=${mascotaId}`;
+                } else {
+                    throw new Error('No se pudo guardar la vacuna.');
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        });
+    });
+</script>
+</body>
+</html>

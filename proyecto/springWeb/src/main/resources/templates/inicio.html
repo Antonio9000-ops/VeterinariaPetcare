@@ -14,55 +14,62 @@
         h1 { color: #2c3e50; margin-bottom: 15px; }
         p { font-size: 1.1em; color: #555; margin-bottom: 30px; }
         nav a {
-            display: inline-block; margin: 0 10px; padding: 12px 25px; text-decoration: none;
+            display: inline-block; margin: 10px 10px; padding: 12px 25px; text-decoration: none;
             color: #fff; background-color: #007bff; border-radius: 5px; font-size: 1em;
             font-weight: bold; transition: background-color 0.3s ease;
         }
         nav a:hover { background-color: #0056b3; }
-        /* Estilo para el botón de cerrar sesión */
         nav a.logout { background-color: #dc3545; }
         nav a.logout:hover { background-color: #c82333; }
+        nav a.admin { background-color: #28a745; }
+        nav a.admin:hover { background-color: #218838; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>Bienvenido al Sistema de Gestión de la Clínica Veterinaria</h1>
-    <p>
-        Administre las citas, historias clínicas y el cuidado de sus mascotas de forma fácil y eficiente.
-    </p>
-
-    <!-- Este contenedor se llenará dinámicamente con los enlaces correctos -->
+    <p>Administre las citas, historias clínicas y el cuidado de sus mascotas de forma fácil y eficiente.</p>
     <nav id="nav-links"></nav>
 </div>
 
 <script>
+    function parseJwt(token) {
+        try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
         const navLinks = document.getElementById('nav-links');
         const token = localStorage.getItem('jwt_token');
 
         if (token) {
-            // --- El usuario HA INICIADO SESIÓN ---
-            // Creamos los enlaces para usuarios autenticados
-            navLinks.innerHTML = `
-                <a href="/mascotas">Mis Mascotas</a>
-                <a href="#" id="logout-btn" class="logout">Cerrar Sesión</a>
-            `;
+            const userData = parseJwt(token);
+            const userRole = userData ? userData.role : null;
 
-            // Añadimos la funcionalidad al botón de logout
+            let navHTML = '';
+
+            if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
+                
+                navHTML += '<a href="/gestion-citas" class="admin">Gestión de Citas</a>';
+                navHTML += '<a href="/agenda">Mi Agenda</a>';
+            } else {
+                navHTML += '<a href="/mascotas">Mis Mascotas</a>';
+            }
+
+            navHTML += '<a href="#" id="logout-btn" class="logout">Cerrar Sesión</a>';
+            navLinks.innerHTML = navHTML;
+
             document.getElementById('logout-btn').addEventListener('click', (e) => {
                 e.preventDefault();
-                localStorage.removeItem('jwt_token'); // Borramos el token
+                localStorage.removeItem('jwt_token');
                 alert('Has cerrado la sesión.');
-                window.location.href = '/'; // Recargamos la página de inicio
+                window.location.href = '/';
             });
 
         } else {
-            // --- El usuario NO HA INICIADO SESIÓN ---
-            // Mostramos los enlaces de login y registro
             navLinks.innerHTML = `
-                <a href="/auth/login">Iniciar Sesión</a>
-                <a href="/auth/register">Registrarse</a>
+                <a href="/login">Iniciar Sesión</a>
+                <a href="/register">Registrarse</a>
             `;
         }
     });

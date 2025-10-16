@@ -2,82 +2,73 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro - Clínica Veterinaria</title>
+    <title>Registro de Usuario</title>
     <style>
-        body { font-family: sans-serif; background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 20px 0; }
+        body { font-family: sans-serif; background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         .form-container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-        h1 { text-align: center; color: #333; margin-bottom: 20px; }
+        h1 { text-align: center; }
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background-color: #28a745; color: #fff; border: none; border-radius: 4px; font-size: 1em; cursor: pointer; transition: background-color 0.3s; }
-        button:hover { background-color: #218838; }
-        .message { padding: 10px; margin-bottom: 15px; border-radius: 4px; text-align: center; display: none; }
-        .message.error { background-color: #f8d7da; color: #721c24; }
-        .login-link { text-align: center; margin-top: 20px; }
+        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #28a745; color: #fff; border: none; border-radius: 4px; font-size: 1em; cursor: pointer; }
+        .login-link { text-align: center; margin-top: 15px; }
         .login-link a { color: #007bff; text-decoration: none; }
     </style>
 </head>
 <body>
 <div class="form-container">
-    <h1>Crear una Cuenta</h1>
-    <div id="error-message" class="message error"></div>
-
+    <h1>Crear Cuenta</h1>
     <form id="register-form">
         <div class="form-group">
             <label for="nombre">Nombre Completo:</label>
-            <input type="text" id="nombre" name="nombre" required>
+            <input type="text" id="nombre" required>
         </div>
         <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" id="email" required>
         </div>
         <div class="form-group">
             <label for="contraseña">Contraseña:</label>
-            <input type="password" id="contraseña" name="contraseña" required>
+            <input type="password" id="contraseña" required>
         </div>
-        <!-- Este campo oculto asigna un rol por defecto.
-             En una aplicación real, esto debería manejarse en el backend para mayor seguridad. -->
-        <input type="hidden" id="rol" name="rol" value="DUEÑO">
+        <div class="form-group">
+            <label for="rol">Tipo de Usuario:</label>
+            <select id="rol" required>
+                <option value="DUEÑO">Dueño de Mascota</option>
+                <option value="VETERINARIO">Veterinario</option>
+                <option value="ASISTENTE">Asistente</option>
+            </select>
+        </div>
         <button type="submit">Registrarse</button>
     </form>
-
     <div class="login-link">
-        <p>¿Ya tienes una cuenta? <a href="/auth/login">Inicia sesión</a></p>
+        <p>¿Ya tienes una cuenta? <a href="/login">Inicia sesión aquí</a></p>
     </div>
 </div>
 
 <script>
     document.getElementById('register-form').addEventListener('submit', async function(event) {
         event.preventDefault();
-
-        const nombre = document.getElementById('nombre').value;
-        const email = document.getElementById('email').value;
-        const contraseña = document.getElementById('contraseña').value;
-        const rol = document.getElementById('rol').value; // Tomamos el rol del campo oculto
-        const errorMessageDiv = document.getElementById('error-message');
-
+        const registerData = {
+            nombre: document.getElementById('nombre').value,
+            email: document.getElementById('email').value,
+            contraseña: document.getElementById('contraseña').value,
+            rol: document.getElementById('rol').value
+        };
         try {
             const response = await fetch('/auth/register', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ nombre, email, contraseña, rol })
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(registerData)
             });
-
             if (response.ok) {
-                // Si el registro es exitoso, redirige a la página de login
-                window.location.href = '/auth/login?registration_success';
+                alert('¡Registro exitoso! Ahora puedes iniciar sesión.');
+                window.location.href = '/login';
             } else {
-                const errorData = await response.json();
-                errorMessageDiv.textContent = errorData.message || 'No se pudo completar el registro.';
-                errorMessageDiv.style.display = 'block';
+                alert('Error en el registro. El email puede que ya esté en uso.');
             }
         } catch (error) {
-            errorMessageDiv.textContent = 'Error de conexión. Inténtalo de nuevo.';
-            errorMessageDiv.style.display = 'block';
+            alert('Error de conexión.');
         }
     });
 </script>

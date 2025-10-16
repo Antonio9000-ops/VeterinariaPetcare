@@ -6,31 +6,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class VistaController {
 
-    /**
-     * Maneja las solicitudes a la raíz del sitio web ("/") y muestra la página de inicio.
-     * @return El nombre de la plantilla Thymeleaf a renderizar ("inicio").
-     */
     @GetMapping("/")
     public String mostrarPaginaDeInicio() {
-        return "inicio"; // Devuelve "inicio.html" desde la carpeta /resources/templates/
-    }
-    /**
-     * Muestra la página de inicio de sesión.
-     * @return El nombre de la plantilla "login".
-     */
-    @GetMapping("/auth/login")
-    public String mostrarPaginaLogin() {
-        return "login"; // Devuelve login.html
+        return "inicio";
     }
 
-    /**
-     * Muestra la página de registro.
-     * @return El nombre de la plantilla "register".
-     */
-    @GetMapping("/auth/register")
-    public String mostrarPaginaRegister() {
-        return "register"; // Devuelve register.html
+    @GetMapping({"/login", "/login.html"})
+    public String mostrarPaginaLogin() {
+        return "login";
     }
+
+    @GetMapping({"/register", "/register.html"})
+    public String mostrarPaginaRegister() {
+        return "register";
+    }
+
     @GetMapping("/mascotas")
     public String mostrarPaginaMascotas() {
         return "mascotas";
@@ -49,5 +39,26 @@ public class VistaController {
     @GetMapping("/cita-formulario")
     public String mostrarPaginaCitaFormulario() {
         return "cita-formulario";
+    }
+
+    @GetMapping("/agenda")
+    public String mostrarPaginaAgenda() {
+        return "agenda";
+    }
+
+    @GetMapping("/historia-formulario")
+    public String mostrarPaginaHistoriaFormulario() {
+        return "historia-formulario";
+    }
+
+    @GetMapping("/vacuna-formulario")
+    public String mostrarPaginaVacunaFormulario() {
+        return "vacuna-formulario";
+    }
+
+    // --- MÉTODO NUEVO QUE SOLUCIONA EL PROBLEMA ---
+    @GetMapping("/gestion-citas")
+    public String mostrarPaginaGestionCitas() {
+        return "gestion-citas";
     }
 }

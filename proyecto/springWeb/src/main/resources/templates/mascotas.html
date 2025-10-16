@@ -14,14 +14,17 @@
         h1 { color: #333; }
         .pet-list { list-style: none; padding: 0; }
         .pet-item { background: #f4f4f4; border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; }
-        .pet-item a { text-decoration: none; color: #007bff; font-weight: bold; }
-        .btn { padding: 10px 15px; color: #fff; background-color: #28a745; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; }
+        .pet-info { flex-grow: 1; }
+        .pet-actions a, .pet-actions button { margin-left: 10px; }
+        .btn { padding: 10px 15px; color: #fff; background-color: #007bff; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; }
+        .btn-edit { background-color: #ffc107; }
+        .btn-delete { background-color: #dc3545; }
+        .btn-add { background-color: #28a745; }
         .error-message { color: #dc3545; background-color: #f8d7da; border: 1px solid #f5c6cb; padding: 10px; border-radius: 5px; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-<!-- BARRA DE NAVEGACIÓN -->
 <div class="navbar" id="navbar">
     <a href="/">Inicio</a>
     <a href="/mascotas">Mis Mascotas</a>
@@ -33,35 +36,49 @@
 
 <div class="container">
     <h1>Mis Mascotas</h1>
-    <a href="/mascota-formulario" class="btn">Añadir Nueva Mascota</a>
+    <a href="/mascota-formulario" class="btn btn-add">Añadir Nueva Mascota</a>
     <hr>
-    <!-- Div para mostrar errores -->
     <div id="error-message" class="error-message" style="display: none;"></div>
     <ul id="pet-list" class="pet-list">
-        <!-- Las mascotas se cargarán aquí dinámicamente -->
     </ul>
 </div>
 
 <script>
-    // Función para decodificar el JWT y obtener los datos (payload)
     function parseJwt(token) {
-        try {
-            return JSON.parse(atob(token.split('.')[1]));
-        } catch (e) {
-            return null;
-        }
+        try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
     }
 
-    // Función para configurar la barra de navegación
     function setupNavbar(token) {
         const userData = parseJwt(token);
         if (userData) {
-            document.getElementById('user-email').textContent = userData.sub; // 'sub' es el email
+            document.getElementById('user-email').textContent = userData.sub;
             document.getElementById('logout-btn').addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.removeItem('jwt_token');
-                window.location.href = '/auth/login';
+                window.location.href = '/login.html';
             });
+        }
+    }
+
+    async function eliminarMascota(mascotaId) {
+        const token = localStorage.getItem('jwt_token');
+        if (!confirm('¿Estás seguro de que quieres eliminar esta mascota?')) {
+            return;
+        }
+        try {
+            const response = await fetch(`/api/mascotas/${mascotaId}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (response.ok) {
+                alert('Mascota eliminada correctamente.');
+                window.location.reload();
+            } else {
+                throw new Error('No se pudo eliminar la mascota.');
+            }
+        } catch (error) {
+            document.getElementById('error-message').textContent = `Error: ${error.message}`;
+            document.getElementById('error-message').style.display = 'block';
         }
     }
 
@@ -70,11 +87,11 @@
         const errorMessageDiv = document.getElementById('error-message');
 
         if (!token) {
-            window.location.href = '/auth/login';
+            window.location.href = '/login.html';
             return;
         }
 
-        setupNavbar(token); // Configura la barra de navegación
+        setupNavbar(token);
 
         const userData = parseJwt(token);
         if (!userData || !userData.userId) {
@@ -87,23 +104,18 @@
 
         try {
             const response = await fetch(`/api/mascotas/dueno/${duenoId}`, {
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
+                headers: { 'Authorization': `Bearer ${token}` }
             });
 
-            // --- ESTA ES LA PARTE NUEVA Y MEJORADA ---
             if (!response.ok) {
-                // Si la respuesta no es exitosa (ej. 403 Forbidden, 500 Internal Server Error)
-                const errorData = await response.json().catch(() => ({ message: `Error ${response.status}: ${response.statusText}` }));
-                throw new Error(errorData.message || 'No se pudieron cargar las mascotas.');
+                throw new Error('No se pudieron cargar las mascotas.');
             }
 
             const mascotas = await response.json();
             const petList = document.getElementById('pet-list');
 
             if (mascotas.length === 0) {
-                petList.innerHTML = '<li>No tienes mascotas registradas. ¡Añade una!</li>';
+                petList.innerHTML = '<li>No tienes mascotas registradas.</li>';
                 return;
             }
 
@@ -111,16 +123,19 @@
                 const listItem = document.createElement('li');
                 listItem.className = 'pet-item';
                 listItem.innerHTML = `
-                    <div>
+                    <div class="pet-info">
                         <strong>${mascota.nombre}</strong> (${mascota.especie} - ${mascota.raza})
                     </div>
-                    <a href="/mascota-detalle?id=${mascota.id}" class="btn">Ver Detalles</a>
+                    <div class="pet-actions">
+                        <a href="/mascota-detalle?id=${mascota.id}" class="btn">Ver Detalles</a>
+                        <a href="/mascota-formulario?id=${mascota.id}" class="btn btn-edit">Editar</a>
+                        <button onclick="eliminarMascota(${mascota.id})" class="btn btn-delete">Eliminar</button>
+                    </div>
                 `;
                 petList.appendChild(listItem);
             });
 
         } catch (error) {
-            // Muestra cualquier error en la página para que el usuario lo vea
             console.error('Error al cargar las mascotas:', error);
             errorMessageDiv.textContent = `Error al cargar las mascotas: ${error.message}`;
             errorMessageDiv.style.display = 'block';

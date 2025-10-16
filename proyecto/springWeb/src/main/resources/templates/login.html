@@ -11,7 +11,7 @@
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; }
         input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; font-size: 1em; cursor: pointer; transition: background-color 0.3s; }
+        button { width: 100%; padding: 12px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; font-size: 1em; cursor: pointer; transition: background-color: 0.3s; }
         button:hover { background-color: #0056b3; }
         .message { padding: 10px; margin-bottom: 15px; border-radius: 4px; text-align: center; display: none; }
         .message.error { background-color: #f8d7da; color: #721c24; }
@@ -37,32 +37,57 @@
     </form>
 
     <div class="register-link">
-        <p>¿No tienes una cuenta? <a href="/auth/register">Regístrate aquí</a></p>
+        <p>¿No tienes una cuenta? <a href="/register">Regístrate aquí</a></p>
     </div>
 </div>
 
 <script>
+    
+    function parseJwt(token) {
+        try {
+            return JSON.parse(atob(token.split('.')[1]));
+        } catch (e) {
+            return null;
+        }
+    }
+
     document.getElementById('login-form').addEventListener('submit', async function(event) {
         event.preventDefault();
-
         const email = document.getElementById('email').value;
         const contraseña = document.getElementById('contraseña').value;
         const errorMessageDiv = document.getElementById('error-message');
-
         try {
             const response = await fetch('/auth/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, contraseña })
             });
 
             if (response.ok) {
                 const data = await response.json();
                 localStorage.setItem('jwt_token', data.token);
-                // --- CORRECCIÓN: Redirige a la página de mascotas ---
-                window.location.href = '/mascotas';
+
+                // ✨ 2. LÓGICA DE REDIRECCIÓN BASADA EN ROL
+                const userData = parseJwt(data.token);
+                if (!userData || !userData.role) {
+                    alert("Error: El token no contiene el rol del usuario.");
+                    return;
+                }
+
+                switch (userData.role) {
+                    case 'DUEÑO':
+                        window.location.href = '/mascotas';
+                        break;
+                    case 'VETERINARIO':
+                    case 'ASISTENTE':
+                        window.location.href = '/agenda'; // O la página principal para el personal
+                        break;
+                    default:
+                        // Redirección por defecto si el rol no es reconocido
+                        window.location.href = '/';
+                        break;
+                }
+
             } else {
                 errorMessageDiv.textContent = 'Email o contraseña incorrectos.';
                 errorMessageDiv.style.display = 'block';
