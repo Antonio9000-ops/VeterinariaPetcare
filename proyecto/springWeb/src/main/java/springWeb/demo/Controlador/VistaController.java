@@ -6,12 +6,59 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class VistaController {
 
-    /**
-     * Maneja las solicitudes a la raíz del sitio web ("/") y muestra la página de inicio.
-     * @return El nombre de la plantilla Thymeleaf a renderizar ("inicio").
-     */
     @GetMapping("/")
     public String mostrarPaginaDeInicio() {
-        return "inicio"; // Devuelve "inicio.html" desde la carpeta /resources/templates/
+        return "inicio";
+    }
+
+    @GetMapping({"/login", "/login.html"})
+    public String mostrarPaginaLogin() {
+        return "login";
+    }
+
+    @GetMapping({"/register", "/register.html"})
+    public String mostrarPaginaRegister() {
+        return "register";
+    }
+
+    @GetMapping("/mascotas")
+    public String mostrarPaginaMascotas() {
+        return "mascotas";
+    }
+
+    @GetMapping("/mascota-detalle")
+    public String mostrarPaginaMascotaDetalle() {
+        return "mascota-detalle";
+    }
+
+    @GetMapping("/mascota-formulario")
+    public String mostrarPaginaMascotaFormulario() {
+        return "mascota-formulario";
+    }
+
+    @GetMapping("/cita-formulario")
+    public String mostrarPaginaCitaFormulario() {
+        return "cita-formulario";
+    }
+
+    @GetMapping("/agenda")
+    public String mostrarPaginaAgenda() {
+        return "agenda";
+    }
+
+    @GetMapping("/historia-formulario")
+    public String mostrarPaginaHistoriaFormulario() {
+        return "historia-formulario";
+    }
+
+    @GetMapping("/vacuna-formulario")
+    public String mostrarPaginaVacunaFormulario() {
+        return "vacuna-formulario";
+    }
+
+    // --- MÉTODO NUEVO QUE SOLUCIONA EL PROBLEMA ---
+    @GetMapping("/gestion-citas")
+    public String mostrarPaginaGestionCitas() {
+        return "gestion-citas";
     }
 }

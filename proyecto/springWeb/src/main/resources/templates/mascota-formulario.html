@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Formulario de Mascota</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding-top: 60px; }
+        .form-container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; max-width: 500px; margin-top: 20px; }
+        .navbar { background-color: #333; overflow: hidden; position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .navbar a { float: left; display: block; color: #f2f2f2; text-align: center; padding: 14px 16px; text-decoration: none; }
+        .navbar a:hover { background-color: #ddd; color: black; }
+        .navbar .right { float: right; }
+        .navbar .user-email { padding: 14px 16px; color: #fff; float: right; }
+        h1 { text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; font-size: 1em; cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="navbar" id="navbar">
+    <a href="/">Inicio</a>
+    <a href="/mascotas">Mis Mascotas</a>
+    <div class="right">
+        <span id="user-email" class="user-email"></span>
+        <a href="#" id="logout-btn">Cerrar Sesión</a>
+    </div>
+</div>
+<div class="form-container">
+    <h1 id="form-title">Registrar Nueva Mascota</h1>
+    <form id="pet-form">
+        <!-- Campo oculto para guardar el ID en modo edición -->
+        <input type="hidden" id="id">
+        <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" required>
+        </div>
+        <div class="form-group">
+            <label for="especie">Especie:</label>
+            <input type="text" id="especie" required>
+        </div>
+        <div class="form-group">
+            <label for="raza">Raza:</label>
+            <input type="text" id="raza" required>
+        </div>
+        <div class="form-group">
+            <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+            <input type="date" id="fechaNacimiento" required>
+        </div>
+        <button type="submit">Guardar</button>
+    </form>
+</div>
+
+<script>
+    function parseJwt(token) {
+        try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
+    }
+
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const token = localStorage.getItem('jwt_token');
+        if (!token) {
+            window.location.href = '/login';
+            return;
+        }
+
+        const userData = parseJwt(token);
+        if (userData) {
+            document.getElementById('user-email').textContent = userData.sub;
+            document.getElementById('logout-btn').addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('jwt_token');
+                window.location.href = '/login';
+            });
+        }
+
+        const form = document.getElementById('pet-form');
+        const formTitle = document.getElementById('form-title');
+        const idInput = document.getElementById('id');
+
+        
+        const urlParams = new URLSearchParams(window.location.search);
+        const petId = urlParams.get('id');
+
+        if (petId) {
+            
+            formTitle.textContent = 'Editar Mascota';
+            idInput.value = petId;
+
+            // Cargar los datos de la mascota desde la API
+            try {
+                const response = await fetch(`/api/mascotas/${petId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!response.ok) throw new Error('No se pudo cargar la mascota.');
+
+                const mascota = await response.json();
+
+                // Rellenar el formulario con los datos
+                document.getElementById('nombre').value = mascota.nombre;
+                document.getElementById('especie').value = mascota.especie;
+                document.getElementById('raza').value = mascota.raza;
+                document.getElementById('fechaNacimiento').value = mascota.fechaNacimiento;
+
+            } catch (error) {
+                alert(error.message);
+                window.location.href = '/mascotas';
+            }
+        }
+
+       
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const mascotaData = {
+                nombre: document.getElementById('nombre').value,
+                especie: document.getElementById('especie').value,
+                raza: document.getElementById('raza').value,
+                fechaNacimiento: document.getElementById('fechaNacimiento').value,
+                duenoId: userData.userId
+            };
+
+            // Determinar si es POST (crear) o PUT (actualizar)
+            const currentPetId = idInput.value;
+            const isEditing = !!currentPetId;
+
+            const method = isEditing ? 'PUT' : 'POST';
+            const url = isEditing ? `/api/mascotas/${currentPetId}` : '/api/mascotas';
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(mascotaData)
+                });
+
+                if (response.ok) {
+                    alert(isEditing ? '¡Mascota actualizada con éxito!' : '¡Mascota registrada con éxito!');
+                    window.location.href = '/mascotas';
+                } else {
+                    const errorData = await response.json();
+                    alert(`Error: ${errorData.message || 'No se pudo guardar la mascota.'}`);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error de conexión.');
+            }
+        });
+    });
+</script>
+</body>
+</html>
