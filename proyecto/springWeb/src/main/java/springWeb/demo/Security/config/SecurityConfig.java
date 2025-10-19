@@ -46,7 +46,7 @@ public class SecurityConfig {
                                 "/historia-formulario", "/historia-formulario.html",
                                 "/vacuna-formulario", "/vacuna-formulario.html",
                                 "/gestion-citas", "/gestion-citas.html",
-                                "/css/**", "/js/**", "/images/**", "/favicon.ico"
+                                "/css/**", "/js/**", "/images/**", "/favicon.ico", "/img/**", "/lib/**" ,"/scss/**"
                         ).permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/api/historias", "/api/vacunas").hasAuthority("VETERINARIO")

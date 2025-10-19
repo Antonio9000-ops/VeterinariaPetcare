@@ -29,13 +29,13 @@
 <div id="spinner"
      class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
     <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
-        <span class="sr-only">Cargando...</span>
+        <span class="sr-only">Loading...</span>
     </div>
 </div>
 <div class="container-fluid sticky-top">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
-            <a th:href="@{/}" class="navbar-brand">
+            <a th:href="@{/index.html}" class="navbar-brand">
                 <h1>iSTUDIO</h1>
             </a>
             <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
@@ -44,13 +44,20 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto">
-
-                    <a th:href="@{/}" class="nav-item nav-link active">Inicio</a>
-                    <a th:href="@{/mascotas}" class="nav-item nav-link">Mis Mascotas</a>
-                    <a th:href="@{/mascota-formulario}" class="nav-item nav-link">Añadir Nueva Mascota</a>
-                    <a th:href="@{/contact}" class="nav-item nav-link">Contact</a>
-
-                    <a href="#" id="logout-btn" class="nav-item nav-link">Cerrar Sesión</a>
+                    <a th:href="@{/index.html}" class="nav-item nav-link active">Home</a>
+                    <a th:href="@{/about.html}" class="nav-item nav-link">About</a>
+                    <a th:href="@{/service.html}" class="nav-item nav-link">Services</a>
+                    <a th:href="@{/project.html}" class="nav-item nav-link">Projects</a>
+                    <div class="nav-item dropdown">
+                        <a href="#!" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu bg-light mt-2">
+                            <a th:href="@{/feature.html}" class="dropdown-item">Features</a>
+                            <a th:href="@{/team.html}" class="dropdown-item">Our Team</a>
+                            <a th:href="@{/testimonial.html}" class="dropdown-item">Testimonial</a>
+                            <a th:href="@{/404.html}" class="dropdown-item">404 Page</a>
+                        </div>
+                    </div>
+                    <a th:href="@{/contact.html}" class="nav-item nav-link">Contact</a>
                 </div>
             </div>
         </nav>
@@ -59,20 +66,20 @@
 <div class="container-fluid pb-5 hero-header bg-light mb-5">
     <div class="container py-5">
         <div class="row g-5 align-items-center mb-5">
-            <div class="col-lg-12 text-center wow fadeIn" data-wow-delay="0.3s">
-                <h1 class="display-3 mb-4 text-primary animated slideInRight">Clínica Veterinaria</h1>
-
-                <div class="container bg-white p-5 shadow rounded">
-                    <h1>Bienvenido al Sistema de Gestión de la Clínica Veterinaria</h1>
-                    <p class="lead">Administre las citas, historias clínicas y el cuidado de sus mascotas de forma fácil y eficiente.</p>
-
-                    <div id="nav-links" class="mt-4 d-flex justify-content-center flex-wrap gap-3">
-                        <p class="text-muted">Cargando opciones de navegación...</p>
-                    </div>
+            <div class="col-lg-6">
+                <h1 class="display-1 mb-4 animated slideInRight">We Make Your <span class="text-primary">Home</span>
+                    Better</h1>
+                <h5 class="d-inline-block border border-2 border-white py-3 px-5 mb-0 animated slideInRight">
+                    An Award Winning Studio Since 1990</h5>
+            </div>
+            <div class="col-lg-6">
+                <div class="owl-carousel header-carousel animated fadeIn">
+                    <img class="img-fluid" th:src="@{/img/hero-slider-1.jpg}" alt="">
+                    <img class="img-fluid" th:src="@{/img/hero-slider-2.jpg}" alt="">
+                    <img class="img-fluid" th:src="@{/img/hero-slider-3.jpg}" alt="">
                 </div>
             </div>
         </div>
-
         <div class="row g-5 animated fadeIn">
             <div class="col-md-6 col-lg-3">
                 <div class="d-flex align-items-center">
@@ -585,12 +592,13 @@
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                     &copy; <a class="border-bottom" href="#!">Your Site Name</a>, All Right Reserved.
+
                     Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>. Distributed by
                     <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <div class="footer-menu">
-                        <a href="#!">Home</a>
+                        <a th:href="@{/index.html}">Home</a>
                         <a href="#!">Cookies</a>
                         <a href="#!">Help</a>
                         <a href="#!">FAQs</a>
@@ -611,60 +619,6 @@
 <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
 
 <script th:src="@{/js/main.js}"></script>
-
-<script>
-    function parseJwt(token) {
-        try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-        const navLinks = document.getElementById('nav-links');
-        const token = localStorage.getItem('jwt_token');
-
-        if (navLinks) {
-            // Clases de Bootstrap para darle estilo a los enlaces
-            const linkClass = 'btn btn-primary px-4';
-            const logoutClass = 'btn btn-outline-danger px-4';
-            const loginClass = 'btn btn-success px-4';
-            const registerClass = 'btn btn-outline-success px-4';
-
-            if (token) {
-                const userData = parseJwt(token);
-                const userRole = userData ? userData.role : null;
-
-                let navHTML = '';
-
-                if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
-                    navHTML += `<a href="/gestion-citas" class="${linkClass}">Gestión de Citas</a>`;
-                    navHTML += `<a href="/agenda" class="${linkClass}">Mi Agenda</a>`;
-                } else {
-                    navHTML += `<a href="/mascotas" class="${linkClass}">Mis Mascotas</a>`;
-                }
-
-                navHTML += `<a href="#" id="logout-btn" class="${logoutClass}">Cerrar Sesión</a>`;
-                navLinks.innerHTML = navHTML;
-
-                // Manejador del botón de cerrar sesión
-                const logoutBtn = document.getElementById('logout-btn');
-                if (logoutBtn) {
-                    logoutBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        localStorage.removeItem('jwt_token');
-                        alert('Has cerrado la sesión.');
-                        window.location.href = '/';
-                    });
-                }
-
-            } else {
-                // Si no hay token, mostrar Login y Register
-                navLinks.innerHTML = `
-                    <a href="/login" class="${loginClass}">Iniciar Sesión</a>
-                    <a href="/register" class="${registerClass}">Registrarse</a>
-                `;
-            }
-        }
-    });
-</script>
 </body>
 
 </html>
