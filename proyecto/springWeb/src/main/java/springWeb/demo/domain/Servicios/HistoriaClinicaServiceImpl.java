@@ -17,19 +17,19 @@ import springWeb.demo.domain.Servicios.interfaces.HistoriaClinicaService;
 public class HistoriaClinicaServiceImpl implements HistoriaClinicaService {
 
     private final HistoriaClinicaRepository historiaClinicaRepository;
-    private final HistoriaClinicaMapper historiaClinicaMapper;
+    //no se necesita la intancia del mapper si todos los demas metodos son estaticos
 
     @Override
     public HistoriaClinicaDTO registrarEntrada(HistoriaClinicaDTO dto) {
         // Convertir DTO a entidad
-        HistoriaClinica historia = historiaClinicaMapper.toEntity(dto);
+        HistoriaClinica historia = HistoriaClinicaMapper.toEntity(dto); 
         historia.setFecha(LocalDateTime.now());
 
         // Guardar en BD
         HistoriaClinica nuevaEntrada = historiaClinicaRepository.save(historia);
 
         // Convertir de vuelta a DTO
-        return historiaClinicaMapper.toDTO(nuevaEntrada);
+        return HistoriaClinicaMapper.toDTO(nuevaEntrada);
     }
 
     @Override

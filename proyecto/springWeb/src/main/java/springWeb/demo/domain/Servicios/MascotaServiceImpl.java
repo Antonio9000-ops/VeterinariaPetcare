@@ -16,7 +16,7 @@ import springWeb.demo.domain.Servicios.interfaces.MascotaService;
 public class MascotaServiceImpl implements MascotaService {
 
     private final MascotaRepository mascotaRepository;
-    private final MascotaMapper mascotaMapper;
+    
 
     @Override
     public MascotaDTO registrarMascota(MascotaDTO mascotaDTO) {

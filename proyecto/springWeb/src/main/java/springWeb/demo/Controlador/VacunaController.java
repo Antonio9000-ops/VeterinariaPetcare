@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springWeb.demo.domain.Dto.VacunaDTO;
-import springWeb.demo.domain.Mapper.VacunaMapper;
+
 import springWeb.demo.domain.Servicios.interfaces.VacunaService;
 
 @RestController
@@ -21,7 +21,7 @@ import springWeb.demo.domain.Servicios.interfaces.VacunaService;
 public class VacunaController {
 
     private final VacunaService vacunaService;
-    private final VacunaMapper vacunaMapper;
+
 
     @PostMapping
     public ResponseEntity<VacunaDTO> registrarVacuna(@RequestBody VacunaDTO vacunaDTO) {
