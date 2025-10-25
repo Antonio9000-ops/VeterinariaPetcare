@@ -16,18 +16,19 @@ import springWeb.demo.domain.Servicios.interfaces.VacunaService;
 public class VacunaServiceImpl implements VacunaService {
 
     private final VacunaRepository vacunaRepository;
-    private final VacunaMapper vacunaMapper;
+    
 
     @Override
     public VacunaDTO registrarVacuna(VacunaDTO dto) {
-        Vacuna vacuna = vacunaMapper.toEntity(dto);
+        //llama al metodo de forma estatica
+        Vacuna vacuna = VacunaMapper.toEntity(dto);
 
         if (vacuna.getFechaAplicacion() == null) {
             vacuna.setFechaAplicacion(LocalDate.now());
         }
 
         Vacuna nuevaVacuna = vacunaRepository.save(vacuna);
-        return vacunaMapper.toDTO(nuevaVacuna);
+        return VacunaMapper.toDTO(nuevaVacuna);
     }
 
     @Override
