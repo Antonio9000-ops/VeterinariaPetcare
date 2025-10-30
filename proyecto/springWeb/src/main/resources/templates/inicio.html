@@ -644,17 +644,6 @@
                 navHTML += `<a href="#" id="logout-btn" class="${logoutClass}">Cerrar Sesión</a>`;
                 navLinks.innerHTML = navHTML;
 
-                // Manejador del botón de cerrar sesión
-                const logoutBtn = document.getElementById('logout-btn');
-                if (logoutBtn) {
-                    logoutBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        localStorage.removeItem('jwt_token');
-                        alert('Has cerrado la sesión.');
-                        window.location.href = '/';
-                    });
-                }
-
             } else {
                 // Si no hay token, mostrar Login y Register
                 navLinks.innerHTML = `
@@ -662,6 +651,15 @@
                     <a href="/register" class="${registerClass}">Registrarse</a>
                 `;
             }
+            navLinks.addEventListener('click', (e) => {
+                
+                if (e.target.id === 'logout-btn') {
+                    e.preventDefault(); 
+                    localStorage.removeItem('jwt_token');
+                    alert('Has cerrado la sesión.');
+                    window.location.href = '/';
+                }
+            });
         }
     });
 </script>

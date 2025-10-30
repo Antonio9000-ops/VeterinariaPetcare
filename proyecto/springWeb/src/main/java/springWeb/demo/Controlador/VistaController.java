@@ -2,6 +2,9 @@ package springWeb.demo.Controlador;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+
 
 @Controller
 public class VistaController {
@@ -46,15 +49,19 @@ public class VistaController {
         return "agenda";
     }
 
-    @GetMapping("/historia-formulario")
-    public String mostrarPaginaHistoriaFormulario() {
-        return "historia-formulario";
-    }
+   @GetMapping("/historia-formulario")
+public String mostrarPaginaHistoriaFormulario(@RequestParam("mascotaId") Long mascotaId, Model model) {
+    
+    model.addAttribute("mascotaId", mascotaId);
+    return "historia-formulario";
+}
 
     @GetMapping("/vacuna-formulario")
-    public String mostrarPaginaVacunaFormulario() {
-        return "vacuna-formulario";
-    }
+public String mostrarPaginaVacunaFormulario(@RequestParam("mascotaId") Long mascotaId, Model model) {
+    
+    model.addAttribute("mascotaId", mascotaId);
+    return "vacuna-formulario";
+}
 
     // --- MÉTODO NUEVO QUE SOLUCIONA EL PROBLEMA ---
     @GetMapping("/gestion-citas")

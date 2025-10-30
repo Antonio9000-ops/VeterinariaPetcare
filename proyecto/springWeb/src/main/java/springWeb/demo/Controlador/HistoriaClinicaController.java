@@ -2,7 +2,7 @@ package springWeb.demo.Controlador;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import springWeb.demo.domain.Dto.HistoriaClinicaDTO;
 import springWeb.demo.domain.Servicios.interfaces.HistoriaClinicaService;
 
+
 @RestController
 @RequestMapping("/api/historias")
 @RequiredArgsConstructor
@@ -22,10 +23,11 @@ public class HistoriaClinicaController {
     private final HistoriaClinicaService historiaClinicaService;
 
     @PostMapping
-    public ResponseEntity<HistoriaClinicaDTO> registrarEntrada(@RequestBody HistoriaClinicaDTO dto) {
-        HistoriaClinicaDTO nuevaEntrada = historiaClinicaService.registrarEntrada(dto);
-        return new ResponseEntity<>(nuevaEntrada, HttpStatus.CREATED);
-    }
+public ResponseEntity<HistoriaClinicaDTO> crearHistoria(@RequestBody HistoriaClinicaDTO historiaClinicaDTO) {
+    // El DTO ya viene con la descripción y el mascotaId gracias a @RequestBody
+    HistoriaClinicaDTO nuevaHistoria = historiaClinicaService.guardarHistoria(historiaClinicaDTO);
+    return ResponseEntity.ok(nuevaHistoria);
+}
 
     @GetMapping("/mascota/{mascotaId}")
     public List<HistoriaClinicaDTO> listarPorMascota(@PathVariable Long mascotaId) {
@@ -44,4 +46,5 @@ public class HistoriaClinicaController {
         historiaClinicaService.eliminarEntrada(id);
         return ResponseEntity.noContent().build();
     }
+    
 }

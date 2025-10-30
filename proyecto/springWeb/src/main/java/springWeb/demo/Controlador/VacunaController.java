@@ -2,7 +2,7 @@ package springWeb.demo.Controlador;
 
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +24,11 @@ public class VacunaController {
 
 
     @PostMapping
-    public ResponseEntity<VacunaDTO> registrarVacuna(@RequestBody VacunaDTO vacunaDTO) {
-        VacunaDTO nuevaVacuna = vacunaService.registrarVacuna(vacunaDTO);
-        return new ResponseEntity<>(nuevaVacuna, HttpStatus.CREATED);
-    }
-
+public ResponseEntity<VacunaDTO> crearVacuna(@RequestBody VacunaDTO vacunaDTO) {
+    // El DTO ya viene con el nombre, fecha y mascotaId
+    VacunaDTO nuevaVacuna = vacunaService.guardarVacuna(vacunaDTO);
+    return ResponseEntity.ok(nuevaVacuna);
+}
     @GetMapping("/mascota/{mascotaId}")
     public List<VacunaDTO> listarVacunasPorMascota(@PathVariable Long mascotaId) {
         return vacunaService.listarVacunasPorMascota(mascotaId);

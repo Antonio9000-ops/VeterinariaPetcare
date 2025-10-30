@@ -126,9 +126,8 @@
                         </div>
                     </div>
                     <a th:href="@{/contact}" class="nav-item nav-link">Contact</a>
+
                     
-                    <!-- Controles de Usuario Dinámicos -->
-                    <span id="user-email" class="nav-item nav-link user-email text-primary fw-bold" style="cursor: default;"></span>
 
                     <a href="#" id="logout-btn" class="nav-item nav-link">Cerrar Sesión</a>
                     <!-- Fin Controles de Usuario Dinámicos -->
@@ -273,20 +272,33 @@
 
     // Configura el correo del usuario en la barra de navegación y el botón de cerrar sesión
     function setupNavbar(token) {
-        const userData = parseJwt(token);
-        if (userData) {
-            document.getElementById('user-email').textContent = userData.sub;
-            document.getElementById('logout-btn').addEventListener('click', (e) => {
-                e.preventDefault();
-                localStorage.removeItem('jwt_token');
-                // Redirigir a la ruta de login de Thymeleaf/Spring
-                window.location.href = '/login';
-            });
-        } else {
-            document.getElementById('user-email').textContent = 'Usuario Invitado';
-            document.getElementById('logout-btn').style.display = 'none'; // Ocultar si el token es inválido
+    const userData = parseJwt(token);
+
+    // Buscamos los elementos HTML de forma segura
+    const userEmailElement = document.getElementById('user-email');
+    const logoutBtnElement = document.getElementById('logout-btn');
+
+    if (logoutBtnElement) {
+        logoutBtnElement.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('jwt_token');
+            window.location.href = '/login';
+        });
+
+    if (userData) {
+        if (userEmailElement) { 
+            userEmailElement.textContent = userData.sub; 
+        }
+    } else {
+        if (userEmailElement) { 
+            userEmailElement.textContent = 'Usuario Invitado';
+        }
+        if (logoutBtnElement) {
+            logoutBtnElement.style.display = 'none';
         }
     }
+}
+}
 
     // Función para eliminar una mascota
     window.eliminarMascota = async function(mascotaId) {
@@ -366,8 +378,8 @@
                         <strong>${mascota.nombre}</strong> (${mascota.especie} - ${mascota.raza})
                     </div>
                     <div class="pet-actions">
-                        <a th:href="@{/mascota-detalle(id=${mascota.id})}" class="btn btn-outline-primary border-2">Ver Detalles</a>
-                        <a th:href="@{/mascota-formulario(id=${mascota.id})}" class="btn btn-outline-primary border-2">Editar</a>
+                         <a href="/mascota-detalle?id=${mascota.id}" class="btn btn-outline-primary border-2">Ver Detalles</a>
+                        <a href="/mascota-formulario?id=${mascota.id}" class="btn btn-outline-primary border-2">Editar</a>
                         <button onclick="eliminarMascota(${mascota.id})" class="btn btn-outline-primary border-2">Eliminar</button>
                     </div>
                 `;

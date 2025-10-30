@@ -6,8 +6,10 @@ import java.util.Optional;
 import springWeb.demo.domain.Dto.VacunaDTO;
 
 public interface VacunaService {
-    VacunaDTO registrarVacuna(VacunaDTO vacunaDTO);
+    
     List<VacunaDTO> listarVacunasPorMascota(Long mascotaId);
     Optional<VacunaDTO> obtenerVacunaPorId(Long id);
     void eliminarVacuna(Long id);
+    VacunaDTO guardarVacuna(VacunaDTO vacunaDTO);
+
 }
