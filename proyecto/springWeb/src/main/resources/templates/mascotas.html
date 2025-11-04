@@ -358,17 +358,24 @@
             }
 
             mascotas.forEach(mascota => {
+                // 💡 CORRECCIÓN 1: Definir las variables de URL aquí.
+                const detalleUrl = `/mascota-detalle?id=${mascota.id}`;
+                const editarUrl = `/mascota-formulario?id=${mascota.id}`;
+
                 const listItem = document.createElement('li');
                 listItem.className = 'pet-item wow fadeIn';
                 listItem.setAttribute('data-wow-delay', '0.1s'); // Añadir animación a los items
+
+                // 💡 CORRECCIÓN 2: Se eliminó el código HTML duplicado e incorrecto.
+                // Se usa la URL generada en las variables JS, no la sintaxis de Thymeleaf.
                 listItem.innerHTML = `
                     <div class="pet-info">
                         <strong>${mascota.nombre}</strong> (${mascota.especie} - ${mascota.raza})
                     </div>
                     <div class="pet-actions">
-                        <a th:href="@{/mascota-detalle(id=${mascota.id})}" class="btn btn-outline-primary border-2">Ver Detalles</a>
-                        <a th:href="@{/mascota-formulario(id=${mascota.id})}" class="btn btn-outline-primary border-2">Editar</a>
-                        <button onclick="eliminarMascota(${mascota.id})" class="btn btn-outline-primary border-2">Eliminar</button>
+                        <a href="${detalleUrl}" class="btn btn-outline-primary border-2">Ver Detalles</a>
+                        <a href="${editarUrl}" class="btn btn-outline-primary border-2">Editar</a>
+                        <button onclick="eliminarMascota(${mascota.id})" class="btn btn-outline-danger border-2">Eliminar</button>
                     </div>
                 `;
                 petList.appendChild(listItem);
