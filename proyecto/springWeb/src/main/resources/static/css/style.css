@@ -413,6 +413,10 @@
 
 
 /*** Footer ***/
+.footer {
+    background-color: #0057c9dc !important;
+}
+
 .footer .btn.btn-link {
     display: block;
     margin-bottom: 10px;
@@ -461,4 +465,21 @@
     margin-right: 0;
     padding-right: 0;
     border-right: none;
+}
+
+.footer .btn-outline-primary {
+    color: #E3F2FD !important;
+    border-color: #E3F2FD !important;
+}
+
+.footer .btn-outline-primary:hover {
+    color: #2196F3 !important;
+    background-color: #E3F2FD !important;
+    border-color: #E3F2FD !important;
+}
+
+.footer .btn-lg .btn-primary .btn-lg-square .bi-arrow-up {
+    color: #2196F3 !important;
+    background-color: #E3F2FD !important;
+    border-color: #E3F2FD !important;
 }

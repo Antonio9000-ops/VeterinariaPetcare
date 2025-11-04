@@ -1,9 +1,3 @@
-/*!
- * Bootstrap v5.0.0 (https://getbootstrap.com/)
- * Copyright 2011-2021 The Bootstrap Authors
- * Copyright 2011-2021 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- */
 :root {
     --bs-blue: #0d6efd;
     --bs-indigo: #6610f2;
@@ -18,14 +12,14 @@
     --bs-white: #fff;
     --bs-gray: #6c757d;
     --bs-gray-dark: #343a40;
-    --bs-primary: #0D6B68;
+    --bs-primary: #1E88E5;
     --bs-secondary: #555555;
     --bs-success: #198754;
     --bs-info: #0dcaf0;
     --bs-warning: #ffc107;
     --bs-danger: #dc3545;
-    --bs-light: #E6F0EF;
-    --bs-dark: #03201F;
+    --bs-light: #E3F2FD;
+    --bs-dark: #0D47A1;
     --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0))
