@@ -26,19 +26,17 @@ public class JwtService {
 
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("userId", usuario.getId());
-        extraClaims.put("role", usuario.getRol().name()); // .name() para convertir el Enum a String
+        extraClaims.put("role", usuario.getRol().name());
         extraClaims.put("nombre", usuario.getNombre());
 
         return Jwts.builder()
                 .setClaims(extraClaims)
                 .setSubject(usuario.getEmail())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 24 horas
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
-
-
 
     public String getUsername(String token) {
         return getClaim(token, Claims::getSubject);

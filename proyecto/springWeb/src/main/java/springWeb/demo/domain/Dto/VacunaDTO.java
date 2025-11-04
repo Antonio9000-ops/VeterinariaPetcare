@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class VacunaDTO {
+    
 
     private Long id;
     private String nombre;
