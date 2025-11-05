@@ -26,452 +26,352 @@
 </head>
 
 <body>
-<div id="spinner"
-     class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-    <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
-        <span class="sr-only">Cargando...</span>
-    </div>
-</div>
-<div class="container-fluid sticky-top">
-    <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
-            <a th:href="@{/}" class="navbar-brand">
-                <h1>PetCare</h1>
-            </a>
-            <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto" id="nav-links-menu">
-                    <a th:href="@{/}" class="nav-item nav-link active">Inicio</a>
-                    <a th:href="@{/contact}" class="nav-item nav-link">Contacto de emergencia</a>
-                    <p class="nav-item nav-link text-muted">Cargando...</p>
-                </div>
-            </div>
-        </nav>
-    </div>
-</div>
-<div class="container-fluid pb-5 hero-header bg-light mb-5">
-    <div class="container py-5">
-        <div class="row g-5 align-items-center mb-5">
-            <div class="col-lg-12 text-center wow fadeIn" data-wow-delay="0.3s">
-                <h1 class="display-3 mb-4 text-primary animated slideInRight">Clínica Veterinaria PetCare</h1>
-
-                <div id="bienvenida-seccion" class="container bg-white p-5 shadow rounded d-none">
-                    <h1>Bienvenido a la veterinaria PetCare</h1>
-                    <p class="lead">Administre las citas, historias clínicas y el cuidado de sus mascotas de forma fácil y eficiente.</p>
-
-                </div>
-            </div>
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Cargando...</span>
         </div>
     </div>
-</div>
-<div class="container-fluid py-5">
-    <div class="container">
-        <div class="row g-5">
-            <div class="col-lg-6">
-                <div class="row">
-                    <div class="col-6 wow fadeIn" data-wow-delay="0.1s">
-                        <img class="img-fluid" th:src="@{/img/about-1.jpg}" alt="">
-                    </div>
-                    <div class="col-6 wow fadeIn" data-wow-delay="0.3s">
-                        <img class="img-fluid h-75" th:src="@{/img/about-2.jpg}" alt="">
-                        <div class="h-25 d-flex align-items-center text-center bg-primary px-4">
-                            <h4 class="text-white lh-base mb-0">Award Winning Studio Since 1990</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                <h1 class="mb-5"><span class="text-uppercase text-primary bg-light px-2">History</span> of Our
-                    Creation</h1>
-                <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                    amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
-                    clita duo justo et tempor eirmod magna dolore erat amet</p>
-                <p class="mb-5">Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no
-                    labore lorem sit. Sanctus clita duo justo et tempor.</p>
-                <div class="row g-3">
-                    <div class="col-sm-6">
-                        <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>Award Winning</h6>
-                        <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Professional Staff</h6>
-                    </div>
-                    <div class="col-sm-6">
-                        <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>24/7 Support</h6>
-                        <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Fair Prices</h6>
-                    </div>
-                </div>
-                <div class="d-flex align-items-center mt-5">
-                    <a class="btn btn-primary px-4 me-2" href="#!">Read More</a>
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-twitter"></i></a>
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-instagram"></i></a>
-                    <a class="btn btn-outline-primary btn-square border-2" href="#!"><i
-                            class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container-fluid py-5">
-    <div class="container">
-        <div class="text-center wow fadeIn" data-wow-delay="0.1s">
-            <h1 class="mb-5">Why People <span class="text-uppercase text-primary bg-light px-2">Choose Us</span>
-            </h1>
-        </div>
-        <div class="row g-5 align-items-center text-center">
-            <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.1s">
-                <i class="fa fa-calendar-alt fa-5x text-primary mb-4"></i>
-                <h4>25+ Years Experience</h4>
-                <p class="mb-0">Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo
-                    justo et tempor eirmod magna dolore erat amet</p>
-            </div>
-            <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.3s">
-                <i class="fa fa-tasks fa-5x text-primary mb-4"></i>
-                <h4>Best Interior Design</h4>
-                <p class="mb-0">Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo
-                    justo et tempor eirmod magna dolore erat amet</p>
-            </div>
-            <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.5s">
-                <i class="fa fa-pencil-ruler fa-5x text-primary mb-4"></i>
-                <h4>Innovative Architects</h4>
-                <p class="mb-0">Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo
-                    justo et tempor eirmod magna dolore erat amet</p>
-            </div>
-            <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.1s">
-                <i class="fa fa-user fa-5x text-primary mb-4"></i>
-                <h4>Customer Satisfaction</h4>
-                <p class="mb-0">Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo
-                    justo et tempor eirmod magna dolore erat amet</p>
-            </div>
-            <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.3s">
-                <i class="fa fa-hand-holding-usd fa-5x text-primary mb-4"></i>
-                <h4>Budget Friendly</h4>
-                <p class="mb-0">Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo
-                    justo et tempor eirmod magna dolore erat amet</p>
-            </div>
-            <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.5s">
-                <i class="fa fa-check fa-5x text-primary mb-4"></i>
-                <h4>Sustainable Material</h4>
-                <p class="mb-0">Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo
-                    justo et tempor eirmod magna dolore erat amet</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid bg-light py-5">
-    <div class="container py-5">
-        <h1 class="mb-5">Our Professional <span class="text-uppercase text-primary bg-light px-2">Designers</span>
-        </h1>
-        <div class="row g-4">
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-                <div class="team-item position-relative overflow-hidden">
-                    <img class="img-fluid w-100" th:src="@{/img/team-1.jpg}" alt="">
-                    <div class="team-overlay">
-                        <small class="mb-2">Architect</small>
-                        <h4 class="lh-base text-light">Boris Johnson</h4>
-                        <div class="d-flex justify-content-center">
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
-                <div class="team-item position-relative overflow-hidden">
-                    <img class="img-fluid w-100" th:src="@{/img/team-2.jpg}" alt="">
-                    <div class="team-overlay">
-                        <small class="mb-2">Architect</small>
-                        <h4 class="lh-base text-light">Donald Pakura</h4>
-                        <div class="d-flex justify-content-center">
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
-                <div class="team-item position-relative overflow-hidden">
-                    <img class="img-fluid w-100" th:src="@{/img/team-3.jpg}" alt="">
-                    <div class="team-overlay">
-                        <small class="mb-2">Architect</small>
-                        <h4 class="lh-base text-light">Bradley Gordon</h4>
-                        <div class="d-flex justify-content-center">
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
-                <div class="team-item position-relative overflow-hidden">
-                    <img class="img-fluid w-100" th:src="@{/img/team-4.jpg}" alt="">
-                    <div class="team-overlay">
-                        <small class="mb-2">Architect</small>
-                        <h4 class="lh-base text-light">Alexander Bell</h4>
-                        <div class="d-flex justify-content-center">
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a class="btn btn-outline-primary btn-sm-square border-2 me-2" href="#!">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container-xxl py-5">
-    <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-md-12 col-lg-9">
-                <div class="owl-carousel testimonial-carousel wow fadeIn" data-wow-delay="0.2s">
-                    <div class="testimonial-item">
-                        <div class="row g-5 align-items-center">
-                            <div class="col-md-6">
-                                <div class="testimonial-img">
-                                    <img class="img-fluid" th:src="@{/img/testimonial-1.jpg}" alt="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="testimonial-text pb-5 pb-md-0">
-                                    <h3>Sustainable Material</h3>
-                                    <p>Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed
-                                        stet no labore lorem sit. Sanctus clita duo justo et tempor eirmod magna
-                                        dolore erat
-                                        amet</p>
-                                    <h5 class="mb-0">Boris Johnson</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item">
-                        <div class="row g-5 align-items-center">
-                            <div class="col-md-6">
-                                <div class="testimonial-img">
-                                    <img class="img-fluid" th:src="@{/img/testimonial-3.jpg}" alt="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="testimonial-text pb-5 pb-md-0">
-                                    <h3>Budget Friendly</h3>
-                                    <p>Diam amet diam et eos labore. Clita erat ipsum et lorem et sit, sed
-                                        stet no labore lorem sit. Sanctus clita duo justo et tempor eirmod magna
-                                        dolore erat
-                                        amet</p>
-                                    <h5 class="mb-0">Bradley Gordon</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container-fluid footer pt-5">
-    <div class="container py-5">
-        <div class="row g-5">
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-                <a th:href="@{/index}" class="d-inline-block mb-3">
-                    <h1 class="text">PetCare</h1>
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
+                <a th:href="@{/}" class="navbar-brand">
+                    <h1>PetCare</h1>
                 </a>
-                <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                    amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
-                    clita duo justo et tempor</p>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
-                <h5 class="text-white mb-4">Contáctanos</h5>
-                <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                <div class="d-flex pt-2">
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-twitter"></i></a>
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-youtube"></i></a>
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-instagram"></i></a>
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-linkedin-in"></i></a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto" id="nav-links-menu">
+                        <a th:href="@{/}" class="nav-item nav-link active">Inicio</a>
+                        <a th:href="@{/contact}" class="nav-item nav-link">Contacto de emergencia</a>
+                        <p class="nav-item nav-link text-muted">Cargando...</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
-                <h5 class="text-white mb-4">Enlaces Populares</h5>
-                <a class="btn btn-link" th:href="@{/about}">Acerca de Nosotros</a>
-                <a class="btn btn-link" th:href="@{/contact}">Contáctanos</a>
-                <a class="btn btn-link" href="#!">Política de Privacidad</a>
-                <a class="btn btn-link" href="#!">Términos &amp; Condiciones</a>
-                <a class="btn btn-link" href="#!">Carrera</a>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
-                <h5 class="text-white mb-4">Nuestros Servicios</h5>
-                <a class="btn btn-link" th:href="@{/service}">Diseño Interior</a>
-                <a class="btn btn-link" th:href="@{/service}">Planificación de Proyectos</a>
-                <a class="btn btn-link" th:href="@{/service}">Renovación</a>
-                <a class="btn btn-link" th:href="@{/service}">Implementación</a>
-                <a class="btn btn-link" th:href="@{/service}">Diseño de Paisajes</a>
-            </div>
+            </nav>
         </div>
     </div>
-    <div class="container wow fadeIn" data-wow-delay="0.1s">
-        <div class="copyright">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" href="#!">Your Site Name</a>, All Right Reserved.
-                    Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>. Distributed by
-                    <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <div class="footer-menu">
-                        <a th:href="@{/index}">Home</a>
-                        <a href="#!">Cookies</a>
-                        <a href="#!">Ayuda</a>
-                        <a href="#!">FAQs</a>
+    <div class="container-fluid pb-5 hero-header bg-light mb-5">
+        <div class="container py-5">
+            <div class="row g-5 align-items-center mb-5">
+                <div class="col-lg-12 text-center wow fadeIn" data-wow-delay="0.3s">
+                    <h1 class="display-3 mb-4 text-primary animated slideInRight">Clínica Veterinaria PetCare</h1>
+
+                    <div id="bienvenida-seccion" class="container bg-white p-5 shadow rounded d-none">
+                        <h1>Bienvenido a la veterinaria PetCare</h1>
+                        <p class="lead">Administre las citas, historias clínicas y el cuidado de sus mascotas de forma
+                            fácil y eficiente.</p>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="row g-5">
+                <div class="col-lg-6">
+                    <div class="row">
+                        <div class="col-6 wow fadeIn" data-wow-delay="0.1s">
+                            <img class="img-fluid" th:src="@{/img/C1.jpg}" alt="">
+                        </div>
+                        <div class="col-6 wow fadeIn" data-wow-delay="0.1s">
+                            <img class="img-fluid" th:src="@{/img/C2.jpg}" alt="">
+                        </div>
+                        <div class="col-6 wow fadeIn" data-wow-delay="0.1s">
+                            <img class="img-fluid" th:src="@{/img/C3.jpg}" alt="">
+                        </div>
+                        <div class="col-6 wow fadeIn" data-wow-delay="0.1s">
+                            <img class="img-fluid" th:src="@{/img/C4.jpg}" alt="">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                    <h1 class="mb-5"><span class="text-uppercase text-primary bg-light px-2">Historia</span> de Nuestra
+                        Creación</h1>
+                    <p class="mb-4">El Hospital Veterinario PetCare nació en 2025 con
+                        la visión de ofrecer una atención médica de calidad, compasiva y avanzada a las mascotas de
+                        nuestra comunidad. Desde nuestros humildes comienzos como un pequeño consultorio, hemos crecido
+                        hasta convertirnos en un centro de referencia que combina tecnología moderna con un profundo
+                        amor por los animales.</p>
+
+                    <p class="mb-5">Nuestro compromiso es garantizar que cada mascota reciba el mejor cuidado posible en
+                        cada etapa de su vida. Nos enorgullece ser un equipo dedicado a la prevención, el diagnóstico y
+                        el tratamiento, siempre priorizando el bienestar y la tranquilidad tanto del paciente como de su
+                        familia.</p>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>Acreditación de Calidad</h6>
+                            <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Personal Altamente Cualificado
+                            </h6>
+                        </div>
+                        <div class="col-sm-6">
+                            <h6 class="mb-3"><i class="fa fa-check text-primary me-2"></i>Soporte de Urgencias 24/7</h6>
+                            <h6 class="mb-0"><i class="fa fa-check text-primary me-2"></i>Tarifas Justas y Transparentes
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid py-5">
+        <div class="container">
+            <div class="text-center wow fadeIn" data-wow-delay="0.1s">
+                <h1 class="mb-5">Por Qué la Gente <span class="text-uppercase text-primary bg-light px-2">NOS
+                        ELIGE</span>
+                </h1>
+            </div>
+            <div class="row g-5 align-items-center text-center">
+                <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.1s">
+                    <i class="fa fa-calendar-alt fa-5x text-primary mb-4"></i>
+                    <h4>Más de 25 Años de Experiencia</h4>
+                    <p class="mb-0">Nuestro equipo cuenta con décadas de práctica en medicina, cirugía y cuidados
+                        preventivos, asegurando diagnósticos precisos y tratamientos efectivos.</p>
+                </div>
+                <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.3s">
+                    <i class="fa fa-tasks fa-5x text-primary mb-4"></i>
+                    <h4>Protocolos y Calidad Certificada</h4>
+                    <p class="mb-0">Aplicamos rigurosos protocolos de bioseguridad y atención que garantizan la máxima
+                        calidad en cada servicio médico ofrecido.</p>
+                </div>
+                <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.5s">
+                    <i class="fa fa-pencil-ruler fa-5x text-primary mb-4"></i>
+                    <h4>Tecnología Médica Avanzada</h4>
+                    <p class="mb-0">Utilizamos equipos de diagnóstico y tratamiento de última generación (como
+                        ecografía, radiología digital y laboratorio propio) para una atención completa.</p>
+                </div>
+                <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.1s">
+                    <i class="fa fa-user fa-5x text-primary mb-4"></i>
+                    <h4>Foco en la Satisfacción del Cliente</h4>
+                    <p class="mb-0">Nos esforzamos por mantener una comunicación clara y empática, asegurando que los
+                        dueños se sientan informados y tranquilos con el cuidado de su mascota.</p>
+                </div>
+                <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.3s">
+                    <i class="fa fa-hand-holding-usd fa-5x text-primary mb-4"></i>
+                    <h4>Opciones de Pago Flexibles</h4>
+                    <p class="mb-0">Ofrecemos planes de bienestar y diversas opciones de pago para que el cuidado de
+                        alta calidad sea accesible y se ajuste a su presupuesto.</p>
+                </div>
+                <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.5s">
+                    <i class="fa fa-check fa-5x text-primary mb-4"></i>
+                    <h4>Énfasis en el Cuidado Preventivo</h4>
+                    <p class="mb-0">Promovemos la salud a largo plazo a través de vacunas, desparasitaciones y
+                        nutrición, previniendo enfermedades antes de que ocurran.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid bg-light py-5">
+        <div class="container py-5">
+            <h1 class="mb-5">Nuestros <span class="text-uppercase text-primary bg-light px-2">Veterinarios
+                    Profesionales</span>
+            </h1>
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="team-item position-relative overflow-hidden">
+                        <img class="img-fluid w-100" th:src="@{/img/team-1.jpg}" alt="">
+                        <div class="team-overlay">
+                            <small class="mb-2">Veterinario</small>
+                            <h4 class="lh-base text-light">Boris Johnson</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
+                    <div class="team-item position-relative overflow-hidden">
+                        <img class="img-fluid w-100" th:src="@{/img/team-2.jpg}" alt="">
+                        <div class="team-overlay">
+                            <small class="mb-2">Veterinario</small>
+                            <h4 class="lh-base text-light">Donald Pakura</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
+                    <div class="team-item position-relative overflow-hidden">
+                        <img class="img-fluid w-100" th:src="@{/img/team-3.jpg}" alt="">
+                        <div class="team-overlay">
+                            <small class="mb-2">Veterinario</small>
+                            <h4 class="lh-base text-light">Bradley Gordon</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
+                    <div class="team-item position-relative overflow-hidden">
+                        <img class="img-fluid w-100" th:src="@{/img/team-4.jpg}" alt="">
+                        <div class="team-overlay">
+                            <small class="mb-2">Veterinario</small>
+                            <h4 class="lh-base text-light">Alexander Bell</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid footer pt-5">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
+                    <a th:href="@{/index}" class="d-inline-block mb-3">
+                        <h1 class="text">PetCare</h1>
+                    </a>
+                    <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
+                        amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
+                        clita duo justo et tempor</p>
+                </div>
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
+                    <h5 class="text-white mb-4">Contáctanos</h5>
+                    <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                    <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                    <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                                class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                                class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                                class="fab fa-instagram"></i></a>
+                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                                class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
+                    <h5 class="text-white mb-4">Enlaces Populares</h5>
+                    <a class="btn btn-link" th:href="@{/about}">Acerca de Nosotros</a>
+                    <a class="btn btn-link" th:href="@{/contact}">Contáctanos</a>
+                    <a class="btn btn-link" href="#!">Política de Privacidad</a>
+                    <a class="btn btn-link" href="#!">Términos &amp; Condiciones</a>
+                    <a class="btn btn-link" href="#!">Carrera</a>
+                </div>
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
+                    <h5 class="text-white mb-4">Nuestros Servicios</h5>
+                    <a class="btn btn-link" th:href="@{/service}">Diseño Interior</a>
+                    <a class="btn btn-link" th:href="@{/service}">Planificación de Proyectos</a>
+                    <a class="btn btn-link" th:href="@{/service}">Renovación</a>
+                    <a class="btn btn-link" th:href="@{/service}">Implementación</a>
+                    <a class="btn btn-link" th:href="@{/service}">Diseño de Paisajes</a>
+                </div>
+            </div>
+        </div>
+        <div class="container wow fadeIn" data-wow-delay="0.1s">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#!">Your Site Name</a>, All Right Reserved.
+                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>. Distributed by
+                        <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a th:href="@{/index}">Home</a>
+                            <a href="#!">Cookies</a>
+                            <a href="#!">Ayuda</a>
+                            <a href="#!">FAQs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script th:src="@{/lib/wow/wow.min.js}"></script>
-<script th:src="@{/lib/easing/easing.min.js}"></script>
-<script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
-<script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/lib/wow/wow.min.js}"></script>
+    <script th:src="@{/lib/easing/easing.min.js}"></script>
+    <script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
+    <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
 
-<script th:src="@{/js/main.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
 
-<script>
-    function parseJwt(token) {
-        try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
-    }
+    <script>
+        function parseJwt(token) {
+            try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
+        }
 
-    window.addEventListener('DOMContentLoaded', () => {
-        const navLinksMenu = document.getElementById('nav-links-menu');
-        const bienvenidaSeccion = document.getElementById('bienvenida-seccion');
-        const token = localStorage.getItem('jwt_token');
+        window.addEventListener('DOMContentLoaded', () => {
+            const navLinksMenu = document.getElementById('nav-links-menu');
+            const bienvenidaSeccion = document.getElementById('bienvenida-seccion');
+            const token = localStorage.getItem('jwt_token');
 
-        // Clases de Bootstrap
-        const navItemClass = 'nav-item nav-link';
+            // Clases de Bootstrap
+            const navItemClass = 'nav-item nav-link';
 
-        if (token) {
-            // USUARIO LOGEADO
+            if (token) {
+                // USUARIO LOGEADO
 
-            // 1. Mostrar la sección de Bienvenida
-            if (bienvenidaSeccion) {
-                bienvenidaSeccion.classList.remove('d-none');
-                bienvenidaSeccion.classList.add('d-block');
-            }
+                // 1. Mostrar la sección de Bienvenida
+                if (bienvenidaSeccion) {
+                    bienvenidaSeccion.classList.remove('d-none');
+                    bienvenidaSeccion.classList.add('d-block');
+                }
 
-            const userData = parseJwt(token);
-            const userRole = userData ? userData.role : null;
+                const userData = parseJwt(token);
+                const userRole = userData ? userData.role : null;
 
-            // 2. Construir TODOS los enlaces en la BARRA SUPERIOR
-            let menuHTML =
-                // Remplazo: th:href="@{/}" -> href="/"
-                `<a href="/" class="${navItemClass} active">Inicio</a>`;
+                // 2. Construir TODOS los enlaces en la BARRA SUPERIOR
+                let menuHTML =
+                    // Remplazo: th:href="@{/}" -> href="/"
+                    `<a href="/" class="${navItemClass} active">Inicio</a>`;
 
-            if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
-                // Remplazo: th:href="@{/gestion-citas}" -> href="/gestion-citas"
-                menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
-                // Remplazo: th:href="@{/agenda}" -> href="/agenda"
-                menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
+                if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
+                    // Remplazo: th:href="@{/gestion-citas}" -> href="/gestion-citas"
+                    menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
+                    // Remplazo: th:href="@{/agenda}" -> href="/agenda"
+                    menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
+                } else {
+                    // Remplazo: th:href="@{/mascotas}" -> href="/mascotas"
+                    menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
+                    // Remplazo: th:href="@{/mascota-formulario}" -> href="/mascota-formulario"
+                    menuHTML += `<a href="/mascota-formulario" class="${navItemClass}">Añadir Nueva Mascota</a>`;
+                }
+
+                // Remplazo: th:href="@{/contact}" -> href="/contact"
+                menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
+
+                // Botón Cerrar Sesión
+                menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
+
+                if (navLinksMenu) {
+                    navLinksMenu.innerHTML = menuHTML;
+                }
+
             } else {
-                // Remplazo: th:href="@{/mascotas}" -> href="/mascotas"
-                menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
-                // Remplazo: th:href="@{/mascota-formulario}" -> href="/mascota-formulario"
-                menuHTML += `<a href="/mascota-formulario" class="${navItemClass}">Añadir Nueva Mascota</a>`;
-            }
+                // USUARIO NO LOGEADO
 
-            // Remplazo: th:href="@{/contact}" -> href="/contact"
-            menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
+                // 1. Ocultar la sección de Bienvenida
+                if (bienvenidaSeccion) {
+                    bienvenidaSeccion.classList.add('d-none');
+                }
 
-            // Botón Cerrar Sesión
-            menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
-
-            if (navLinksMenu) {
-                navLinksMenu.innerHTML = menuHTML;
-            }
-
-        } else {
-            // USUARIO NO LOGEADO
-
-            // 1. Ocultar la sección de Bienvenida
-            if (bienvenidaSeccion) {
-                bienvenidaSeccion.classList.add('d-none');
-            }
-
-            // 2. Construir los enlaces de la BARRA SUPERIOR
-            let menuHTML =
-                `<a href="/" class="${navItemClass} active">Inicio</a>
+                // 2. Construir los enlaces de la BARRA SUPERIOR
+                let menuHTML =
+                    `<a href="/" class="${navItemClass} active">Inicio</a>
                  <a href="/contact" class="${navItemClass}">Contact</a>
                  <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`; // Botón de Iniciar Sesión
 
-            if (navLinksMenu) {
-                navLinksMenu.innerHTML = menuHTML;
+                if (navLinksMenu) {
+                    navLinksMenu.innerHTML = menuHTML;
+                }
             }
-        }
 
-        // 3. Manejador de eventos para el cierre de sesión
-        document.addEventListener('click', (e) => {
-            if (e.target.id === 'logout-btn-menu') {
-                e.preventDefault();
-                localStorage.removeItem('jwt_token');
-                alert('Has cerrado la sesión.');
-                window.location.href = '/';
-            }
+            // 3. Manejador de eventos para el cierre de sesión
+            document.addEventListener('click', (e) => {
+                if (e.target.id === 'logout-btn-menu') {
+                    e.preventDefault();
+                    localStorage.removeItem('jwt_token');
+                    alert('Has cerrado la sesión.');
+                    window.location.href = '/';
+                }
+            });
+
         });
-
-    });
-</script>
+    </script>
 </body>
+
 </html>

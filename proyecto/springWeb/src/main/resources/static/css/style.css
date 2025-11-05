@@ -124,7 +124,7 @@
     margin-top: -100px;
     padding-top: 150px;
     background: linear-gradient(rgba(0, 195, 255, 0.5), rgba(255, 255, 255, 0.5)), 
-                url(../img/nav.jpg) top center no-repeat;        
+                url(../img/nav3.png) top center no-repeat;        
     background-size: cover;
 }
 
@@ -490,4 +490,25 @@
     color: #2196F3 !important;
     background-color: #E3F2FD !important;
     border-color: #E3F2FD !important;
+}
+
+/* Botones dentro de la lista de mascotas (Agendar / Editar) */
+.pet-actions .btn-outline-primary {
+    color: #0095ff; /* celeste claro */
+    border-color: #0095ff;
+    background-color: transparent;
+}
+
+.pet-actions .btn-outline-primary:hover,
+.pet-actions .btn-outline-primary:focus {
+    color: #ffffff;
+    background-color: #1E88E5; /* celeste más oscuro al hover */
+    border-color: #1E88E5;
+}
+
+/* Opción alternativa: botones sólidos azules */
+.pet-actions .btn-primary {
+    background-color: #1E88E5;
+    border-color: #1E88E5;
+    color: #ffffff;
 }

@@ -114,7 +114,9 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto" id="nav-links-menu">
-                    <p class="nav-item nav-link text-muted">Cargando opciones...</p>
+                    <a th:href="@{/}" class="nav-item nav-link active">Inicio</a>
+                    <a th:href="@{/contact}" class="nav-item nav-link">Contacto de emergencia</a>
+                    <p class="nav-item nav-link text-muted">Cargando...</p>
                 </div>
             </div>
         </nav>
@@ -122,13 +124,18 @@
 </div>
 <!-- Navbar End -->
 
-
-<!-- Contenido Dinámico: Mis Mascotas Start -->
-<div class="container-fluid py-5 bg-light container-mascotas">
-    <div class="container">
-        <div class="text-center wow fadeIn" data-wow-delay="0.1s">
-            <h1 class="display-5 mb-4">Gestión de <span class="text-uppercase text-primary bg-light px-2">Mis Mascotas</span></h1>
+<div class="container-fluid pb-5 bg-primary hero-header">
+    <div class="container py-5">
+        <div class="row g-3 align-items-center">
+            <div class="col-lg-6 text-center text-lg-start">
+                <h1 class="display-1 mb-0 animated slideInLeft" id="hero-title">Gestión de mis mascotas</h1>
+            </div>
         </div>
+    </div>
+</div>
+<!-- Contenido Dinámico: Mis Mascotas Start -->
+<div class="container-fluid py-5 bg-white container-mascotas">
+    <div class="container">
 
         <a th:href="@{/mascota-formulario}" class="btn btn-add d-inline-block mb-4">Añadir Nueva Mascota <i class="fa fa-plus ms-2"></i></a>
 
