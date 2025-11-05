@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="utf-8">
-    <!-- CORRECCIÓN CLAVE: Usamos 'editMode == true' para que si 'editMode' es nulo, la comparación evalúe a false sin error. -->
     <title th:text="${editMode == true ? 'Editar Mascota' : 'Registrar Mascota'}">Formulario de Mascota</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Formulario para registrar o editar información de mascotas" name="keywords">
@@ -69,23 +68,17 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
             <a th:href="@{/}" class="navbar-brand">
-                <h1>iSTUDIO</h1>
+                <h1>PetCare</h1>
             </a>
             <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto">
-                    <a th:href="@{/}" class="nav-item nav-link">Inicio</a>
-                    <a th:href="@{/mascotas}" class="nav-item nav-link active">Mis Mascotas</a>
-                    <a th:href="@{/contact}" class="nav-item nav-link">Contact</a>
-
-                    <!-- Controles de Usuario Dinámicos -->
-                    <span id="user-email" class="nav-item nav-link user-email text-primary fw-bold d-none me-3" style="cursor: default;"></span>
-
-                    <a href="#" id="logout-btn" class="nav-item nav-link">Cerrar Sesión</a>
-                    <!-- Fin Controles de Usuario Dinámicos -->
+                <div class="navbar-nav ms-auto" id="nav-links-menu">
+                    <a th:href="@{/}" class="nav-item nav-link active">Inicio</a>
+                    <a th:href="@{/contact}" class="nav-item nav-link">Contacto de emergencia</a>
+                    <p class="nav-item nav-link text-muted">Cargando...</p>
                 </div>
             </div>
         </nav>
@@ -159,40 +152,15 @@
 <!-- Pet Form End -->
 
 
-<!-- Newsletter Start -->
-<div class="container-fluid bg-primary newsletter p-0">
-    <!-- Contenido del Newsletter (copiado del template anterior) -->
-    <div class="container p-0">
-        <div class="row g-0 align-items-center">
-            <div class="col-md-5 ps-lg-0 text-start wow fadeIn" data-wow-delay="0.2s">
-                <img class="img-fluid w-100" th:src="@{/img/newsletter.jpg}" alt="Suscríbete al Newsletter">
-            </div>
-            <div class="col-md-7 py-5 newsletter-text wow fadeIn" data-wow-delay="0.5s">
-                <div class="p-5">
-                    <h1 class="mb-5">Suscríbete al <span
-                            class="text-uppercase text-primary bg-white px-2">Newsletter</span></h1>
-                    <div class="position-relative w-100 mb-2">
-                        <input class="form-control border-0 w-100 ps-4 pe-5" type="text"
-                               placeholder="Ingresa tu Correo" style="height: 60px;">
-                        <button type="button" class="btn shadow-none position-absolute top-0 end-0 mt-2 me-2"><i
-                                class="fa fa-paper-plane text-primary fs-4"></i></button>
-                    </div>
-                    <p class="mb-0">Recibe nuestras últimas noticias y ofertas.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Newsletter End -->
 
 
 <!-- Footer Start -->
-<div class="container-fluid bg-dark text-white-50 footer pt-5">
+<div class="container-fluid footer pt-5">
     <div class="container py-5">
         <div class="row g-5">
             <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-                <a th:href="@{/}" class="d-inline-block mb-3">
-                    <h1 class="text-white">iSTUDIO</h1>
+                <a th:href="@{/index}" class="d-inline-block mb-3">
+                    <h1 class="text">PetCare</h1>
                 </a>
                 <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
                     amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
@@ -244,7 +212,7 @@
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <div class="footer-menu">
-                        <a th:href="@{/}">Home</a>
+                        <a th:href="@{/index}">Home</a>
                         <a href="#!">Cookies</a>
                         <a href="#!">Ayuda</a>
                         <a href="#!">FAQs</a>
@@ -288,11 +256,68 @@
         try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
     }
 
+    // NUEVA FUNCIÓN: Gestión del Navbar
+    function setupNavbar(token, userData) {
+        const navLinksMenu = document.getElementById('nav-links-menu');
+        const navItemClass = 'nav-item nav-link';
+
+        let menuHTML = '';
+
+        if (token && userData) {
+            // USUARIO LOGEADO
+            const userRole = userData.role;
+
+            menuHTML += `<a href="/" class="${navItemClass}">Inicio</a>`;
+
+            if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
+                // Enlaces de gestión para personal de clínica
+                menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
+                menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
+            } else {
+                // Enlaces de usuario normal
+                menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
+                // El enlace a este formulario específico se resalta como activo
+                menuHTML += `<a href="/mascota-formulario" class="${navItemClass} active">Añadir Nueva Mascota</a>`;
+            }
+
+            menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
+
+            // Botón Cerrar Sesión
+            menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
+
+        } else {
+            // USUARIO NO LOGEADO
+            menuHTML =
+                `<a href="/" class="${navItemClass}">Inicio</a>
+                 <a href="/contact" class="${navItemClass}">Contacto de emergencia</a>
+                 <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`; // Botón de Iniciar Sesión
+        }
+
+        if (navLinksMenu) {
+            navLinksMenu.innerHTML = menuHTML;
+        }
+
+        // Manejador de eventos para el cierre de sesión (solo si el botón fue inyectado)
+        const logoutBtn = document.getElementById('logout-btn-menu');
+        if (logoutBtn) {
+             logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('jwt_token');
+                alert('Has cerrado la sesión.');
+                // Redirige al inicio (o a /login)
+                window.location.href = '/';
+            });
+        }
+    }
+
 
     document.addEventListener('DOMContentLoaded', async () => {
         const token = localStorage.getItem('jwt_token');
+
+        // 1. VERIFICACIÓN Y CONFIGURACIÓN INICIAL
         if (!token) {
-            // Redirigir si no hay token (asumiendo ruta /login)
+            // Si no hay token, configura el navbar y redirige
+            setupNavbar(null, null);
             window.location.href = '/login';
             return;
         }
@@ -301,31 +326,31 @@
         if (!userData) {
             console.error("Token JWT inválido o incompleto.");
             localStorage.removeItem('jwt_token');
+            setupNavbar(null, null);
             window.location.href = '/login';
             return;
         }
 
-        // Mostrar email de usuario y configurar logout
-        document.getElementById('user-email').textContent = `Usuario: ${userData.sub}`;
-        document.getElementById('logout-btn').addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('jwt_token');
-            window.location.href = '/login';
-        });
+        // Configura el navbar con las opciones para el usuario logeado
+        setupNavbar(token, userData);
 
         // Inicializar WOW.js para animaciones
         new WOW().init();
 
 
+        // 2. LÓGICA DEL FORMULARIO DE MASCOTAS
+
         const form = document.getElementById('pet-form');
         const formTitleElement = document.getElementById('form-title');
         const heroTitleElement = document.getElementById('hero-title');
         const idInput = document.getElementById('id');
-        const submitButton = document.getElementById('submit-button'); // Nuevo: Obtener el botón de submit
+        const submitButton = document.getElementById('submit-button');
 
 
         const urlParams = new URLSearchParams(window.location.search);
         const petId = urlParams.get('id');
+
+        // ... (el resto de la lógica del formulario es la misma) ...
 
         if (petId) {
             // Modo Edición

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>iSTUDIO - Mis Mascotas</title>
+    <title>PetCare - Mis Mascotas</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Gestión de mascotas del usuario" name="keywords">
     <meta content="Lista y administración de las mascotas registradas" name="description">
@@ -113,25 +113,8 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto">
-                    <a th:href="@{/}" class="nav-item nav-link">Inicio</a>
-                    <a th:href="@{/mascotas}" class="nav-item nav-link active">Mis Mascotas</a>
-                    <div class="nav-item dropdown">
-                        <a href="#!" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
-                        <div class="dropdown-menu bg-light mt-2">
-                            <a th:href="@{/feature}" class="dropdown-item">Features</a>
-                            <a th:href="@{/team}" class="dropdown-item">Our Team</a>
-                            <a th:href="@{/testimonial}" class="dropdown-item">Testimonial</a>
-                            <a th:href="@{/404}" class="dropdown-item">404 Page</a>
-                        </div>
-                    </div>
-                    <a th:href="@{/contact}" class="nav-item nav-link">Contact</a>
-
-
-                    <a th:href="@{/cita-formulario}" class="nav-item nav-link">Citas</a>
-
-                    <a href="#" id="logout-btn" class="nav-item nav-link">Cerrar Sesión</a>
-                    <!-- Fin Controles de Usuario Dinámicos -->
+                <div class="navbar-nav ms-auto" id="nav-links-menu">
+                    <p class="nav-item nav-link text-muted">Cargando opciones...</p>
                 </div>
             </div>
         </nav>
@@ -165,12 +148,12 @@
 
 
 <!-- Footer Start (Utilizado de la plantilla original) -->
-<div class="container-fluid bg-dark text-white-50 footer pt-5">
+<div class="container-fluid footer pt-5">
     <div class="container py-5">
         <div class="row g-5">
             <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
                 <a th:href="@{/index}" class="d-inline-block mb-3">
-                    <h1 class="text-white">PetCare</h1>
+                    <h1 class="text">PetCare</h1>
                 </a>
                 <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
                     amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
@@ -271,35 +254,59 @@
         }
     }
 
-    // Configura el correo del usuario en la barra de navegación y el botón de cerrar sesión
+    // FUNCIÓN MODIFICADA: Ahora configura la navegación completa
     function setupNavbar(token) {
-    const userData = parseJwt(token);
+        const navLinksMenu = document.getElementById('nav-links-menu');
+        const navItemClass = 'nav-item nav-link';
+        let menuHTML = '';
 
-    // Buscamos los elementos HTML de forma segura
-    const userEmailElement = document.getElementById('user-email');
-    const logoutBtnElement = document.getElementById('logout-btn');
+        const userData = token ? parseJwt(token) : null;
 
-    if (logoutBtnElement) {
-        logoutBtnElement.addEventListener('click', (e) => {
-            e.preventDefault();
-            localStorage.removeItem('jwt_token');
-            window.location.href = '/login';
-        });
+        if (userData) {
+            // USUARIO LOGEADO
+            const userRole = userData.role;
 
-    if (userData) {
-        if (userEmailElement) { 
-            userEmailElement.textContent = userData.sub; 
+            menuHTML += `<a href="/" class="${navItemClass}">Inicio</a>`;
+
+            if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
+                // Enlaces de gestión para personal de clínica
+                menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
+                menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
+            } else {
+                // Enlaces de usuario normal (Mis Mascotas está activo en esta página)
+                menuHTML += `<a href="/mascotas" class="${navItemClass} active">Mis Mascotas</a>`;
+                menuHTML += `<a href="/mascota-formulario" class="${navItemClass}">Añadir Nueva Mascota</a>`;
+            }
+
+            // Contacto y Cerrar Sesión
+            menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
+            menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
+
+        } else {
+            // USUARIO NO LOGEADO
+            menuHTML =
+                `<a href="/" class="${navItemClass}">Inicio</a>
+                 <a href="/contact" class="${navItemClass}">Contacto de emergencia</a>
+                 <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`; // Botón de Iniciar Sesión
         }
-    } else {
-        if (userEmailElement) { 
-            userEmailElement.textContent = 'Usuario Invitado';
+
+        if (navLinksMenu) {
+            navLinksMenu.innerHTML = menuHTML;
         }
-        if (logoutBtnElement) {
-            logoutBtnElement.style.display = 'none';
+
+        // Manejador de eventos para el cierre de sesión (aplica solo si el usuario está logeado)
+        const logoutBtn = document.getElementById('logout-btn-menu');
+        if (logoutBtn) {
+             logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('jwt_token');
+                alert('Has cerrado la sesión.');
+                // Redirige al inicio
+                window.location.href = '/';
+            });
         }
     }
-}
-}
+
 
     // Función para eliminar una mascota
     window.eliminarMascota = async function(mascotaId) {
@@ -308,7 +315,7 @@
         }
 
         const token = localStorage.getItem('jwt_token');
-
+        // ... (resto de la lógica de eliminación) ...
         try {
             const response = await fetch(`/api/mascotas/${mascotaId}`, {
                 method: 'DELETE',
@@ -317,7 +324,6 @@
 
             if (response.ok) {
                 showMessage('Mascota eliminada correctamente.', 'success');
-                // Recargar la lista después de un breve retraso para que el usuario vea el mensaje
                 setTimeout(() => window.location.reload(), 1000);
             } else {
                 const errorData = await response.json();
@@ -330,23 +336,25 @@
 
     // Carga y muestra la lista de mascotas
     window.addEventListener('DOMContentLoaded', async () => {
-        new WOW().init(); // Inicializar WOW.js después de que el DOM esté listo
+        new WOW().init();
 
         const token = localStorage.getItem('jwt_token');
         const petList = document.getElementById('pet-list');
 
+        // Configurar el Navbar primero
+        setupNavbar(token);
+
         if (!token) {
-            // Redirigir a la ruta de login de Thymeleaf/Spring
             window.location.href = '/login';
             return;
         }
-
-        setupNavbar(token);
 
         const userData = parseJwt(token);
         if (!userData || !userData.userId) {
             petList.innerHTML = '';
             showMessage('Error: No se pudo obtener el ID del usuario del token.');
+            // Asegurar redirección si el token no es válido o está incompleto
+            setTimeout(() => { localStorage.removeItem('jwt_token'); window.location.href = '/login'; }, 2000);
             return;
         }
 
@@ -363,7 +371,7 @@
             }
 
             const mascotas = await response.json();
-            petList.innerHTML = ''; // Limpiar el mensaje de carga
+            petList.innerHTML = '';
 
             if (mascotas.length === 0) {
                 petList.innerHTML = '<li class="text-center text-muted py-3">Aún no tienes mascotas registradas. ¡Añade una ahora!</li>';
@@ -371,30 +379,19 @@
             }
 
             mascotas.forEach(mascota => {
-                // 💡 CORRECCIÓN 1: Definir las variables de URL aquí.
-                const detalleUrl = `/mascota-detalle?id=${mascota.id}`;
-                const editarUrl = `/mascota-formulario?id=${mascota.id}`;
-
+                // Uso de rutas relativas directas en los atributos href
                 const listItem = document.createElement('li');
                 listItem.className = 'pet-item wow fadeIn';
-                listItem.setAttribute('data-wow-delay', '0.1s'); // Añadir animación a los items
+                listItem.setAttribute('data-wow-delay', '0.1s');
 
-                // 💡 CORRECCIÓN 2: Se eliminó el código HTML duplicado e incorrecto.
-                // Se usa la URL generada en las variables JS, no la sintaxis de Thymeleaf.
                 listItem.innerHTML = `
                     <div class="pet-info">
                         <strong>${mascota.nombre}</strong> (${mascota.especie} - ${mascota.raza})
                     </div>
                     <div class="pet-actions">
-<<<<<<< HEAD
-                        <a href="${detalleUrl}" class="btn btn-outline-primary border-2">Ver Detalles</a>
-                        <a href="${editarUrl}" class="btn btn-outline-primary border-2">Editar</a>
-                        <button onclick="eliminarMascota(${mascota.id})" class="btn btn-outline-danger border-2">Eliminar</button>
-=======
-                         <a href="/mascota-detalle?id=${mascota.id}" class="btn btn-outline-primary border-2">Ver Detalles</a>
-                        <a href="/mascota-formulario?id=${mascota.id}" class="btn btn-outline-primary border-2">Editar</a>
-                        <button onclick="eliminarMascota(${mascota.id})" class="btn btn-outline-primary border-2">Eliminar</button>
->>>>>>> Walter/f
+                        <a href="/cita-formulario?mascotaId=${mascota.id}" class="btn btn-outline-primary border-2">Agendar nueva cita</a>
+                        <a href="/mascota-formulario?id=${mascota.id}" class="btn btn-outline-primary border-2">Editar datos</a>
+                        <button onclick="eliminarMascota(${mascota.id})" class="btn btn-outline-danger border-2">Eliminar mascota</button>
                     </div>
                 `;
                 petList.appendChild(listItem);

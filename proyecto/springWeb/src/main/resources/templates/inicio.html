@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>iSTUDIO - Interior Design Website Template Free</title>
+    <title>PetCare - Inicio</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -36,21 +36,17 @@
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
             <a th:href="@{/}" class="navbar-brand">
-                <h1>iSTUDIO</h1>
+                <h1>PetCare</h1>
             </a>
             <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
                     data-bs-target="#navbarCollapse">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto">
-
+                <div class="navbar-nav ms-auto" id="nav-links-menu">
                     <a th:href="@{/}" class="nav-item nav-link active">Inicio</a>
-                    <a th:href="@{/mascotas}" class="nav-item nav-link">Mis Mascotas</a>
-                    <a th:href="@{/mascota-formulario}" class="nav-item nav-link">Añadir Nueva Mascota</a>
-                    <a th:href="@{/contact}" class="nav-item nav-link">Contact</a>
-
-                    <a href="#" id="logout-btn" class="nav-item nav-link">Cerrar Sesión</a>
+                    <a th:href="@{/contact}" class="nav-item nav-link">Contacto de emergencia</a>
+                    <p class="nav-item nav-link text-muted">Cargando...</p>
                 </div>
             </div>
         </nav>
@@ -60,50 +56,12 @@
     <div class="container py-5">
         <div class="row g-5 align-items-center mb-5">
             <div class="col-lg-12 text-center wow fadeIn" data-wow-delay="0.3s">
-                <h1 class="display-3 mb-4 text-primary animated slideInRight">Clínica Veterinaria</h1>
+                <h1 class="display-3 mb-4 text-primary animated slideInRight">Clínica Veterinaria PetCare</h1>
 
-                <div class="container bg-white p-5 shadow rounded">
-                    <h1>Bienvenido al Sistema de Gestión de la Clínica Veterinaria</h1>
+                <div id="bienvenida-seccion" class="container bg-white p-5 shadow rounded d-none">
+                    <h1>Bienvenido a la veterinaria PetCare</h1>
                     <p class="lead">Administre las citas, historias clínicas y el cuidado de sus mascotas de forma fácil y eficiente.</p>
 
-                    <div id="nav-links" class="mt-4 d-flex justify-content-center flex-wrap gap-3">
-                        <p class="text-muted">Cargando opciones de navegación...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row g-5 animated fadeIn">
-            <div class="col-md-6 col-lg-3">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 btn-square border border-2 border-white me-3">
-                        <i class="fa fa-robot text-primary"></i>
-                    </div>
-                    <h5 class="lh-base mb-0">Crafted Furniture</h5>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 btn-square border border-2 border-white me-3">
-                        <i class="fa fa-robot text-primary"></i>
-                    </div>
-                    <h5 class="lh-base mb-0">Sustainable Material</h5>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 btn-square border border-2 border-white me-3">
-                        <i class="fa fa-robot text-primary"></i>
-                    </div>
-                    <h5 class="lh-base mb-0">Innovative Architects</h5>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 btn-square border border-2 border-white me-3">
-                        <i class="fa fa-robot text-primary"></i>
-                    </div>
-                    <h5 class="lh-base mb-0">Budget Friendly</h5>
                 </div>
             </div>
         </div>
@@ -204,146 +162,7 @@
         </div>
     </div>
 </div>
-<div class="container-fluid mt-5">
-    <div class="container mt-5">
-        <div class="row g-0">
-            <div class="col-lg-5 wow fadeIn" data-wow-delay="0.1s">
-                <div class="d-flex flex-column justify-content-center bg-primary h-100 p-5">
-                    <h1 class="text-white mb-5">Our Latest <span
-                            class="text-uppercase text-primary bg-light px-2">Projects</span></h1>
-                    <h4 class="text-white mb-0"><span class="display-1">6</span> of our latest projects</h4>
-                </div>
-            </div>
-            <div class="col-lg-7">
-                <div class="row g-0">
-                    <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.2s">
-                        <div class="project-item position-relative overflow-hidden">
-                            <img class="img-fluid w-100" th:src="@{/img/project-1.jpg}" alt="">
-                            <a class="project-overlay text-decoration-none" href="#!">
-                                <h4 class="text-white">Kitchen</h4>
-                                <small class="text-white">72 Projects</small>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.3s">
-                        <div class="project-item position-relative overflow-hidden">
-                            <img class="img-fluid w-100" th:src="@{/img/project-2.jpg}" alt="">
-                            <a class="project-overlay text-decoration-none" href="#!">
-                                <h4 class="text-white">Bathroom</h4>
-                                <small class="text-white">67 Projects</small>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.4s">
-                        <div class="project-item position-relative overflow-hidden">
-                            <img class="img-fluid w-100" th:src="@{/img/project-3.jpg}" alt="">
-                            <a class="project-overlay text-decoration-none" href="#!">
-                                <h4 class="text-white">Bedroom</h4>
-                                <small class="text-white">53 Projects</small>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.5s">
-                        <div class="project-item position-relative overflow-hidden">
-                            <img class="img-fluid w-100" th:src="@{/img/project-4.jpg}" alt="">
-                            <a class="project-overlay text-decoration-none" href="#!">
-                                <h4 class="text-white">Living Room</h4>
-                                <small class="text-white">33 Projects</small>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.6s">
-                        <div class="project-item position-relative overflow-hidden">
-                            <img class="img-fluid w-100" th:src="@{/img/project-5.jpg}" alt="">
-                            <a class="project-overlay text-decoration-none" href="#!">
-                                <h4 class="text-white">Furniture</h4>
-                                <small class="text-white">87 Projects</small>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay="0.7s">
-                        <div class="project-item position-relative overflow-hidden">
-                            <img class="img-fluid w-100" th:src="@{/img/project-6.jpg}" alt="">
-                            <a class="project-overlay text-decoration-none" href="#!">
-                                <h4 class="text-white">Rennovation</h4>
-                                <small class="text-white">69 Projects</small>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container-fluid py-5">
-    <div class="container py-5">
-        <div class="row g-5 align-items-center">
-            <div class="col-lg-5 wow fadeIn" data-wow-delay="0.1s">
-                <h1 class="mb-5">Our Creative <span
-                        class="text-uppercase text-primary bg-light px-2">Services</span></h1>
-                <p>Aliqu diam
-                    amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
-                    clita duo justo et tempor eirmod magna dolore erat amet</p>
-                <p class="mb-5">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                    amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
-                    clita duo justo et tempor eirmod magna dolore erat amet</p>
-                <div class="d-flex align-items-center bg-light">
-                    <div class="btn-square flex-shrink-0 bg-primary" style="width: 100px; height: 100px;">
-                        <i class="fa fa-phone fa-2x text-white"></i>
-                    </div>
-                    <div class="px-3">
-                        <h3>+0123456789</h3>
-                        <span>Call us direct 24/7 for get a free consultation</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7">
-                <div class="row g-0">
-                    <div class="col-md-6 wow fadeIn" data-wow-delay="0.2s">
-                        <div class="service-item h-100 d-flex flex-column justify-content-center bg-primary">
-                            <a href="#!" class="service-img position-relative mb-4">
-                                <img class="img-fluid w-100" th:src="@{/img/service-1.jpg}" alt="">
-                                <h3>Interior Design</h3>
-                            </a>
-                            <p class="mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam
-                                stet diam sed stet lorem.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 wow fadeIn" data-wow-delay="0.4s">
-                        <div class="service-item h-100 d-flex flex-column justify-content-center bg-light">
-                            <a href="#!" class="service-img position-relative mb-4">
-                                <img class="img-fluid w-100" th:src="@{/img/service-2.jpg}" alt="">
-                                <h3>Implement</h3>
-                            </a>
-                            <p class="mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam
-                                stet diam sed stet lorem.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 wow fadeIn" data-wow-delay="0.6s">
-                        <div class="service-item h-100 d-flex flex-column justify-content-center bg-light">
-                            <a href="#!" class="service-img position-relative mb-4">
-                                <img class="img-fluid w-100" th:src="@{/img/service-3.jpg}" alt="">
-                                <h3>Renovation</h3>
-                            </a>
-                            <p class="mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam
-                                stet diam sed stet lorem.</p>
-                        </div>
-                    </div>
-                    <div class="col-md-6 wow fadeIn" data-wow-delay="0.8s">
-                        <div class="service-item h-100 d-flex flex-column justify-content-center bg-primary">
-                            <a href="#!" class="service-img position-relative mb-4">
-                                <img class="img-fluid w-100" th:src="@{/img/service-4.jpg}" alt="">
-                                <h3>Commercial</h3>
-                            </a>
-                            <p class="mb-0">Erat ipsum justo amet duo et elitr dolor, est duo duo eos lorem sed diam
-                                stet diam sed stet lorem.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="container-fluid bg-light py-5">
     <div class="container py-5">
         <h1 class="mb-5">Our Professional <span class="text-uppercase text-primary bg-light px-2">Designers</span>
@@ -472,25 +291,6 @@
                         <div class="row g-5 align-items-center">
                             <div class="col-md-6">
                                 <div class="testimonial-img">
-                                    <img class="img-fluid" th:src="@{/img/testimonial-2.jpg}" alt="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="testimonial-text pb-5 pb-md-0">
-                                    <h3>Customer Satisfaction</h3>
-                                    <p>Clita erat ipsum et lorem et sit, sed
-                                        stet no labore lorem sit. Sanctus clita duo justo et tempor eirmod magna
-                                        dolore erat
-                                        amet</p>
-                                    <h5 class="mb-0">Alexander Bell</h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="testimonial-item">
-                        <div class="row g-5 align-items-center">
-                            <div class="col-md-6">
-                                <div class="testimonial-img">
                                     <img class="img-fluid" th:src="@{/img/testimonial-3.jpg}" alt="">
                                 </div>
                             </div>
@@ -511,41 +311,19 @@
         </div>
     </div>
 </div>
-<div class="container-fluid bg-primary newsletter p-0">
-    <div class="container p-0">
-        <div class="row g-0 align-items-center">
-            <div class="col-md-5 ps-lg-0 text-start wow fadeIn" data-wow-delay="0.2s">
-                <img class="img-fluid w-100" th:src="@{/img/newsletter.jpg}" alt="">
-            </div>
-            <div class="col-md-7 py-5 newsletter-text wow fadeIn" data-wow-delay="0.5s">
-                <div class="p-5">
-                    <h1 class="mb-5">Subscribe the <span
-                            class="text-uppercase text-primary bg-white px-2">Newsletter</span></h1>
-                    <div class="position-relative w-100 mb-2">
-                        <input class="form-control border-0 w-100 ps-4 pe-5" type="text"
-                               placeholder="Enter Your Email" style="height: 60px;">
-                        <button type="button" class="btn shadow-none position-absolute top-0 end-0 mt-2 me-2"><i
-                                class="fa fa-paper-plane text-primary fs-4"></i></button>
-                    </div>
-                    <p class="mb-0">Diam sed sed dolor stet amet eirmod</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="container-fluid bg-dark text-white-50 footer pt-5">
+<div class="container-fluid footer pt-5">
     <div class="container py-5">
         <div class="row g-5">
             <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-                <a th:href="@{/index.html}" class="d-inline-block mb-3">
-                    <h1 class="text-white">iSTUDIO</h1>
+                <a th:href="@{/index}" class="d-inline-block mb-3">
+                    <h1 class="text">PetCare</h1>
                 </a>
                 <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
                     amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
                     clita duo justo et tempor</p>
             </div>
             <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
-                <h5 class="text-white mb-4">Get In Touch</h5>
+                <h5 class="text-white mb-4">Contáctanos</h5>
                 <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
                 <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
                 <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
@@ -563,20 +341,20 @@
                 </div>
             </div>
             <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
-                <h5 class="text-white mb-4">Popular Link</h5>
-                <a class="btn btn-link" href="#!">About Us</a>
-                <a class="btn btn-link" href="#!">Contact Us</a>
-                <a class="btn btn-link" href="#!">Privacy Policy</a>
-                <a class="btn btn-link" href="#!">Terms & Condition</a>
-                <a class="btn btn-link" href="#!">Career</a>
+                <h5 class="text-white mb-4">Enlaces Populares</h5>
+                <a class="btn btn-link" th:href="@{/about}">Acerca de Nosotros</a>
+                <a class="btn btn-link" th:href="@{/contact}">Contáctanos</a>
+                <a class="btn btn-link" href="#!">Política de Privacidad</a>
+                <a class="btn btn-link" href="#!">Términos &amp; Condiciones</a>
+                <a class="btn btn-link" href="#!">Carrera</a>
             </div>
             <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
-                <h5 class="text-white mb-4">Our Services</h5>
-                <a class="btn btn-link" href="#!">Interior Design</a>
-                <a class="btn btn-link" href="#!">Project Planning</a>
-                <a class="btn btn-link" href="#!">Renovation</a>
-                <a class="btn btn-link" href="#!">Implement</a>
-                <a class="btn btn-link" href="#!">Landscape Design</a>
+                <h5 class="text-white mb-4">Nuestros Servicios</h5>
+                <a class="btn btn-link" th:href="@{/service}">Diseño Interior</a>
+                <a class="btn btn-link" th:href="@{/service}">Planificación de Proyectos</a>
+                <a class="btn btn-link" th:href="@{/service}">Renovación</a>
+                <a class="btn btn-link" th:href="@{/service}">Implementación</a>
+                <a class="btn btn-link" th:href="@{/service}">Diseño de Paisajes</a>
             </div>
         </div>
     </div>
@@ -590,9 +368,9 @@
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <div class="footer-menu">
-                        <a href="#!">Home</a>
+                        <a th:href="@{/index}">Home</a>
                         <a href="#!">Cookies</a>
-                        <a href="#!">Help</a>
+                        <a href="#!">Ayuda</a>
                         <a href="#!">FAQs</a>
                     </div>
                 </div>
@@ -618,51 +396,82 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-        const navLinks = document.getElementById('nav-links');
+        const navLinksMenu = document.getElementById('nav-links-menu');
+        const bienvenidaSeccion = document.getElementById('bienvenida-seccion');
         const token = localStorage.getItem('jwt_token');
 
-        if (navLinks) {
-            // Clases de Bootstrap para darle estilo a los enlaces
-            const linkClass = 'btn btn-primary px-4';
-            const logoutClass = 'btn btn-outline-danger px-4';
-            const loginClass = 'btn btn-success px-4';
-            const registerClass = 'btn btn-outline-success px-4';
+        // Clases de Bootstrap
+        const navItemClass = 'nav-item nav-link';
 
-            if (token) {
-                const userData = parseJwt(token);
-                const userRole = userData ? userData.role : null;
+        if (token) {
+            // USUARIO LOGEADO
 
-                let navHTML = '';
-
-                if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
-                    navHTML += `<a href="/gestion-citas" class="${linkClass}">Gestión de Citas</a>`;
-                    navHTML += `<a href="/agenda" class="${linkClass}">Mi Agenda</a>`;
-                } else {
-                    navHTML += `<a href="/mascotas" class="${linkClass}">Mis Mascotas</a>`;
-                }
-
-                navHTML += `<a href="#" id="logout-btn" class="${logoutClass}">Cerrar Sesión</a>`;
-                navLinks.innerHTML = navHTML;
-
-            } else {
-                // Si no hay token, mostrar Login y Register
-                navLinks.innerHTML = `
-                    <a href="/login" class="${loginClass}">Iniciar Sesión</a>
-                    <a href="/register" class="${registerClass}">Registrarse</a>
-                `;
+            // 1. Mostrar la sección de Bienvenida
+            if (bienvenidaSeccion) {
+                bienvenidaSeccion.classList.remove('d-none');
+                bienvenidaSeccion.classList.add('d-block');
             }
-            navLinks.addEventListener('click', (e) => {
-                
-                if (e.target.id === 'logout-btn') {
-                    e.preventDefault(); 
-                    localStorage.removeItem('jwt_token');
-                    alert('Has cerrado la sesión.');
-                    window.location.href = '/';
-                }
-            });
+
+            const userData = parseJwt(token);
+            const userRole = userData ? userData.role : null;
+
+            // 2. Construir TODOS los enlaces en la BARRA SUPERIOR
+            let menuHTML =
+                // Remplazo: th:href="@{/}" -> href="/"
+                `<a href="/" class="${navItemClass} active">Inicio</a>`;
+
+            if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
+                // Remplazo: th:href="@{/gestion-citas}" -> href="/gestion-citas"
+                menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
+                // Remplazo: th:href="@{/agenda}" -> href="/agenda"
+                menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
+            } else {
+                // Remplazo: th:href="@{/mascotas}" -> href="/mascotas"
+                menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
+                // Remplazo: th:href="@{/mascota-formulario}" -> href="/mascota-formulario"
+                menuHTML += `<a href="/mascota-formulario" class="${navItemClass}">Añadir Nueva Mascota</a>`;
+            }
+
+            // Remplazo: th:href="@{/contact}" -> href="/contact"
+            menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
+
+            // Botón Cerrar Sesión
+            menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
+
+            if (navLinksMenu) {
+                navLinksMenu.innerHTML = menuHTML;
+            }
+
+        } else {
+            // USUARIO NO LOGEADO
+
+            // 1. Ocultar la sección de Bienvenida
+            if (bienvenidaSeccion) {
+                bienvenidaSeccion.classList.add('d-none');
+            }
+
+            // 2. Construir los enlaces de la BARRA SUPERIOR
+            let menuHTML =
+                `<a href="/" class="${navItemClass} active">Inicio</a>
+                 <a href="/contact" class="${navItemClass}">Contact</a>
+                 <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`; // Botón de Iniciar Sesión
+
+            if (navLinksMenu) {
+                navLinksMenu.innerHTML = menuHTML;
+            }
         }
+
+        // 3. Manejador de eventos para el cierre de sesión
+        document.addEventListener('click', (e) => {
+            if (e.target.id === 'logout-btn-menu') {
+                e.preventDefault();
+                localStorage.removeItem('jwt_token');
+                alert('Has cerrado la sesión.');
+                window.location.href = '/';
+            }
+        });
+
     });
 </script>
 </body>
-
 </html>
