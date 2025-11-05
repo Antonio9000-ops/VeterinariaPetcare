@@ -386,15 +386,9 @@
                         <strong>${mascota.nombre}</strong> (${mascota.especie} - ${mascota.raza})
                     </div>
                     <div class="pet-actions">
-<<<<<<< HEAD
-                        <a href="${detalleUrl}" class="btn btn-outline-primary border-2">Ver Detalles</a>
-                        <a href="${editarUrl}" class="btn btn-outline-primary border-2">Editar</a>
-                        <button onclick="eliminarMascota(${mascota.id})" class="btn btn-outline-danger border-2">Eliminar</button>
-=======
                          <a href="/mascota-detalle?id=${mascota.id}" class="btn btn-outline-primary border-2">Ver Detalles</a>
                         <a href="/mascota-formulario?id=${mascota.id}" class="btn btn-outline-primary border-2">Editar</a>
                         <button onclick="eliminarMascota(${mascota.id})" class="btn btn-outline-primary border-2">Eliminar</button>
->>>>>>> Walter/f
                     </div>
                 `;
                 petList.appendChild(listItem);
