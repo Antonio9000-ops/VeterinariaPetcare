@@ -6,6 +6,7 @@ import java.util.Optional;
 import springWeb.demo.domain.Dto.MascotaDTO;
 
 public interface MascotaService {
+    List<MascotaDTO> listarTodasLasMascotas(); 
 
     MascotaDTO registrarMascota(MascotaDTO mascotaDTO);
 

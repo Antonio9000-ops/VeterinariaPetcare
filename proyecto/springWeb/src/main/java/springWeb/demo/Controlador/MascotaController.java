@@ -21,7 +21,12 @@ import springWeb.demo.domain.Servicios.interfaces.MascotaService;
 public class MascotaController {
 
     private final MascotaService mascotaService;
-
+    
+     @GetMapping
+    public ResponseEntity<List<MascotaDTO>> listarTodasLasMascotas() {
+        List<MascotaDTO> mascotas = mascotaService.listarTodasLasMascotas();
+        return ResponseEntity.ok(mascotas);
+    }
     @PostMapping
     public ResponseEntity<MascotaDTO> registrarMascota(@RequestBody MascotaDTO mascotaDTO) {
         MascotaDTO nuevaMascota = mascotaService.registrarMascota(mascotaDTO);

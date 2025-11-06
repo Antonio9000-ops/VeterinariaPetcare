@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springWeb.demo.domain.Dto.HistoriaClinicaDTO;
+import springWeb.demo.domain.Dto.RecetaDTO;
+import springWeb.demo.domain.Dto.TratamientoDTO;
 import springWeb.demo.domain.Servicios.interfaces.HistoriaClinicaService;
 
 
@@ -45,6 +47,18 @@ public ResponseEntity<HistoriaClinicaDTO> crearHistoria(@RequestBody HistoriaCli
     public ResponseEntity<Void> eliminarEntrada(@PathVariable Long id) {
         historiaClinicaService.eliminarEntrada(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/tratamientos/mascota/{mascotaId}")
+    public ResponseEntity<List<TratamientoDTO>> getTratamientosPorMascota(@PathVariable Long mascotaId) {
+        List<TratamientoDTO> tratamientos = historiaClinicaService.listarTratamientosPorMascota(mascotaId);
+        return ResponseEntity.ok(tratamientos);
+    }
+
+    @GetMapping("/recetas/mascota/{mascotaId}")
+    public ResponseEntity<List<RecetaDTO>> getRecetasPorMascota(@PathVariable Long mascotaId) {
+        List<RecetaDTO> recetas = historiaClinicaService.listarRecetasPorMascota(mascotaId);
+        return ResponseEntity.ok(recetas);
     }
     
 }

@@ -46,10 +46,14 @@ public class SecurityConfig {
                                 "/historia-formulario", "/historia-formulario.html",
                                 "/vacuna-formulario", "/vacuna-formulario.html",
                                 "/gestion-citas", "/gestion-citas.html",
+                                "/tratamiento-formulario", "/receta-formulario",
                                 "/css/**", "/js/**", "/images/**", "/favicon.ico", "/img/**", "/lib/**" ,"/scss/**"
                         ).permitAll()
 
+                       
+                        .requestMatchers(HttpMethod.POST, "/api/tratamientos", "/api/recetas").hasAuthority("VETERINARIO")
                         .requestMatchers(HttpMethod.POST, "/api/historias", "/api/vacunas").hasAuthority("VETERINARIO")
+                        
                         .requestMatchers(HttpMethod.GET, "/api/citas/pendientes").hasAnyAuthority("VETERINARIO", "ASISTENTE")
                         .requestMatchers(HttpMethod.PUT, "/api/citas/**").hasAnyAuthority("VETERINARIO", "ASISTENTE")
 
@@ -61,6 +65,7 @@ public class SecurityConfig {
 
                         .requestMatchers("/api/historias/**").hasAnyAuthority("DUEÑO", "VETERINARIO")
                         .requestMatchers("/api/vacunas/**").hasAnyAuthority("DUEÑO", "VETERINARIO")
+                        
                         .requestMatchers("/api/usuarios/**").permitAll()
 
                         .anyRequest().authenticated()
@@ -79,8 +84,9 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+        
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", "http://127.0.0.1:5500"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", "http://127.0.0.1:5500", "http://localhost:8092"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);

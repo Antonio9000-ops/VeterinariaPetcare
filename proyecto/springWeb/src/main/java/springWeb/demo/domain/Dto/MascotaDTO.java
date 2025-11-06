@@ -27,4 +27,5 @@ public class MascotaDTO {
     private List<Long> citasIds;
     private List<Long> historiaClinicaIds;
     private List<Long> vacunasIds;
+    private String nombreDueno;
 }

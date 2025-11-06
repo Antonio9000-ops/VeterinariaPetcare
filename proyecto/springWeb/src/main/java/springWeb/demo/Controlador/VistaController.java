@@ -68,4 +68,15 @@ public String mostrarPaginaVacunaFormulario(@RequestParam("mascotaId") Long masc
     public String mostrarPaginaGestionCitas() {
         return "gestion-citas";
     }
+     @GetMapping("/tratamiento-formulario")
+    public String mostrarPaginaTratamientoFormulario(@RequestParam("mascotaId") Long mascotaId, Model model) {
+        model.addAttribute("mascotaId", mascotaId);
+        return "tratamiento-formulario";
+    }
+
+    @GetMapping("/receta-formulario")
+    public String mostrarPaginaRecetaFormulario(@RequestParam("mascotaId") Long mascotaId, Model model) {
+        model.addAttribute("mascotaId", mascotaId);
+        return "receta-formulario";
+    }
 }

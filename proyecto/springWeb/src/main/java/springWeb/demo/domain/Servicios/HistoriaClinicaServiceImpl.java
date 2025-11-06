@@ -4,20 +4,31 @@ package springWeb.demo.domain.Servicios;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import springWeb.demo.domain.Dto.HistoriaClinicaDTO;
+import springWeb.demo.domain.Dto.RecetaDTO;
+import springWeb.demo.domain.Dto.TratamientoDTO;
 import springWeb.demo.domain.Mapper.HistoriaClinicaMapper;
+import springWeb.demo.domain.Mapper.RecetaMapper;
+import springWeb.demo.domain.Mapper.TratamientoMapper;
 import springWeb.demo.domain.Modelos.HistoriaClinica;
 import springWeb.demo.domain.Modelos.Mascota;
 import springWeb.demo.domain.Repositorios.HistoriaClinicaRepository;
 import springWeb.demo.domain.Repositorios.MascotaRepository;
+import springWeb.demo.domain.Repositorios.RecetaRepository;
+import springWeb.demo.domain.Repositorios.TratamientoRepository;
 import springWeb.demo.domain.Servicios.interfaces.HistoriaClinicaService;
 
 @Service
 @RequiredArgsConstructor
 public class HistoriaClinicaServiceImpl implements HistoriaClinicaService {
+
+    private final TratamientoRepository tratamientoRepository;
+    private final RecetaRepository recetaRepository;
 
     private final HistoriaClinicaRepository historiaClinicaRepository;
     private final MascotaRepository mascotaRepository;
@@ -74,5 +85,18 @@ public class HistoriaClinicaServiceImpl implements HistoriaClinicaService {
 
         // 5. Convertir la entidad guardada de nuevo a DTO para devolverla
         return HistoriaClinicaMapper.toDTO(historiaGuardada);
+    }
+    @Override
+    public List<TratamientoDTO> listarTratamientosPorMascota(Long mascotaId) {
+        return tratamientoRepository.findByMascotaId(mascotaId).stream()
+                .map(TratamientoMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<RecetaDTO> listarRecetasPorMascota(Long mascotaId) {
+        return recetaRepository.findByMascotaId(mascotaId).stream()
+                .map(RecetaMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }

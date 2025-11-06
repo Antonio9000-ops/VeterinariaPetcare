@@ -396,6 +396,7 @@
                         <strong>${mascota.nombre}</strong> (${mascota.especie} - ${mascota.raza})
                     </div>
                     <div class="pet-actions">
+                        <a href="/mascota-detalle?id=${mascota.id}" class="btn btn-outline-info border-2">Ver Detalle</a>
                         <a href="/cita-formulario?mascotaId=${mascota.id}" class="btn btn-outline-primary border-2">Agendar nueva cita</a>
                         <a href="/mascota-formulario?id=${mascota.id}" class="btn btn-outline-primary border-2">Editar datos</a>
                         <button onclick="eliminarMascota(${mascota.id})" class="btn btn-outline-danger border-2">Eliminar mascota</button>

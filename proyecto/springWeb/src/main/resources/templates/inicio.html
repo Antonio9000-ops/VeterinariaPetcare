@@ -322,8 +322,8 @@
                 if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
                     // Remplazo: th:href="@{/gestion-citas}" -> href="/gestion-citas"
                     menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
-                    // Remplazo: th:href="@{/agenda}" -> href="/agenda"
-                    menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
+                    menuHTML += `<a href="/agenda" class="${navItemClass}">Mascotas</a>`;
+
                 } else {
                     // Remplazo: th:href="@{/mascotas}" -> href="/mascotas"
                     menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;

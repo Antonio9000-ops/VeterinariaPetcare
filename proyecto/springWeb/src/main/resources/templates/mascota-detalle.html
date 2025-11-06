@@ -3,26 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>Detalle de Mascota</title>
-    <style>
-        body { font-family: sans-serif; background-color: #f9f9f9; margin: 0; padding-top: 80px; }
-        .navbar { background-color: #333; overflow: hidden; position: fixed; top: 0; width: 100%; z-index: 1000; }
-        .navbar a { float: left; display: block; color: #f2f2f2; text-align: center; padding: 14px 16px; text-decoration: none; }
-        .navbar a:hover { background-color: #ddd; color: black; }
-        .navbar .right { float: right; }
-        .navbar .user-email { padding: 14px 16px; color: #fff; float: right; }
-        .container { max-width: 900px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .pet-header { border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
-        .section { margin-top: 30px; }
-        h1, h2 { color: #333; }
-        ul { list-style: none; padding: 0; }
-        li { background: #f4f4f4; border: 1px solid #ddd; padding: 10px; margin-bottom: 5px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; }
-        .btn { padding: 10px 15px; color: #fff; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; margin: 5px; }
-        .btn-primary { background-color: #007bff; }
-        .btn-success { background-color: #28a745; }
-        .btn-info { background-color: #17a2b8; }
-        .btn-danger { background-color: #dc3545; }
-        #actions { margin-top: 20px; }
-    </style>
+   <style>
+    body { font-family: sans-serif; background-color: #f9f9f9; margin: 0; padding-top: 80px; }
+    .navbar { background-color: #333; overflow: hidden; position: fixed; top: 0; width: 100%; z-index: 1000; }
+    .navbar a { float: left; display: block; color: #f2f2f2; text-align: center; padding: 14px 16px; text-decoration: none; }
+    .navbar a:hover { background-color: #ddd; color: black; }
+    .navbar .right { float: right; }
+    .navbar .user-email { padding: 14px 16px; color: #fff; float: right; }
+    .container { max-width: 900px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .pet-header { border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
+    .section { margin-top: 30px; }
+    h1, h2 { color: #333; }
+    ul { list-style: none; padding: 0; }
+    li { background: #f4f4f4; border: 1px solid #ddd; padding: 10px; margin-bottom: 5px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .btn { padding: 10px 15px; color: #fff; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; margin: 5px; }
+    .btn-primary { background-color: #007bff; }
+    .btn-success { background-color: #28a745; }
+    .btn-info { background-color: #17a2b8; }
+    .btn-danger { background-color: #dc3545; }
+    #actions { margin-top: 20px; }
+   
+    .subsection { margin-top: 10px; padding-left: 20px; border-left: 2px solid #ddd; width: 100%; }
+    .subsection ul { margin-top: 5px; }
+    .subsection li { background-color: #fff; border: none; padding: 5px; display: block; }
+
+   
+    .btn-warning { background-color: #ffc107; color: #212529; } 
+    .btn-secondary { background-color: #6c757d; } 
+
+</style>
 </head>
 <body>
 
@@ -46,6 +55,14 @@
         <h2>Historia Clínica</h2>
         <ul id="historia-list"></ul>
     </div>
+     <div class="section">
+        <h2>Historial de Tratamiento</h2>
+        <ul id="tratamientos-list"></ul>
+    </div>
+    <div class="section">
+        <h2>Historial de Recetas</h2>
+        <ul id="recetas-list"></ul>
+    </div>
     <div class="section">
         <h2>Vacunas Aplicadas</h2>
         <ul id="vacunas-list"></ul>
@@ -60,7 +77,6 @@
     async function cancelarCita(citaId) {
         const token = localStorage.getItem('jwt_token');
         if (!confirm('¿Estás seguro de que quieres cancelar esta cita?')) return;
-
         try {
             const response = await fetch(`/api/citas/${citaId}`, {
                 method: 'DELETE',
@@ -92,7 +108,9 @@
         const headers = { 'Authorization': `Bearer ${token}` };
         const userData = parseJwt(token);
         const userRole = userData ? userData.role : null;
+        document.getElementById('user-email').textContent = userData.sub;
 
+        // --- 1. Cargar datos básicos de la mascota ---
         fetch(`/api/mascotas/${mascotaId}`, { headers })
             .then(res => res.json())
             .then(mascota => {
@@ -102,16 +120,18 @@
                 `;
                 const actionsDiv = document.getElementById('actions');
                 let actionsHTML = `<a href="/cita-formulario?mascotaId=${mascota.id}" class="btn btn-primary">Agendar Nueva Cita</a>`;
-
                 if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
                     actionsHTML += `
                         <a href="/historia-formulario?mascotaId=${mascotaId}" class="btn btn-success">Añadir a Historia Clínica</a>
                         <a href="/vacuna-formulario?mascotaId=${mascotaId}" class="btn btn-info">Registrar Vacuna</a>
+                        <a href="/tratamiento-formulario?mascotaId=${mascotaId}" class="btn btn-warning">Añadir Tratamiento</a>
+                        <a href="/receta-formulario?mascotaId=${mascotaId}" class="btn btn-secondary">Añadir Receta</a>
                     `;
                 }
                 actionsDiv.innerHTML = actionsHTML;
             });
 
+        // --- 2. Cargar Citas ---
         fetch(`/api/citas/mascota/${mascotaId}`, { headers })
             .then(res => res.json())
             .then(citas => {
@@ -128,6 +148,7 @@
                 `).join('');
             });
 
+        // --- 3. Cargar Historia Clínica (Lógica simplificada) ---
         fetch(`/api/historias/mascota/${mascotaId}`, { headers })
             .then(res => res.json())
             .then(historias => {
@@ -139,6 +160,31 @@
                 list.innerHTML = historias.map(h => `<li><strong>${new Date(h.fecha).toLocaleDateString()}:</strong> ${h.descripcion}</li>`).join('');
             });
 
+        // --- 4. Cargar Tratamientos (Lógica nueva e independiente) ---
+        fetch(`/api/historias/tratamientos/mascota/${mascotaId}`, { headers })
+            .then(res => res.json())
+            .then(tratamientos => {
+                const list = document.getElementById('tratamientos-list');
+                if (tratamientos.length === 0) {
+                    list.innerHTML = '<li>No hay tratamientos registrados.</li>';
+                    return;
+                }
+                list.innerHTML = tratamientos.map(t => `<li><strong>${new Date(t.fecha).toLocaleDateString()}:</strong> ${t.descripcion}</li>`).join('');
+            });
+
+        // --- 5. Cargar Recetas (Lógica nueva e independiente) ---
+        fetch(`/api/historias/recetas/mascota/${mascotaId}`, { headers })
+            .then(res => res.json())
+            .then(recetas => {
+                const list = document.getElementById('recetas-list');
+                if (recetas.length === 0) {
+                    list.innerHTML = '<li>No hay recetas registradas.</li>';
+                    return;
+                }
+                list.innerHTML = recetas.map(r => `<li><strong>Medicamento:</strong> ${r.medicamento} | <strong>Dosis:</strong> ${r.dosis} | <strong>Duración:</strong> ${r.duracion}</li>`).join('');
+            });
+
+        // --- 6. Cargar Vacunas ---
         fetch(`/api/vacunas/mascota/${mascotaId}`, { headers })
             .then(res => res.json())
             .then(vacunas => {
@@ -149,6 +195,12 @@
                 }
                 list.innerHTML = vacunas.map(v => `<li><strong>${v.fechaAplicacion}:</strong> ${v.nombre}</li>`).join('');
             });
+        
+        // --- 7. Lógica del botón de Logout ---
+        document.getElementById('logout-btn').addEventListener('click', () => {
+            localStorage.removeItem('jwt_token');
+            window.location.href = '/login';
+        });
     });
 </script>
 </body>
