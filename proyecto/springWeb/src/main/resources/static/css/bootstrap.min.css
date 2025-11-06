@@ -3841,7 +3841,7 @@ fieldset:disabled .btn {
 }
 
 .fade {
-    transition: opacity .15s linear
+    transition: opacity .15s linear;
 }
 
 @media(prefers-reduced-motion: reduce) {
@@ -7831,7 +7831,8 @@ fieldset:disabled .btn {
 }
 
 .mb-0 {
-    margin-bottom: 0 !important
+    margin-bottom: 0 !important;
+    color: rgb(1, 2, 3) !important
 }
 
 .mb-1 {
@@ -8338,7 +8339,7 @@ fieldset:disabled .btn {
 }
 
 .text-primary {
-    color: #0d6b68 !important
+    color: var(--bs-dark);
 }
 
 .text-secondary {
@@ -8370,7 +8371,7 @@ fieldset:disabled .btn {
 }
 
 .text-white {
-    color: #fff !important
+    color: black !important
 }
 
 .text-body {
@@ -8418,7 +8419,7 @@ fieldset:disabled .btn {
 }
 
 .bg-light {
-    background-color: #e6f0ef !important
+    background-color: #cfe7fa !important
 }
 
 .bg-dark {
