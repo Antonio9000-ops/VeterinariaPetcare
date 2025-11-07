@@ -6,9 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tratamientos")
@@ -24,7 +23,11 @@ public class Tratamiento {
 
     private String descripcion;
     private LocalDate fecha;
+    @Column(precision = 10, scale = 2) 
+    private BigDecimal monto;
 
+    @Enumerated(EnumType.STRING)
+    private EstadoPago estadoPago;
     @ManyToOne
     @JoinColumn(name = "historia_clinica_id")
     @JsonBackReference("historia-tratamiento")

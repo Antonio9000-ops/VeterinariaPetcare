@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Plataforma de Pagos</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .spinner-border { 
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 id="user-greeting">Plataforma de Pagos</h1>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>Detalle de Pagos Pendientes</h2>
+            </div>
+            <div class="card-body">
+                <ul id="debt-details-list" class="list-group">
+                </ul>
+                <h3 class="text-right mt-3">Total a Pagar: <span id="total-amount-display" class="font-weight-bold">$0.00</span></h3>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                <h2>Realizar un Nuevo Pago</h2>
+            </div>
+            <div class="card-body">
+                <div id="payment-success-alert" class="alert alert-success" style="display: none;"></div>
+                <div id="no-debt-alert" class="alert alert-info" style="display: none;">No tienes pagos pendientes.</div>
+                
+                <form id="payment-form">
+                    <div class="form-group">
+                        <label for="amount">Monto Total a Pagar (USD)</label>
+                        <input type="text" id="amount" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-name">Nombre en la Tarjeta</label>
+                        <input type="text" id="card-name" class="form-control" value="Juan Perez" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="card-number">Número de Tarjeta</label>
+                        <input type="text" id="card-number" class="form-control" value="4242 4242 4242 4242" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="expiry-date">Fecha de Vencimiento (MM/AA)</label>
+                            <input type="text" id="expiry-date" class="form-control" value="12/28" required>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" class="form-control" value="123" required>
+                        </div>
+                    </div>
+                    
+                    <button id="submit-button" class="btn btn-primary mt-4">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span id="button-text">Pagar Ahora</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mt-5">
+            <div class="card-header">
+                <h2>Historial de Pagos</h2>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID Transacción</th>
+                            <th>Monto</th>
+                            <th>Moneda</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody id="payment-history-body"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+           
+            const paymentForm = document.getElementById('payment-form');
+            const submitButton = document.getElementById('submit-button');
+            const buttonText = document.getElementById('button-text');
+            const spinner = submitButton.querySelector('.spinner-border');
+            const successAlert = document.getElementById('payment-success-alert');
+            
+            const debtDetailsList = document.getElementById('debt-details-list');
+            const totalAmountDisplay = document.getElementById('total-amount-display');
+            const amountInput = document.getElementById('amount');
+            const noDebtAlert = document.getElementById('no-debt-alert');
+
+            const token = localStorage.getItem('jwt_token');
+
+            async function loadPendingDebt() {
+                if (!token) return;
+
+                try {
+                    const response = await fetch("/api/facturacion/deuda-pendiente", {
+                        headers: { "Authorization": `Bearer ${token}` }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error("No se pudo cargar la deuda pendiente.");
+                    }
+                    
+                    const deuda = await response.json();
+                    
+                    debtDetailsList.innerHTML = '';
+                    
+                    if (deuda.detalles.length === 0) {
+                        debtDetailsList.innerHTML = '<li class="list-group-item">¡Felicidades! No tienes deudas pendientes.</li>';
+                    } else {
+                        deuda.detalles.forEach(item => {
+                            const li = document.createElement('li');
+                            li.className = 'list-group-item d-flex justify-content-between align-items-center';
+                            li.textContent = item.concepto;
+                            
+                            const span = document.createElement('span');
+                            span.className = 'badge badge-primary badge-pill';
+                            span.textContent = `$${item.monto.toFixed(2)}`;
+                            li.appendChild(span);
+                            
+                            debtDetailsList.appendChild(li);
+                        });
+                    }
+
+                    totalAmountDisplay.textContent = `$${deuda.total.toFixed(2)}`;
+                    amountInput.value = `${deuda.total.toFixed(2)}`;
+                    
+                    if (deuda.total <= 0) {
+                        submitButton.disabled = true;
+                        buttonText.textContent = "No tienes pagos pendientes";
+                        document.getElementById('payment-form').style.display = 'none';
+                        noDebtAlert.style.display = 'block';
+                    } else {
+                        submitButton.disabled = false;
+                        buttonText.textContent = "Pagar Ahora";
+                        document.getElementById('payment-form').style.display = 'block';
+                        noDebtAlert.style.display = 'none';
+                    }
+                } catch (error) {
+                    console.error(error);
+                    debtDetailsList.innerHTML = '<li class="list-group-item text-danger">Error al cargar la deuda.</li>';
+                }
+            }
+         
+            async function loadPaymentHistory() {
+                if (!token) return;
+
+                try {
+                    const response = await fetch("/api/pagos/mis-pagos", {
+                        headers: { "Authorization": `Bearer ${token}` }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error("No se pudo cargar el historial de pagos.");
+                    }
+                    
+                    const payments = await response.json();
+                    const historyBody = document.getElementById('payment-history-body');
+                    historyBody.innerHTML = '';
+                    payments.sort((a, b) => new Date(b.fechaCreacion) - new Date(a.fechaCreacion));
+                    payments.forEach(pago => {
+                        const row = `
+                            <tr>
+                                <td>${pago.numeroTransaccion.substring(0, 8)}...</td>
+                                <td>${pago.monto.toFixed(2)}</td>
+                                <td>${pago.moneda.toUpperCase()}</td>
+                                <td><span class="badge badge-success">${pago.estado}</span></td>
+                                <td>${new Date(pago.fechaCreacion).toLocaleString()}</td>
+                            </tr>
+                        `;
+                        historyBody.innerHTML += row;
+                    });
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+
+            paymentForm.addEventListener('submit', async (e) => {
+                e.preventDefault(); 
+                
+                buttonText.textContent = 'Procesando...';
+                spinner.style.display = 'inline-block';
+                submitButton.disabled = true;
+                successAlert.style.display = 'none'; 
+
+                try {
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+                
+                    const response = await fetch('/api/pagos/simular-pago', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({})
+                    });
+
+                    if (response.ok) {
+                        successAlert.textContent = '¡Pago realizado con éxito!';
+                        successAlert.style.display = 'block';
+                        paymentForm.reset();
+                        
+                        await loadPaymentHistory();
+                        await loadPendingDebt();
+                    } else {
+                        
+                        let errorMessage = 'Hubo un error al procesar el pago.';
+                        try {
+                            const errorData = await response.json();
+                            errorMessage = errorData.mensaje || `Error ${response.status}`;
+                        } catch (jsonError) {
+                            errorMessage = `Error ${response.status}: ${response.statusText}. No se pudo procesar la respuesta del servidor.`;
+                        }
+                        throw new Error(errorMessage);
+                    }
+                } catch (error) {
+                    alert(error.message);
+                } finally {
+                    buttonText.textContent = 'Pagar Ahora';
+                    spinner.style.display = 'none';
+                    
+                }
+            });
+            
+            loadPendingDebt();
+            loadPaymentHistory();
+        });
+    </script>
+</body>
+</html>

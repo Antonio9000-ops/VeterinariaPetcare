@@ -16,21 +16,25 @@
     h1, h2 { color: #333; }
     ul { list-style: none; padding: 0; }
     li { background: #f4f4f4; border: 1px solid #ddd; padding: 10px; margin-bottom: 5px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-    .btn { padding: 10px 15px; color: #fff; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; margin: 5px; }
+    .btn { padding: 8px 12px; color: #fff; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; margin: 5px; font-size: 0.9em; }
     .btn-primary { background-color: #007bff; }
     .btn-success { background-color: #28a745; }
     .btn-info { background-color: #17a2b8; }
     .btn-danger { background-color: #dc3545; }
+    .btn-warning { background-color: #ffc107; color: #212529; } 
+    .btn-secondary { background-color: #6c757d; } 
     #actions { margin-top: 20px; }
-   
     .subsection { margin-top: 10px; padding-left: 20px; border-left: 2px solid #ddd; width: 100%; }
     .subsection ul { margin-top: 5px; }
     .subsection li { background-color: #fff; border: none; padding: 5px; display: block; }
-
-   
-    .btn-warning { background-color: #ffc107; color: #212529; } 
-    .btn-secondary { background-color: #6c757d; } 
-
+    .modal { display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
+    .modal-content { background-color: #fefefe; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; border-radius: 8px; }
+    .modal-header { padding-bottom: 10px; border-bottom: 1px solid #ddd; }
+    .modal-body { padding: 15px 0; max-height: 400px; overflow-y: auto; }
+    .modal-footer { padding-top: 10px; border-top: 1px solid #ddd; text-align: right; }
+    .close-btn { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+    .item-facturable { display: block; margin-bottom: 10px; }
+    .item-facturable label { margin-left: 10px; }
 </style>
 </head>
 <body>
@@ -69,13 +73,118 @@
     </div>
 </div>
 
+<div id="facturaModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2>Generar Factura</h2>
+        </div>
+        <div class="modal-body">
+            <p>Seleccione los servicios y productos a facturar para la cita:</p>
+            <div id="items-facturables-list">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+            <button id="guardar-factura-btn" class="btn btn-primary">Guardar Factura</button>
+        </div>
+    </div>
+</div>
+
+
 <script>
+    const token = localStorage.getItem('jwt_token');
+    const headers = { 
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json'
+    };
+    let userRole = null;
+
     function parseJwt(token) {
         try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
     }
 
+    const modal = document.getElementById('facturaModal');
+    const guardarFacturaBtn = document.getElementById('guardar-factura-btn');
+
+    async function openFacturaModal(citaId) {
+        guardarFacturaBtn.dataset.citaId = citaId;
+
+        const itemsContainer = document.getElementById('items-facturables-list');
+        itemsContainer.innerHTML = '<p>Cargando items...</p>';
+        
+        try {
+            const response = await fetch('/api/items-facturables', { headers });
+            if (!response.ok) throw new Error('No se pudieron cargar los items.');
+            
+            const items = await response.json();
+            
+            if (items.length === 0) {
+                itemsContainer.innerHTML = '<p>No hay servicios o productos registrados en el sistema.</p>';
+                return;
+            }
+
+            itemsContainer.innerHTML = items.map(item => `
+                <div class="item-facturable">
+                    <input type="checkbox" id="item-${item.id}" name="itemFacturable" value="${item.id}">
+                    <label for="item-${item.id}">${item.nombre} - $${item.precio.toFixed(2)}</label>
+                </div>
+            `).join('');
+
+            modal.style.display = 'block';
+
+        } catch (error) {
+            itemsContainer.innerHTML = `<p style="color: red;">${error.message}</p>`;
+            modal.style.display = 'block';
+        }
+    }
+
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+
+    guardarFacturaBtn.addEventListener('click', async () => {
+        const citaId = guardarFacturaBtn.dataset.citaId;
+        const selectedItems = document.querySelectorAll('input[name="itemFacturable"]:checked');
+        const itemIds = Array.from(selectedItems).map(cb => cb.value);
+
+        if (itemIds.length === 0) {
+            alert('Debe seleccionar al menos un item para facturar.');
+            return;
+        }
+
+        const requestBody = {
+            citaId: parseInt(citaId),
+            itemIds: itemIds.map(id => parseInt(id))
+        };
+
+        try {
+            const response = await fetch('/api/facturacion/crear', {
+                method: 'POST',
+                headers: headers,
+                body: JSON.stringify(requestBody)
+            });
+
+            if (response.ok) {
+                alert('Factura creada correctamente.');
+                closeModal();
+                window.location.reload();
+            } else {
+                const errorText = await response.text();
+                throw new Error(errorText || 'No se pudo crear la factura.');
+            }
+        } catch (error) {
+            alert(`Error: ${error.message}`);
+        }
+    });
+
     async function cancelarCita(citaId) {
-        const token = localStorage.getItem('jwt_token');
         if (!confirm('¿Estás seguro de que quieres cancelar esta cita?')) return;
         try {
             const response = await fetch(`/api/citas/${citaId}`, {
@@ -94,7 +203,6 @@
     }
 
     document.addEventListener('DOMContentLoaded', async () => {
-        const token = localStorage.getItem('jwt_token');
         if (!token) { window.location.href = '/login'; return; }
 
         const params = new URLSearchParams(window.location.search);
@@ -105,13 +213,11 @@
             return;
         }
 
-        const headers = { 'Authorization': `Bearer ${token}` };
         const userData = parseJwt(token);
-        const userRole = userData ? userData.role : null;
+        userRole = userData ? userData.role : null;
         document.getElementById('user-email').textContent = userData.sub;
 
-        // --- 1. Cargar datos básicos de la mascota ---
-        fetch(`/api/mascotas/${mascotaId}`, { headers })
+        fetch(`/api/mascotas/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } })
             .then(res => res.json())
             .then(mascota => {
                 document.getElementById('pet-header').innerHTML = `
@@ -131,8 +237,7 @@
                 actionsDiv.innerHTML = actionsHTML;
             });
 
-        // --- 2. Cargar Citas ---
-        fetch(`/api/citas/mascota/${mascotaId}`, { headers })
+        fetch(`/api/citas/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } })
             .then(res => res.json())
             .then(citas => {
                 const list = document.getElementById('citas-list');
@@ -140,63 +245,44 @@
                     list.innerHTML = '<li>No hay citas programadas.</li>';
                     return;
                 }
-                list.innerHTML = citas.map(c => `
-                    <li>
-                        <span>${new Date(c.fechaHora).toLocaleString()}: ${c.motivo} (<strong>${c.estado}</strong>)</span>
-                        ${c.estado === 'PROGRAMADA' ? `<button onclick="cancelarCita(${c.id})" class="btn btn-danger">Cancelar</button>` : ''}
-                    </li>
-                `).join('');
+                list.innerHTML = citas.map(c => {
+                    let actions = '';
+                    if (c.estado === 'PROGRAMADA') {
+                        actions = `<button onclick="cancelarCita(${c.id})" class="btn btn-danger">Cancelar</button>`;
+                    } else if ((c.estado === 'ACEPTADA' || c.estado === 'COMPLETADA') && (userRole === 'VETERINARIO' || userRole === 'ASISTENTE')) {
+                        if (c.facturaId) {
+                            actions = `<span class="btn btn-success">Facturada (${c.estadoPago})</span>`;
+                        } else {
+                            actions = `<button onclick="openFacturaModal(${c.id})" class="btn btn-primary">Generar Factura</button>`;
+                        }
+                    }
+
+                    return `
+                        <li>
+                            <span>${new Date(c.fechaHora).toLocaleString()}: ${c.motivo} (<strong>${c.estado}</strong>)</span>
+                            <div>${actions}</div>
+                        </li>
+                    `;
+                }).join('');
             });
 
-        // --- 3. Cargar Historia Clínica (Lógica simplificada) ---
-        fetch(`/api/historias/mascota/${mascotaId}`, { headers })
-            .then(res => res.json())
-            .then(historias => {
-                const list = document.getElementById('historia-list');
-                if (historias.length === 0) {
-                    list.innerHTML = '<li>No hay registros en la historia clínica.</li>';
-                    return;
-                }
-                list.innerHTML = historias.map(h => `<li><strong>${new Date(h.fecha).toLocaleDateString()}:</strong> ${h.descripcion}</li>`).join('');
-            });
-
-        // --- 4. Cargar Tratamientos (Lógica nueva e independiente) ---
-        fetch(`/api/historias/tratamientos/mascota/${mascotaId}`, { headers })
-            .then(res => res.json())
-            .then(tratamientos => {
-                const list = document.getElementById('tratamientos-list');
-                if (tratamientos.length === 0) {
-                    list.innerHTML = '<li>No hay tratamientos registrados.</li>';
-                    return;
-                }
-                list.innerHTML = tratamientos.map(t => `<li><strong>${new Date(t.fecha).toLocaleDateString()}:</strong> ${t.descripcion}</li>`).join('');
-            });
-
-        // --- 5. Cargar Recetas (Lógica nueva e independiente) ---
-        fetch(`/api/historias/recetas/mascota/${mascotaId}`, { headers })
-            .then(res => res.json())
-            .then(recetas => {
-                const list = document.getElementById('recetas-list');
-                if (recetas.length === 0) {
-                    list.innerHTML = '<li>No hay recetas registradas.</li>';
-                    return;
-                }
-                list.innerHTML = recetas.map(r => `<li><strong>Medicamento:</strong> ${r.medicamento} | <strong>Dosis:</strong> ${r.dosis} | <strong>Duración:</strong> ${r.duracion}</li>`).join('');
-            });
-
-        // --- 6. Cargar Vacunas ---
-        fetch(`/api/vacunas/mascota/${mascotaId}`, { headers })
-            .then(res => res.json())
-            .then(vacunas => {
-                const list = document.getElementById('vacunas-list');
-                if (vacunas.length === 0) {
-                    list.innerHTML = '<li>No hay vacunas registradas.</li>';
-                    return;
-                }
-                list.innerHTML = vacunas.map(v => `<li><strong>${v.fechaAplicacion}:</strong> ${v.nombre}</li>`).join('');
-            });
+        fetch(`/api/historias/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(historias => {
+            const list = document.getElementById('historia-list');
+            list.innerHTML = historias.length ? historias.map(h => `<li><strong>${new Date(h.fecha).toLocaleDateString()}:</strong> ${h.descripcion}</li>`).join('') : '<li>No hay registros.</li>';
+        });
+        fetch(`/api/historias/tratamientos/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(tratamientos => {
+            const list = document.getElementById('tratamientos-list');
+            list.innerHTML = tratamientos.length ? tratamientos.map(t => `<li><strong>${new Date(t.fecha).toLocaleDateString()}:</strong> ${t.descripcion}</li>`).join('') : '<li>No hay tratamientos.</li>';
+        });
+        fetch(`/api/historias/recetas/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(recetas => {
+            const list = document.getElementById('recetas-list');
+            list.innerHTML = recetas.length ? recetas.map(r => `<li><strong>Medicamento:</strong> ${r.medicamento} | <strong>Dosis:</strong> ${r.dosis}</li>`).join('') : '<li>No hay recetas.</li>';
+        });
+        fetch(`/api/vacunas/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(vacunas => {
+            const list = document.getElementById('vacunas-list');
+            list.innerHTML = vacunas.length ? vacunas.map(v => `<li><strong>${v.fechaAplicacion}:</strong> ${v.nombre}</li>`).join('') : '<li>No hay vacunas.</li>';
+        });
         
-        // --- 7. Lógica del botón de Logout ---
         document.getElementById('logout-btn').addEventListener('click', () => {
             localStorage.removeItem('jwt_token');
             window.location.href = '/login';

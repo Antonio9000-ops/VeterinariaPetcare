@@ -316,22 +316,22 @@
 
                 // 2. Construir TODOS los enlaces en la BARRA SUPERIOR
                 let menuHTML =
-                    // Remplazo: th:href="@{/}" -> href="/"
                     `<a href="/" class="${navItemClass} active">Inicio</a>`;
 
                 if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
-                    // Remplazo: th:href="@{/gestion-citas}" -> href="/gestion-citas"
                     menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
                     menuHTML += `<a href="/agenda" class="${navItemClass}">Mascotas</a>`;
+                    // --- NUEVO ENLACE AÑADIDO AQUÍ ---
+                    menuHTML += `<a href="/gestion-servicios" class="${navItemClass}">Gestión de Servicios</a>`;
+                    menuHTML += `<a href="/pagos" class="${navItemClass}">Pagos</a>`;
 
                 } else {
-                    // Remplazo: th:href="@{/mascotas}" -> href="/mascotas"
                     menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
-                    // Remplazo: th:href="@{/mascota-formulario}" -> href="/mascota-formulario"
+                    // --- NUEVO ENLACE AÑADIDO AQUÍ ---
+                    menuHTML += `<a href="/pagos" class="${navItemClass}">Mis Pagos</a>`;
                     menuHTML += `<a href="/mascota-formulario" class="${navItemClass}">Añadir Nueva Mascota</a>`;
                 }
 
-                // Remplazo: th:href="@{/contact}" -> href="/contact"
                 menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
 
                 // Botón Cerrar Sesión

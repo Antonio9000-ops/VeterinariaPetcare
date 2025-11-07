@@ -1,200 +1,300 @@
-```
-/home/anthony/Proyectos/ProyectoUni/veterinaria/VeterinariaPetcare/
-├───.gitignore
-├───LICENSE
-├───project-structure.md
-├───README.md
-├───.git/...
-├───.vscode/
-│   └───settings.json
-└───proyecto/
-    └───springWeb/
-        ├───.gitattributes
-        ├───.gitignore
-        ├───nbactions.tmp
-        ├───pom.xml
-        ├───src/
-        │   ├───main/
-        │   │   ├───java/
-        │   │   │   └───springWeb/
-        │   │   │       └───demo/
-        │   │   │           ├───DemoApplication.java
-        │   │   │           ├───Controlador/
-        │   │   │           │   ├───CitaController.java
-        │   │   │           │   ├───HistoriaClinicaController.java
-        │   │   │           │   ├───MascotaController.java
-        │   │   │           │   ├───UsuarioController.java
-        │   │   │           │   ├───VacunaController.java
-        │   │   │           │   └───VistaController.java
-        │   │   │           ├───domain/
-        │   │   │           │   ├───Dto/
-        │   │   │           │   │   ├───CitaDTO.java
-        │   │   │           │   │   ├───HistoriaClinicaDTO.java
-        │   │   │           │   │   ├───MascotaDTO.java
-        │   │   │           │   │   ├───UsuarioDTO.java
-        │   │   │           │   │   └───VacunaDTO.java
-        │   │   │           │   ├───Mapper/
-        │   │   │           │   │   ├───CitaMapper.java
-        │   │   │           │   │   ├───HistoriaClinicaMapper.java
-        │   │   │           │   │   ├───MascotaMapper.java
-        │   │   │           │   │   ├───UsuarioMapper.java
-        │   │   │           │   │   └───VacunaMapper.java
-        │   │   │           │   ├───Modelos/
-        │   │   │           │   │   ├───Cita.java
-        │   │   │           │   │   ├───EstadoCita.java
-        │   │   │           │   │   ├───HistoriaClinica.java
-        │   │   │           │   │   ├───Mascota.java
-        │   │   │           │   │   ├───Rol.java
-        │   │   │           │   │   ├───Usuario.java
-        │   │   │           │   │   └───Vacuna.java
-        │   │   │           │   ├───Repositorios/
-        │   │   │           │   │   ├───CitaRepository.java
-        │   │   │           │   │   ├───HistoriaClinicaRepository.java
-        │   │   │           │   │   ├───MascotaRepository.java
-        │   │   │           │   │   ├───UsuarioRepository.java
-        │   │   │           │   │   └───VacunaRepository.java
-        │   │   │           │   └───Servicios/
-        │   │   │           │       ├───CitaServiceImpl.java
-        │   │   │           │       ├───HistoriaClinicaServiceImpl.java
-        │   │   │           │       ├───MascotaServiceImpl.java
-        │   │   │           │       ├───UsuarioServiceImpl.java
-        │   │   │           │       ├───VacunaServiceImpl.java
-        │   │   │           │       └───interfaces/
-        │   │   │           └───Security/
-        │   │   │               ├───auth/
-        │   │   │               │   ├───AuthController.java
-        │   │   │               │   ├───AuthRequest.java
-        │   │   │               │   ├───AuthResponse.java
-        │   │   │               │   ├───AuthService.java
-        │   │   │               │   └───RegisterRequest.java
-        │   │   │               ├───config/
-        │   │   │               │   └───SecurityConfig.java
-        │   │   │               └───jwt/
-        │   │   │                   ├───JwtAuthFilter.java
-        │   │   │                   └───JwtService.java
-        │   │   └───resources/
-        │   │       ├───application.properties
-        │   │       ├───modelosHTML/
-        │   │       │   ├───404.html
-        │   │       │   ├───about.html
-        │   │       │   ├───contact.html
-        │   │       │   ├───feature.html
-        │   │       │   ├───index.html
-        │   │       │   ├───project.html
-        │   │       │   ├───service.html
-        │   │       │   ├───team.html
-        │   │       │   └───testimonial.html
-        │   │       ├───static/
-        │   │       │   ├───css/
-        │   │       │   │   ├───bootstrap.min.css
-        │   │       │   │   └───style.css
-        │   │       │   ├───img/
-        │   │       │   │   ├───about-1.jpg
-        │   │       │   │   ├───about-2.jpg
-        │   │       │   │   ├───C1.jpg
-        │   │       │   │   ├───C2.jpg
-        │   │       │   │   ├───C3.jpg
-        │   │       │   │   ├───C4.jpg
-        │   │       │   │   ├───footer.jpg
-        │   │       │   │   ├───hero-bg.jpg
-        │   │       │   │   ├───hero-slider-1.jpg
-        │   │       │   │   ├───hero-slider-2.jpg
-        │   │       │   │   ├───hero-slider-3.jpg
-        │   │       │   │   ├───nav.jpg
-        │   │       │   │   ├───nav3.png
-        │   │       │   │   ├───newsletter.jpg
-        │   │       │   │   ├───project-1.jpg
-        │   │       │   │   ├───project-2.jpg
-        │   │       │   │   ├───project-3.jpg
-        │   │       │   │   ├───project-4.jpg
-        │   │       │   │   ├───project-5.jpg
-        │   │       │   │   ├───project-6.jpg
-        │   │       │   │   ├───service-1.jpg
-        │   │       │   │   ├───service-2.jpg
-        │   │       │   │   ├───service-3.jpg
-        │   │       │   │   ├───service-4.jpg
-        │   │       │   │   ├───team-1.jpg
-        │   │       │   │   ├───team-2.jpg
-        │   │       │   │   ├───team-3.jpg
-        │   │       │   │   ├───team-4.jpg
-        │   │       │   │   ├───testimonial-1.jpg
-        │   │       │   │   ├───testimonial-2.jpg
-        │   │       │   │   └───testimonial-3.jpg
-        │   │       │   ├───js/
-        │   │       │   │   └───main.js
-        │   │       │   ├───lib/
-        │   │       │   │   ├───animate/
-        │   │       │   │   │   ├───animate.css
-        │   │       │   │   │   └───animate.min.css
-        │   │       │   │   ├───counterup/
-        │   │       │   │   │   └───counterup.min.js
-        │   │       │   │   ├───easing/
-        │   │       │   │   │   ├───easing.js
-        │   │       │   │   │   └───easing.min.js
-        │   │       │   │   ├───owlcarousel/
-        │   │       │   │   │   ├───LICENSE
-        │   │       │   │   │   ├───owl.carousel.js
-        │   │       │   │   │   ├───owl.carousel.min.js
-        │   │       │   │   │   └───assets/
-        │   │       │   │   │       ├───ajax-loader.gif
-        │   │       │   │   │       ├───owl.carousel.css
-        │   │       │   │   │       ├───owl.carousel.min.css
-        │   │       │   │   │       ├───owl.theme.default.css
-        │   │       │   │   │       ├───owl.theme.default.min.css
-        │   │       │   │   │       ├───owl.theme.green.css
-        │   │       │   │   │       ├───owl.theme.green.min.css
-        │   │       │   │   │       └───owl.video.play.png
-        │   │       │   │   ├───waypoints/
-        │   │       │   │   │   ├───links.php
-        │   │       │   │   │   └───waypoints.min.js
-        │   │       │   │   └───wow/
-        │   │       │   │       ├───wow.js
-        │   │       │   │       └───wow.min.js
-        │   │       │   └───scss/
-        │   │       │       ├───bootstrap.scss
-        │   │       │       └───bootstrap/
-        │   │       │           └───scss/
-        │   │       │               ├───_accordion.scss
-        │   │       │               ├───_alert.scss
-        │   │       │               ├───_badge.scss
-        │   │       │               ├───_breadcrumb.scss
-        │   │       │               ├───_button-group.scss
-        │   │       │               ├───_buttons.scss
-        │   │       │               ├───_card.scss
-        │   │       │               ├───_carousel.scss
-        │   │       │               ├───_close.scss
-        │   │       │               ├───_containers.scss
-        │   │       │               ├───_dropdown.scss
-        │   │       │               ├───_forms.scss
-        │   │       │               ├───_functions.scss
-        │   │       │               ├───_grid.scss
-        │   │       │               ├───_helpers.scss
-        │   │       │               ├───_images.scss
-        │   │       │               ├───_list-group.scss
-        │   │       │               ├───_mixins.scss
-        │   │       │               ├───_modal.scss
-        │   │       │               ├───_nav.scss
-        │   │       │               ├───_navbar.scss
-        │   │       │               ├───_offcanvas.scss
-        │   │       │               ├───_pagination.scss
-        │   │       │               ├───_popover.scss
-        │   │       │               ├───...
-        │   │       │               └───...
-        │   │       └───templates/
-        │   │           ├───agenda.html
-        │   │           ├───cita-formulario.html
-        │   │           ├───gestion-citas.html
-        │   │           ├───historia-formulario.html
-        │   │           ├───inicio.html
-        │   │           ├───login.html
-        │   │           ├───mascota-detalle.html
-        │   │           ├───mascota-formulario.html
-        │   │           ├───mascotas.html
-        │   │           ├───register.html
-        │   │           └───vacuna-formulario.html
-        │   └───test/
-        │       └───java/
-        │           └───springWeb/
-        │               └───demo/
-        │                   └───DemoApplicationTests.java
-```
+# Project Structure
+
+- .gitignore
+- LICENSE
+- project-structure.md
+- README.md
+- .vscode/
+  - settings.json
+- proyecto/
+  - springWeb/
+    - .gitattributes
+    - .gitignore
+    - nbactions.tmp
+    - pom.xml
+    - src/
+      - main/
+        - java/
+          - springWeb/
+            - demo/
+              - DemoApplication.java
+              - Controlador/
+                - CitaController.java
+                - FacturacionController.java
+                - HistoriaClinicaController.java
+                - ItemFacturableController.java
+                - MascotaController.java
+                - PagoController.java
+                - RecetaController.java
+                - TratamientoController.java
+                - UsuarioController.java
+                - VacunaController.java
+                - VistaController.java
+              - domain/
+                - Dto/
+                  - CitaDTO.java
+                  - Facturacion/
+                    - DeudaDetalleDTO.java
+                    - DeudaTotalDTO.java
+                  - HistoriaClinicaDTO.java
+                  - MascotaDTO.java
+                  - RecetaDTO.java
+                  - TratamientoDTO.java
+                  - UsuarioDTO.java
+                  - VacunaDTO.java
+                - Mapper/
+                  - CitaMapper.java
+                  - FacturacionMapper.java
+                  - HistoriaClinicaMapper.java
+                  - MascotaMapper.java
+                  - RecetaMapper.java
+                  - TratamientoMapper.java
+                  - UsuarioMapper.java
+                  - VacunaMapper.java
+                - Modelos/
+                  - Cita.java
+                  - EstadoCita.java
+                  - EstadoPago.java
+                  - Facturacion.java
+                  - HistoriaClinica.java
+                  - ItemFacturable.java
+                  - Mascota.java
+                  - Pago.java
+                  - Receta.java
+                  - Rol.java
+                  - TipoItem.java
+                  - Tratamiento.java
+                  - Usuario.java
+                  - Vacuna.java
+                - Repositorios/
+                  - CitaRepository.java
+                  - FacturacionRepository.java
+                  - HistoriaClinicaRepository.java
+                  - ItemFacturableRepository.java
+                  - MascotaRepository.java
+                  - PagoRepository.java
+                  - RecetaRepository.java
+                  - TratamientoRepository.java
+                  - UsuarioRepository.java
+                  - VacunaRepository.java
+                - Servicios/
+                  - CitaServiceImpl.java
+                  - FacturacionService.java
+                  - HistoriaClinicaServiceImpl.java
+                  - ItemFacturableServiceImpl.java
+                  - MascotaServiceImpl.java
+                  - RecetaServiceImpl.java
+                  - TratamientoServiceImpl.java
+                  - UsuarioServiceImpl.java
+                  - VacunaServiceImpl.java
+                  - interfaces/
+                    - CitaService.java
+                    - FacturacionService.java
+                    - HistoriaClinicaService.java
+                    - ItemFacturableService.java
+                    - MascotaService.java
+                    - RecetaService.java
+                    - TratamientoService.java
+                    - UsuarioService.java
+                    - VacunaService.java
+              - Security/
+                - auth/
+                  - AuthController.java
+                  - AuthRequest.java
+                  - AuthResponse.java
+                  - AuthService.java
+                  - RegisterRequest.java
+                - config/
+                  - SecurityConfig.java
+                - jwt/
+                  - JwtAuthFilter.java
+                  - JwtService.java
+        - resources/
+          - application.properties
+          - modelosHTML/
+            - 404.html
+            - about.html
+            - contact.html
+            - feature.html
+            - index.html
+            - project.html
+            - service.html
+            - team.html
+            - testimonial.html
+          - static/
+            - css/
+              - bootstrap.min.css
+              - style.css
+            - img/
+              - about-1.jpg
+              - about-2.jpg
+              - C1.jpg
+              - C2.jpg
+              - C3.jpg
+              - C4.jpg
+              - footer.jpg
+              - hero-bg.jpg
+              - hero-slider-1.jpg
+              - hero-slider-2.jpg
+              - hero-slider-3.jpg
+              - nav.jpg
+              - nav3.png
+              - newsletter.jpg
+              - project-1.jpg
+              - project-2.jpg
+              - project-3.jpg
+              - project-4.jpg
+              - project-5.jpg
+              - project-6.jpg
+              - service-1.jpg
+              - service-2.jpg
+              - service-3.jpg
+              - service-4.jpg
+              - team-1.jpg
+              - team-2.jpg
+              - team-3.jpg
+              - team-4.jpg
+              - testimonial-1.jpg
+              - testimonial-2.jpg
+              - testimonial-3.jpg
+            - js/
+              - main.js
+            - lib/
+              - animate/
+                - animate.css
+                - animate.min.css
+              - counterup/
+                - counterup.min.js
+              - easing/
+                - easing.js
+                - easing.min.js
+              - owlcarousel/
+                - LICENSE
+                - owl.carousel.js
+                - owl.carousel.min.js
+                - assets/
+                  - ajax-loader.gif
+                  - owl.carousel.css
+                  - owl.carousel.min.css
+                  - owl.theme.default.css
+                  - owl.theme.default.min.css
+                  - owl.theme.green.css
+                  - owl.theme.green.min.css
+                  - owl.video.play.png
+              - waypoints/
+                - links.php
+                - waypoints.min.js
+              - wow/
+                - wow.js
+                - wow.min.js
+            - scss/
+              - bootstrap.scss
+              - bootstrap/
+                - scss/
+                  - _accordion.scss
+                  - _alert.scss
+                  - _badge.scss
+                  - _breadcrumb.scss
+                  - _button-group.scss
+                  - _buttons.scss
+                  - _card.scss
+                  - _carousel.scss
+                  - _close.scss
+                  - _containers.scss
+                  - _dropdown.scss
+                  - _forms.scss
+                  - _functions.scss
+                  - _grid.scss
+                  - _helpers.scss
+                  - _images.scss
+                  - _list-group.scss
+                  - _mixins.scss
+                  - _modal.scss
+                  - _nav.scss
+                  - _navbar.scss
+                  - _offcanvas.scss
+                  - _pagination.scss
+                  - _popover.scss
+                  - _progress.scss
+                  - _reboot.scss
+                  - _root.scss
+                  - _spinners.scss
+                  - _tables.scss
+                  - _toasts.scss
+                  - _tooltip.scss
+                  - _transitions.scss
+                  - _type.scss
+                  - _utilities.scss
+                  - _variables.scss
+                  - bootstrap-grid.scss
+                  - bootstrap-reboot.scss
+                  - bootstrap-utilities.scss
+                  - bootstrap.scss
+                  - forms/
+                    - _floating-labels.scss
+                    - _form-check.scss
+                    - _form-control.scss
+                    - _form-range.scss
+                    - _form-select.scss
+                    - _form-text.scss
+                    - _input-group.scss
+                    - _labels.scss
+                    - _validation.scss
+                  - helpers/
+                    - _clearfix.scss
+                    - _colored-links.scss
+                    - _position.scss
+                    - _ratio.scss
+                    - _stretched-link.scss
+                    - _text-truncation.scss
+                    - _visually-hidden.scss
+                  - mixins/
+                    - _alert.scss
+                    - _border-radius.scss
+                    - _box-shadow.scss
+                    - _breakpoints.scss
+                    - _buttons.scss
+                    - _caret.scss
+                    - _clearfix.scss
+                    - _color-scheme.scss
+                    - _container.scss
+                    - _deprecate.scss
+                    - _forms.scss
+                    - _gradients.scss
+                    - _grid.scss
+                    - _image.scss
+                    - _list-group.scss
+                    - _lists.scss
+                    - _pagination.scss
+                    - _reset-text.scss
+                    - _resize.scss
+                    - _table-variants.scss
+                    - _text-truncate.scss
+                    - _transition.scss
+                    - _utilities.scss
+                    - _visually-hidden.scss
+                  - utilities/
+                    - _api.scss
+                  - vendor/
+                    - _rfs.scss
+          - templates/
+            - agenda.html
+            - cita-formulario.html
+            - gestion-citas.html
+            - gestion-servicios.html
+            - historia-formulario.html
+            - inicio.html
+            - login.html
+            - mascota-detalle.html
+            - mascota-formulario.html
+            - mascotas.html
+            - pagos.html
+            - receta-formulario.html
+            - register.html
+            - tratamiento-formulario.html
+            - vacuna-formulario.html
+      - test/
+        - java/
+          - springWeb/
+            - demo/
+              - DemoApplicationTests.java

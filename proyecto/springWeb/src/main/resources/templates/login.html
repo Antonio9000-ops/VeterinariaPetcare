@@ -232,12 +232,10 @@
 
 <!-- Script de Funcionalidad de Login (Conservado) -->
 <script>
-    // Inicializar WOW para animaciones (consistente con el resto de la plantilla)
     new WOW().init();
 
     function parseJwt(token) {
         try {
-            // Decodificación Base64 URL-safe y parseo del payload
             const base64Url = token.split('.')[1];
             const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
             return JSON.parse(atob(base64));
@@ -252,7 +250,7 @@
         const email = document.getElementById('email').value;
         const contraseña = document.getElementById('contraseña').value;
         const errorMessageDiv = document.getElementById('error-message');
-        errorMessageDiv.style.display = 'none'; // Ocultar mensaje previo
+        errorMessageDiv.style.display = 'none';
 
         try {
             const response = await fetch('/auth/login', {
@@ -264,10 +262,9 @@
             if (response.ok) {
                 const data = await response.json();
 
-                // Almacenamiento del token (manteniendo tu lógica original)
                 localStorage.setItem('jwt_token', data.token);
+                document.cookie = `jwt_token=${data.token}; path=/; SameSite=Strict`;
 
-                // ✨ LÓGICA DE REDIRECCIÓN BASADA EN ROL
                 const userData = parseJwt(data.token);
                 if (!userData || !userData.role) {
                     errorMessageDiv.textContent = "Error: El token no contiene el rol del usuario.";
@@ -281,10 +278,9 @@
                         break;
                     case 'VETERINARIO':
                     case 'ASISTENTE':
-                        window.location.href = '/agenda'; // O la página principal para el personal
+                        window.location.href = '/agenda';
                         break;
                     default:
-                        // Redirección por defecto si el rol no es reconocido
                         window.location.href = '/';
                         break;
                 }

@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-// ✨ CORRECCIÓN 1: Implementamos la interfaz UserDetails de Spring Security
+
 public class Usuario implements UserDetails {
 
     @Id
@@ -44,8 +44,6 @@ public class Usuario implements UserDetails {
     private List<Cita> citasAsignadas;
 
 
-    // ✨ CORRECCIÓN 2: Añadimos los métodos requeridos por UserDetails
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         // Devolvemos una lista con una única autoridad basada en el rol del usuario.
@@ -64,8 +62,7 @@ public class Usuario implements UserDetails {
         return email;
     }
 
-    // Los siguientes métodos son para gestionar el estado de la cuenta.
-    // Para esta aplicación, simplemente los devolvemos como 'true'.
+    
     @Override
     public boolean isAccountNonExpired() {
         return true;

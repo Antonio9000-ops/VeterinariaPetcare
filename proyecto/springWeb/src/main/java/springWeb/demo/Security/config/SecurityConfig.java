@@ -38,6 +38,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                       .requestMatchers("/gestion-servicios").hasAnyAuthority("VETERINARIO", "ASISTENTE")
+                        .requestMatchers("/api/items-facturables/**").hasAnyAuthority("VETERINARIO", "ASISTENTE")
                         .requestMatchers(
                                 "/", "/inicio.html", "/login", "/login.html",
                                 "/register", "/register.html", "/auth/**",
@@ -47,10 +49,14 @@ public class SecurityConfig {
                                 "/vacuna-formulario", "/vacuna-formulario.html",
                                 "/gestion-citas", "/gestion-citas.html",
                                 "/tratamiento-formulario", "/receta-formulario",
+                                "/pagos", "/pagos.html",
                                 "/css/**", "/js/**", "/images/**", "/favicon.ico", "/img/**", "/lib/**" ,"/scss/**"
                         ).permitAll()
-
-                       
+                        .requestMatchers(HttpMethod.POST, "/api/facturacion/crear").hasAnyAuthority("VETERINARIO", "ASISTENTE")
+                        .requestMatchers(HttpMethod.GET, "/api/facturacion/cita/**").hasAnyAuthority("DUEÑO", "VETERINARIO", "ASISTENTE")
+                        .requestMatchers(HttpMethod.PUT, "/api/facturacion/**/pagar").hasAnyAuthority("VETERINARIO", "ASISTENTE")
+                        .requestMatchers("/api/pagos/**").hasAuthority("DUEÑO")
+                        
                         .requestMatchers(HttpMethod.POST, "/api/tratamientos", "/api/recetas").hasAuthority("VETERINARIO")
                         .requestMatchers(HttpMethod.POST, "/api/historias", "/api/vacunas").hasAuthority("VETERINARIO")
                         
@@ -59,7 +65,7 @@ public class SecurityConfig {
 
                         .requestMatchers("/api/mascotas/dueno/**").hasAuthority("DUEÑO")
                         .requestMatchers("/api/mascotas/**").hasAnyAuthority("DUEÑO", "ASISTENTE", "VETERINARIO")
-
+                        
                         .requestMatchers("/api/citas/veterinario/**").hasAnyAuthority("VETERINARIO", "ASISTENTE")
                         .requestMatchers("/api/citas/**").hasAnyAuthority("DUEÑO", "VETERINARIO", "ASISTENTE")
 
