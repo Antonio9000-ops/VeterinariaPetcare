@@ -1,13 +1,15 @@
 package springWeb.demo.domain.Servicios;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import springWeb.demo.domain.Dto.VacunaDTO;
 import springWeb.demo.domain.Mapper.VacunaMapper;
+import springWeb.demo.domain.Modelos.Mascota;
 import springWeb.demo.domain.Modelos.Vacuna;
+import springWeb.demo.domain.Repositorios.MascotaRepository;
 import springWeb.demo.domain.Repositorios.VacunaRepository;
 import springWeb.demo.domain.Servicios.interfaces.VacunaService;
 
@@ -16,18 +18,19 @@ import springWeb.demo.domain.Servicios.interfaces.VacunaService;
 public class VacunaServiceImpl implements VacunaService {
 
     private final VacunaRepository vacunaRepository;
-    private final VacunaMapper vacunaMapper;
+    private final MascotaRepository mascotaRepository;
 
     @Override
-    public VacunaDTO registrarVacuna(VacunaDTO dto) {
-        Vacuna vacuna = vacunaMapper.toEntity(dto);
+    public VacunaDTO guardarVacuna(VacunaDTO vacunaDTO) {
+        Mascota mascota = mascotaRepository.findById(vacunaDTO.getMascotaId())
+                .orElseThrow(() -> new EntityNotFoundException("Mascota no encontrada con id: " + vacunaDTO.getMascotaId()));
 
-        if (vacuna.getFechaAplicacion() == null) {
-            vacuna.setFechaAplicacion(LocalDate.now());
-        }
+        Vacuna vacuna = VacunaMapper.toEntity(vacunaDTO);
+        vacuna.setMascota(mascota);
 
-        Vacuna nuevaVacuna = vacunaRepository.save(vacuna);
-        return vacunaMapper.toDTO(nuevaVacuna);
+        Vacuna vacunaGuardada = vacunaRepository.save(vacuna);
+
+        return VacunaMapper.toDTO(vacunaGuardada);
     }
 
     @Override

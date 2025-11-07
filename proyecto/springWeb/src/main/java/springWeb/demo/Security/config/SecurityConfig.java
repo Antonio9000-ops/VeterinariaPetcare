@@ -3,6 +3,7 @@ package springWeb.demo.Security.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -14,11 +15,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import springWeb.demo.Security.jwt.JwtAuthFilter;
+import springWeb.demo.Security.jwt.JwtService;
+import springWeb.demo.domain.Repositorios.UsuarioRepository;
 
 import java.util.Arrays;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
@@ -26,7 +29,8 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final JwtAuthFilter jwtAuthFilter;
+    private final UsuarioRepository usuarioRepository;
+    private final JwtService jwtService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -34,26 +38,36 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        // --- Rutas Públicas ---
-                        // Permite el acceso a la página de inicio, la autenticación y los recursos estáticos.
-                        .requestMatchers("/", "/inicio.html", "/auth/**").permitAll()
-                        .requestMatchers("/css/**", "/js/**", "/images/**", "/*.ico").permitAll()
+                        .requestMatchers(
+                                "/", "/inicio.html", "/login", "/login.html",
+                                "/register", "/register.html", "/auth/**",
+                                "/mascotas", "/mascota-detalle", "/mascota-formulario",
+                                "/cita-formulario", "/agenda", "/agenda.html",
+                                "/historia-formulario", "/historia-formulario.html",
+                                "/vacuna-formulario", "/vacuna-formulario.html",
+                                "/gestion-citas", "/gestion-citas.html",
+                                "/css/**", "/js/**", "/images/**", "/favicon.ico", "/img/**", "/lib/**" ,"/scss/**"
+                        ).permitAll()
 
-                        // --- Rutas Protegidas de la API ---
-                        // Se mantienen las reglas específicas para la API.
-                        .requestMatchers("/api/usuarios/**").permitAll() // Asumo que esto es para registro o consulta pública
-                        .requestMatchers("/api/mascotas/**").hasAnyRole("DUEÑO", "ASISTENTE", "VETERINARIO")
-                        .requestMatchers("/api/citas/**").hasAnyRole("DUEÑO", "ASISTENTE", "VETERINARIO")
-                        .requestMatchers("/api/historias/**").hasAnyRole("VETERINARIO")
-                        .requestMatchers("/api/vacunas/**").hasAnyRole("VETERINARIO")
+                        .requestMatchers(HttpMethod.POST, "/api/historias", "/api/vacunas").hasAuthority("VETERINARIO")
+                        .requestMatchers(HttpMethod.GET, "/api/citas/pendientes").hasAnyAuthority("VETERINARIO", "ASISTENTE")
+                        .requestMatchers(HttpMethod.PUT, "/api/citas/**").hasAnyAuthority("VETERINARIO", "ASISTENTE")
 
-                        // --- Regla Final ---
-                        // Cualquier otra solicitud que no coincida con las reglas anteriores debe estar autenticada.
+                        .requestMatchers("/api/mascotas/dueno/**").hasAuthority("DUEÑO")
+                        .requestMatchers("/api/mascotas/**").hasAnyAuthority("DUEÑO", "ASISTENTE", "VETERINARIO")
+
+                        .requestMatchers("/api/citas/veterinario/**").hasAnyAuthority("VETERINARIO", "ASISTENTE")
+                        .requestMatchers("/api/citas/**").hasAnyAuthority("DUEÑO", "VETERINARIO", "ASISTENTE")
+
+                        .requestMatchers("/api/historias/**").hasAnyAuthority("DUEÑO", "VETERINARIO")
+                        .requestMatchers("/api/vacunas/**").hasAnyAuthority("DUEÑO", "VETERINARIO")
+                        .requestMatchers("/api/usuarios/**").permitAll()
+
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthFilter(jwtService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -66,17 +80,10 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(
-                "http://localhost:3000",
-                "http://127.0.0.1:5500",
-                "http://localhost:8080",
-                "http://127.0.0.1:8080"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
-        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "Cache-Control", "X-Requested-With", "Accept", "Origin"));
-        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", "http://127.0.0.1:5500"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
-        configuration.setMaxAge(3600L);
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

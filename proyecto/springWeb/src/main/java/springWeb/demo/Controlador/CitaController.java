@@ -4,6 +4,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springWeb.demo.domain.Dto.CitaDTO;
-import springWeb.demo.domain.Mapper.CitaMapper;
 import springWeb.demo.domain.Servicios.interfaces.CitaService;
 
 @RestController
@@ -22,7 +23,6 @@ import springWeb.demo.domain.Servicios.interfaces.CitaService;
 public class CitaController {
 
     private final CitaService citaService;
-    private final CitaMapper citaMapper; // Mapper que vas a crear
 
     @PostMapping
     public ResponseEntity<CitaDTO> agendarCita(@RequestBody CitaDTO citaDTO) {
@@ -40,6 +40,11 @@ public class CitaController {
         return citaService.listarCitasPorMascota(mascotaId);
     }
 
+    @GetMapping("/pendientes")
+    public List<CitaDTO> listarCitasPendientes() {
+        return citaService.listarCitasPorEstado("PROGRAMADA");
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CitaDTO> obtenerCitaPorId(@PathVariable Long id) {
         return citaService.obtenerCitaPorId(id)
@@ -48,13 +53,9 @@ public class CitaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CitaDTO> actualizarCita(@PathVariable Long id, @RequestBody CitaDTO citaDTO) {
-        return citaService.obtenerCitaPorId(id)
-                .map(c -> {
-                    citaDTO.setId(id);
-                    CitaDTO actualizada = citaService.actualizarCita(citaDTO);
-                    return new ResponseEntity<>(actualizada, HttpStatus.OK);
-                }).orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<CitaDTO> actualizarCita(@PathVariable Long id, @RequestBody CitaDTO citaDTO, @AuthenticationPrincipal UserDetails userDetails) {
+        CitaDTO actualizada = citaService.actualizarCita(id, citaDTO, userDetails);
+        return ResponseEntity.ok(actualizada);
     }
 
     @DeleteMapping("/{id}")

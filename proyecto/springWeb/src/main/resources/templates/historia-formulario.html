@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Añadir a Historia Clínica</title>
+    <style>
+        body { font-family: sans-serif; background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin-top: 60px; }
+        .form-container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; max-width: 600px; }
+        .navbar { background-color: #333; overflow: hidden; position: fixed; top: 0; width: 100%; z-index: 1000; }
+        .navbar a { float: left; display: block; color: #f2f2f2; text-align: center; padding: 14px 16px; text-decoration: none; }
+        h1 { text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; min-height: 150px; }
+        button { width: 100%; padding: 12px; background-color: #28a745; color: #fff; border: none; border-radius: 4px; font-size: 1em; cursor: pointer; }
+    </style>
+</head>
+<body>
+<div class="navbar">
+    <a href="/">Inicio</a>
+</div>
+<div class="form-container">
+    <h1>Añadir Registro a Historia Clínica</h1>
+    <form id="history-form">
+        <div class="form-group">
+            <label for="descripcion">Descripción (Diagnóstico, Tratamiento, Notas):</label>
+            <textarea id="descripcion" required></textarea>
+        </div>
+        <button type="submit">Guardar Registro</button>
+    </form>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('jwt_token');
+        if (!token) { window.location.href = '/login'; return; }
+
+        const params = new URLSearchParams(window.location.search);
+        const mascotaId = params.get('mascotaId');
+        if (!mascotaId) {
+            alert('ID de mascota no encontrado.');
+            window.history.back(); // Regresar a la página anterior
+            return;
+        }
+
+        const form = document.getElementById('history-form');
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+
+            const historyData = {
+                descripcion: document.getElementById('descripcion').value,
+                mascotaId: mascotaId,
+                
+            };
+
+            try {
+                const response = await fetch('/api/historias', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(historyData)
+                });
+
+                if (response.ok) {
+                    alert('Registro añadido con éxito.');
+                    window.location.href = `/mascota-detalle?id=${mascotaId}`;
+                } else {
+                    throw new Error('No se pudo guardar el registro.');
+                }
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        });
+    });
+</script>
+</body>
+</html>

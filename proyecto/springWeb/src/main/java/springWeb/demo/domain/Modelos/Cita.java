@@ -1,5 +1,6 @@
 package springWeb.demo.domain.Modelos;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -35,9 +36,11 @@ public class Cita {
 
     @ManyToOne
     @JoinColumn(name = "mascota_id")
+    @JsonBackReference("mascota-cita")
     private Mascota mascota;
 
     @ManyToOne
     @JoinColumn(name = "veterinario_id")
+    @JsonBackReference("usuario-cita")
     private Usuario veterinario;
 }

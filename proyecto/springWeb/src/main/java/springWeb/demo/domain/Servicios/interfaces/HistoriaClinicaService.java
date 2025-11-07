@@ -13,4 +13,5 @@ public interface HistoriaClinicaService {
     Optional<HistoriaClinicaDTO> obtenerPorId(Long id);
 
     void eliminarEntrada(Long id);
+    HistoriaClinicaDTO guardarHistoria(HistoriaClinicaDTO historiaClinicaDTO);
 }

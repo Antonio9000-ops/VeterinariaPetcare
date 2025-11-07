@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springWeb.demo.domain.Dto.UsuarioDTO;
-import springWeb.demo.domain.Modelos.Usuario;
 import springWeb.demo.domain.Servicios.interfaces.UsuarioService;
 
 @RestController
@@ -54,8 +53,8 @@ public class UsuarioController {
             String email = loginData.get("email");
             String contraseña = loginData.get("contraseña");
 
-            // Usar el método que creamos que retorna la entidad Usuario
-            Usuario usuario = usuarioService.verificarUsuario(email, contraseña);
+            //simplemente se llama al metodo para verificar
+             usuarioService.verificarUsuario(email, contraseña);
 
             // Convertir a DTO para la respuesta (igual que en registro)
             UsuarioDTO usuarioDTO = usuarioService.buscarPorEmail(email)
@@ -64,7 +63,8 @@ public class UsuarioController {
             return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
 
         } catch (RuntimeException e) {
-            return new ResponseEntity<>(null, HttpStatus.UNAUTHORIZED);
+            //usamos el constructor que solo toma el httpStatus
+             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
     }
 

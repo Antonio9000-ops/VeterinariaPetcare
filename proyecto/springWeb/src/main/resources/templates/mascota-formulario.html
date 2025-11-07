@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <title th:text="${editMode == true ? 'Editar Mascota' : 'Registrar Mascota'}">Formulario de Mascota</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Formulario para registrar o editar información de mascotas" name="keywords">
+    <meta content="Gestión de mascotas" name="description">
+
+    <!-- Favicon -->
+    <link th:href="@{/img/favicon.ico}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Space+Grotesk&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link th:href="@{/lib/animate/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+
+    <style>
+        /* Estilos específicos para mejorar la presentación del formulario */
+        .form-container-custom {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #form-title {
+            margin-bottom: 25px;
+            color: var(--bs-primary);
+        }
+
+        .form-floating label {
+            color: #6c757d;
+        }
+    </style>
+</head>
+
+<body>
+<!-- Spinner Start -->
+<div id="spinner"
+     class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Cargando...</span>
+    </div>
+</div>
+<!-- Spinner End -->
+
+
+<!-- Navbar Start -->
+<div class="container-fluid sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
+            <a th:href="@{/}" class="navbar-brand">
+                <h1>PetCare</h1>
+            </a>
+            <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto" id="nav-links-menu">
+                    <a th:href="@{/}" class="nav-item nav-link active">Inicio</a>
+                    <a th:href="@{/contact}" class="nav-item nav-link">Contacto de emergencia</a>
+                    <p class="nav-item nav-link text-muted">Cargando...</p>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<!-- Navbar End -->
+
+
+<!-- Hero Start -->
+<div class="container-fluid pb-5 bg-primary hero-header">
+    <div class="container py-5">
+        <div class="row g-3 align-items-center">
+            <div class="col-lg-6 text-center text-lg-start">
+                <h1 class="display-1 mb-0 animated slideInLeft" id="hero-title">Registrar Mascota</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Hero End -->
+
+
+<!-- Pet Form Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="form-container-custom wow fadeIn" data-wow-delay="0.3s">
+            <h2 class="text-center" id="form-title">Registrar Nueva Mascota</h2>
+
+            <!-- Contenedor para mensajes de error/éxito -->
+            <div id="message-container" class="my-3" role="alert" style="display: none;"></div>
+
+            <form id="pet-form">
+                <!-- Campo oculto para guardar el ID en modo edición -->
+                <input type="hidden" id="id">
+
+                <div class="row g-3">
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="nombre" placeholder="Nombre de tu Mascota" required>
+                            <label for="nombre">Nombre:</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="especie" placeholder="Especie (Ej: Perro, Gato)" required>
+                            <label for="especie">Especie:</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="raza" placeholder="Raza" required>
+                            <label for="raza">Raza:</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <input type="date" class="form-control" id="fechaNacimiento" required>
+                            <label for="fechaNacimiento">Fecha de Nacimiento:</label>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <!-- Se añadió el ID para que el JS pueda cambiar el texto del botón -->
+                        <button type="submit" class="btn btn-primary w-100 py-3" id="submit-button">Guardar Mascota</button>
+                        <a th:href="@{/mascotas}" class="btn btn-outline-secondary w-100 py-2 mt-2">Cancelar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Pet Form End -->
+
+
+
+
+<!-- Footer Start -->
+<div class="container-fluid footer pt-5">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
+                <a th:href="@{/index}" class="d-inline-block mb-3">
+                    <h1 class="text">PetCare</h1>
+                </a>
+                <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
+                    amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
+                    clita duo justo et tempor</p>
+            </div>
+            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
+                <h5 class="text-white mb-4">Contáctanos</h5>
+                <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                <div class="d-flex pt-2">
+                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                            class="fab fa-twitter"></i></a>
+                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                            class="fab fa-facebook-f"></i></a>
+                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                            class="fab fa-youtube"></i></a>
+                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                            class="fab fa-instagram"></i></a>
+                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                            class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
+                <h5 class="text-white mb-4">Enlaces Populares</h5>
+                <a class="btn btn-link" th:href="@{/about}">Acerca de Nosotros</a>
+                <a class="btn btn-link" th:href="@{/contact}">Contáctanos</a>
+                <a class="btn btn-link" href="#!">Política de Privacidad</a>
+                <a class="btn btn-link" href="#!">Términos &amp; Condiciones</a>
+                <a class="btn btn-link" href="#!">Carrera</a>
+            </div>
+            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
+                <h5 class="text-white mb-4">Nuestros Servicios</h5>
+                <a class="btn btn-link" th:href="@{/service}">Diseño Interior</a>
+                <a class="btn btn-link" th:href="@{/service}">Planificación de Proyectos</a>
+                <a class="btn btn-link" th:href="@{/service}">Renovación</a>
+                <a class="btn btn-link" th:href="@{/service}">Implementación</a>
+                <a class="btn btn-link" th:href="@{/service}">Diseño de Paisajes</a>
+            </div>
+        </div>
+    </div>
+    <div class="container wow fadeIn" data-wow-delay="0.1s">
+        <div class="copyright">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    &copy; <a class="border-bottom" href="#!">Your Site Name</a>, All Right Reserved.
+                    Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>. Distributed by
+                    <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="footer-menu">
+                        <a th:href="@{/index}">Home</a>
+                        <a href="#!">Cookies</a>
+                        <a href="#!">Ayuda</a>
+                        <a href="#!">FAQs</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+
+<!-- Back to Top -->
+<a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+<!-- JavaScript Libraries -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/lib/wow/wow.min.js}"></script>
+<script th:src="@{/lib/easing/easing.min.js}"></script>
+<script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
+<script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
+
+<!-- Template Javascript -->
+<script th:src="@{/js/main.js}"></script>
+
+
+<!-- Custom Pet Form Logic -->
+<script>
+    // Función para mostrar mensajes de estado (reemplaza alert)
+    function showMessage(type, message) {
+        const container = document.getElementById('message-container');
+        container.textContent = message;
+        container.style.display = 'block';
+        container.className = `alert alert-${type}`; // bootstrap class: alert-success, alert-danger
+    }
+
+    // Función auxiliar para parsear el JWT
+    function parseJwt(token) {
+        try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
+    }
+
+    // NUEVA FUNCIÓN: Gestión del Navbar
+    function setupNavbar(token, userData) {
+        const navLinksMenu = document.getElementById('nav-links-menu');
+        const navItemClass = 'nav-item nav-link';
+
+        let menuHTML = '';
+
+        if (token && userData) {
+            // USUARIO LOGEADO
+            const userRole = userData.role;
+
+            menuHTML += `<a href="/" class="${navItemClass}">Inicio</a>`;
+
+            if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
+                // Enlaces de gestión para personal de clínica
+                menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
+                menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
+            } else {
+                // Enlaces de usuario normal
+                menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
+                // El enlace a este formulario específico se resalta como activo
+                menuHTML += `<a href="/mascota-formulario" class="${navItemClass} active">Añadir Nueva Mascota</a>`;
+            }
+
+            menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
+
+            // Botón Cerrar Sesión
+            menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
+
+        } else {
+            // USUARIO NO LOGEADO
+            menuHTML =
+                `<a href="/" class="${navItemClass}">Inicio</a>
+                 <a href="/contact" class="${navItemClass}">Contacto de emergencia</a>
+                 <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`; // Botón de Iniciar Sesión
+        }
+
+        if (navLinksMenu) {
+            navLinksMenu.innerHTML = menuHTML;
+        }
+
+        // Manejador de eventos para el cierre de sesión (solo si el botón fue inyectado)
+        const logoutBtn = document.getElementById('logout-btn-menu');
+        if (logoutBtn) {
+             logoutBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('jwt_token');
+                alert('Has cerrado la sesión.');
+                // Redirige al inicio (o a /login)
+                window.location.href = '/';
+            });
+        }
+    }
+
+
+    document.addEventListener('DOMContentLoaded', async () => {
+        const token = localStorage.getItem('jwt_token');
+
+        // 1. VERIFICACIÓN Y CONFIGURACIÓN INICIAL
+        if (!token) {
+            // Si no hay token, configura el navbar y redirige
+            setupNavbar(null, null);
+            window.location.href = '/login';
+            return;
+        }
+
+        const userData = parseJwt(token);
+        if (!userData) {
+            console.error("Token JWT inválido o incompleto.");
+            localStorage.removeItem('jwt_token');
+            setupNavbar(null, null);
+            window.location.href = '/login';
+            return;
+        }
+
+        // Configura el navbar con las opciones para el usuario logeado
+        setupNavbar(token, userData);
+
+        // Inicializar WOW.js para animaciones
+        new WOW().init();
+
+
+        // 2. LÓGICA DEL FORMULARIO DE MASCOTAS
+
+        const form = document.getElementById('pet-form');
+        const formTitleElement = document.getElementById('form-title');
+        const heroTitleElement = document.getElementById('hero-title');
+        const idInput = document.getElementById('id');
+        const submitButton = document.getElementById('submit-button');
+
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const petId = urlParams.get('id');
+
+        // ... (el resto de la lógica del formulario es la misma) ...
+
+        if (petId) {
+            // Modo Edición
+            formTitleElement.textContent = 'Editar Mascota';
+            heroTitleElement.textContent = 'Editar Mascota';
+            submitButton.textContent = 'Guardar Cambios'; // Cambiar texto del botón
+            idInput.value = petId;
+
+            // Cargar los datos de la mascota desde la API
+            try {
+                const response = await fetch(`/api/mascotas/${petId}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+
+                if (!response.ok) throw new Error('No se pudo cargar la mascota.');
+
+                const mascota = await response.json();
+
+                // Rellenar el formulario con los datos
+                document.getElementById('nombre').value = mascota.nombre;
+                document.getElementById('especie').value = mascota.especie;
+                document.getElementById('raza').value = mascota.raza;
+                document.getElementById('fechaNacimiento').value = mascota.fechaNacimiento;
+
+            } catch (error) {
+                console.error('Error al cargar la mascota:', error);
+                showMessage('danger', 'Error al cargar los datos de la mascota.');
+                // Redirigir de vuelta a la lista si falla la carga.
+                setTimeout(() => { window.location.href = '/mascotas'; }, 2000);
+            }
+        } else {
+            // Modo Creación
+            formTitleElement.textContent = 'Registrar Nueva Mascota';
+            heroTitleElement.textContent = 'Registrar Mascota';
+            submitButton.textContent = 'Registrar Mascota'; // Cambiar texto del botón
+        }
+
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            document.getElementById('message-container').style.display = 'none'; // Ocultar mensajes previos
+
+            const mascotaData = {
+                nombre: document.getElementById('nombre').value,
+                especie: document.getElementById('especie').value,
+                raza: document.getElementById('raza').value,
+                fechaNacimiento: document.getElementById('fechaNacimiento').value,
+                // Se asume que el backend obtendrá el ID del dueño del JWT,
+                // pero si se necesita explícitamente, se incluye:
+                duenoId: userData.userId
+            };
+
+            // Determinar si es POST (crear) o PUT (actualizar)
+            const currentPetId = idInput.value;
+            const isEditing = !!currentPetId;
+
+            const method = isEditing ? 'PUT' : 'POST';
+            const url = isEditing ? `/api/mascotas/${currentPetId}` : '/api/mascotas';
+            const successMessage = isEditing ? '¡Mascota actualizada con éxito! Redirigiendo...' : '¡Mascota registrada con éxito! Redirigiendo...';
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(mascotaData)
+                });
+
+                if (response.ok) {
+                    showMessage('success', successMessage);
+                    setTimeout(() => {
+                        window.location.href = '/mascotas';
+                    }, 1500); // Redirigir después de un breve mensaje
+                } else {
+                    const errorData = await response.json();
+                    const errorMessage = errorData.message || 'No se pudo guardar la mascota. Verifique los datos.';
+                    showMessage('danger', `Error: ${errorMessage}`);
+                }
+            } catch (error) {
+                console.error('Error de conexión o de la API:', error);
+                showMessage('danger', 'Error de conexión con el servidor. Inténtelo de nuevo.');
+            }
+        });
+    });
+</script>
+</body>
+
+</html>
