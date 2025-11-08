@@ -53,7 +53,8 @@ public class CitaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CitaDTO> actualizarCita(@PathVariable Long id, @RequestBody CitaDTO citaDTO, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<CitaDTO> actualizarCita(@PathVariable Long id, @RequestBody CitaDTO citaDTO,
+            @AuthenticationPrincipal UserDetails userDetails) {
         CitaDTO actualizada = citaService.actualizarCita(id, citaDTO, userDetails);
         return ResponseEntity.ok(actualizada);
     }
