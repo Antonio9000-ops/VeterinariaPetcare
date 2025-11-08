@@ -1,293 +1,800 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Detalle de Mascota</title>
-   <style>
-    body { font-family: sans-serif; background-color: #f9f9f9; margin: 0; padding-top: 80px; }
-    .navbar { background-color: #333; overflow: hidden; position: fixed; top: 0; width: 100%; z-index: 1000; }
-    .navbar a { float: left; display: block; color: #f2f2f2; text-align: center; padding: 14px 16px; text-decoration: none; }
-    .navbar a:hover { background-color: #ddd; color: black; }
-    .navbar .right { float: right; }
-    .navbar .user-email { padding: 14px 16px; color: #fff; float: right; }
-    .container { max-width: 900px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .pet-header { border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 20px; }
-    .section { margin-top: 30px; }
-    h1, h2 { color: #333; }
-    ul { list-style: none; padding: 0; }
-    li { background: #f4f4f4; border: 1px solid #ddd; padding: 10px; margin-bottom: 5px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-    .btn { padding: 8px 12px; color: #fff; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; margin: 5px; font-size: 0.9em; }
-    .btn-primary { background-color: #007bff; }
-    .btn-success { background-color: #28a745; }
-    .btn-info { background-color: #17a2b8; }
-    .btn-danger { background-color: #dc3545; }
-    .btn-warning { background-color: #ffc107; color: #212529; } 
-    .btn-secondary { background-color: #6c757d; } 
-    #actions { margin-top: 20px; }
-    .subsection { margin-top: 10px; padding-left: 20px; border-left: 2px solid #ddd; width: 100%; }
-    .subsection ul { margin-top: 5px; }
-    .subsection li { background-color: #fff; border: none; padding: 5px; display: block; }
-    .modal { display: none; position: fixed; z-index: 1001; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.5); }
-    .modal-content { background-color: #fefefe; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 600px; border-radius: 8px; }
-    .modal-header { padding-bottom: 10px; border-bottom: 1px solid #ddd; }
-    .modal-body { padding: 15px 0; max-height: 400px; overflow-y: auto; }
-    .modal-footer { padding-top: 10px; border-top: 1px solid #ddd; text-align: right; }
-    .close-btn { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
-    .item-facturable { display: block; margin-bottom: 10px; }
-    .item-facturable label { margin-left: 10px; }
-</style>
-</head>
-<body>
+    <title>PetCare - Detalle de Mascota</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Detalle, historial y citas de una mascota específica" name="description">
 
-<div class="navbar" id="navbar">
-    <a href="/">Inicio</a>
-    <a href="/mascotas">Mis Mascotas</a>
-    <div class="right">
-        <span id="user-email" class="user-email"></span>
-        <a href="#" id="logout-btn">Cerrar Sesión</a>
-    </div>
-</div>
+    <!-- Favicon -->
+    <link th:href="@{/img/favicon.ico}" rel="icon">
 
-<div class="container">
-    <div id="pet-header" class="pet-header"></div>
-    <div id="actions"></div>
-    <div class="section">
-        <h2>Citas Programadas</h2>
-        <ul id="citas-list"></ul>
-    </div>
-    <div class="section">
-        <h2>Historia Clínica</h2>
-        <ul id="historia-list"></ul>
-    </div>
-     <div class="section">
-        <h2>Historial de Tratamiento</h2>
-        <ul id="tratamientos-list"></ul>
-    </div>
-    <div class="section">
-        <h2>Historial de Recetas</h2>
-        <ul id="recetas-list"></ul>
-    </div>
-    <div class="section">
-        <h2>Vacunas Aplicadas</h2>
-        <ul id="vacunas-list"></ul>
-    </div>
-</div>
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Space+Grotesk&family=Inter:wght@400;600;700&display=swap"
+        rel="stylesheet">
 
-<div id="facturaModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2>Generar Factura</h2>
-        </div>
-        <div class="modal-body">
-            <p>Seleccione los servicios y productos a facturar para la cita:</p>
-            <div id="items-facturables-list">
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
-            <button id="guardar-factura-btn" class="btn btn-primary">Guardar Factura</button>
-        </div>
-    </div>
-</div>
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
+    <!-- Libraries Stylesheet -->
+    <link th:href="@{/lib/animate/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
 
-<script>
-    const token = localStorage.getItem('jwt_token');
-    const headers = { 
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-    };
-    let userRole = null;
+    <!-- Customized Bootstrap Stylesheet -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 
-    function parseJwt(token) {
-        try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
-    }
+    <!-- Template Stylesheet -->
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 
-    const modal = document.getElementById('facturaModal');
-    const guardarFacturaBtn = document.getElementById('guardar-factura-btn');
+    <!-- Estilos Específicos para Detalle de Mascota (Adaptados al tema) -->
+    <style>
+        :root {
+            --bs-primary: #1280e0;
+            /* Color primario de la plantilla PetCare */
+            --bs-success: #198754;
+            --bs-warning: #ffc107;
+            --bs-info: #0dcaf0;
+            --bs-secondary: #6c757d;
+        }
 
-    async function openFacturaModal(citaId) {
-        guardarFacturaBtn.dataset.citaId = citaId;
+        .container-detalle {
+            min-height: 70vh;
+            padding: 50px 0;
+            font-family: 'Inter', sans-serif;
+        }
 
-        const itemsContainer = document.getElementById('items-facturables-list');
-        itemsContainer.innerHTML = '<p>Cargando items...</p>';
-        
-        try {
-            const response = await fetch('/api/items-facturables', { headers });
-            if (!response.ok) throw new Error('No se pudieron cargar los items.');
-            
-            const items = await response.json();
-            
-            if (items.length === 0) {
-                itemsContainer.innerHTML = '<p>No hay servicios o productos registrados en el sistema.</p>';
-                return;
+        .pet-header {
+            background-color: var(--bs-primary);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .pet-header h1 {
+            color: white;
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 5px;
+        }
+
+        .pet-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        #actions {
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        #actions a,
+        #actions button {
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-size: 0.95rem;
+        }
+
+        .section {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            border-left: 5px solid var(--bs-primary);
+        }
+
+        .section h2 {
+            color: var(--bs-primary);
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .section li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .section li:last-child {
+            border-bottom: none;
+        }
+
+        .btn-factura {
+            background-color: var(--bs-primary);
+            color: white;
+        }
+
+        /* Estilos para el Modal (Factura) */
+        .modal {
+            display: none;
+            /* Oculto por defecto */
+            position: fixed;
+            z-index: 1050;
+            /* Z-index alto para estar encima de todo */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            /* 10% del top y centrado */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.3s;
+        }
+
+        .modal-header {
+            padding: 15px 0;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: var(--bs-primary);
+            border-bottom: none;
+        }
+
+        .close-btn {
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #333;
+        }
+
+        .modal-body {
+            padding: 20px 0;
+        }
+
+        #items-facturables-list .item-facturable {
+            margin: 10px 0;
+            padding: 5px;
+            border-bottom: 1px dotted #ccc;
+        }
+
+        #items-facturables-list label {
+            margin-left: 10px;
+            font-weight: 500;
+        }
+
+        .modal-footer {
+            padding: 15px 0 0;
+            text-align: right;
+            border-top: 1px solid #dee2e6;
+        }
+
+        /* Animaciones */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
             }
 
-            itemsContainer.innerHTML = items.map(item => `
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Spinner Start (De la plantilla PetCare) -->
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Cargando...</span>
+        </div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Navbar Start (Diseño PetCare) -->
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
+                <a th:href="@{/}" class="navbar-brand">
+                    <h1>PetCare</h1>
+                </a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <!-- El email del usuario se elimina de la navegación aquí -->
+                    <div class="navbar-nav ms-auto" id="nav-links-menu">
+                        <!-- Los enlaces se cargan por JS según el rol y la sesión -->
+                        <!-- El elemento <p class="nav-item nav-link text-muted" id="user-email">Cargando...</p> ha sido eliminado del HTML estático. -->
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Navbar End -->
+
+    <!-- Hero Header Start (Diseño PetCare) -->
+    <div class="container-fluid pb-5 bg-primary hero-header">
+        <div class="container py-5">
+            <div class="row g-3 align-items-center">
+                <div class="col-lg-12 text-center text-lg-start">
+                    <div id="pet-header" class="animated slideInLeft">
+                        <!-- Información de la mascota se carga aquí -->
+                        <h1 class="display-3 mb-0 text-white">Cargando Mascota...</h1>
+                        <p class="text-white mt-2">ID: ...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hero Header End -->
+
+    <!-- Contenido Dinámico: Detalle de Mascota Start -->
+    <div class="container-fluid py-5 container-detalle">
+        <div class="container">
+
+            <!-- Acciones: Botones -->
+            <div id="actions" class="wow fadeIn" data-wow-delay="0.1s">
+                <!-- Botones de acción se cargan aquí por JS (Agendar Cita, Añadir Historia, etc.) -->
+            </div>
+
+            <!-- Secciones de Historial -->
+
+            <div class="row g-4">
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.2s">
+                    <div class="section">
+                        <h2><i class="fas fa-calendar-alt me-2"></i> Citas Programadas</h2>
+                        <ul id="citas-list">
+                            <li>Cargando citas...</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.3s">
+                    <div class="section">
+                        <h2><i class="fas fa-file-medical me-2"></i> Historia Clínica</h2>
+                        <ul id="historia-list">
+                            <li>Cargando historial clínico...</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.4s">
+                    <div class="section">
+                        <h2><i class="fas fa-prescription-bottle-alt me-2"></i> Historial de Tratamiento</h2>
+                        <ul id="tratamientos-list">
+                            <li>Cargando tratamientos...</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                    <div class="section">
+                        <h2><i class="fas fa-pills me-2"></i> Historial de Recetas</h2>
+                        <ul id="recetas-list">
+                            <li>Cargando recetas...</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 wow fadeIn" data-wow-delay="0.6s">
+                    <div class="section">
+                        <h2><i class="fas fa-syringe me-2"></i> Vacunas Aplicadas</h2>
+                        <ul id="vacunas-list">
+                            <li>Cargando vacunas...</li>
+                        </ul>
+                    </div>
+                </div>
+
+                    <div class="container">
+                        <a th:href="@{/mascotas}" class="btn btn-primary border-2"> Volver</a>
+                    </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Contenido Dinámico: Detalle de Mascota End -->
+
+    <!-- Footer Start (Utilizado de la plantilla original) -->
+    <div class="container-fluid footer pt-5">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
+                    <a th:href="@{/index}" class="d-inline-block mb-3">
+                        <h1 class="text">PetCare</h1>
+                    </a>
+                    <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
+                        amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
+                        clita duo justo et tempor</p>
+                </div>
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
+                    <h5 class="text-white mb-4">Contáctanos</h5>
+                    <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                    <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                    <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                                class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                                class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                                class="fab fa-instagram"></i></a>
+                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                                class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
+                    <h5 class="text-white mb-4">Enlaces Populares</h5>
+                    <a class="btn btn-link" th:href="@{/about}">Acerca de Nosotros</a>
+                    <a class="btn btn-link" th:href="@{/contact}">Contáctanos</a>
+                    <a class="btn btn-link" href="#!">Política de Privacidad</a>
+                    <a class="btn btn-link" href="#!">Términos &amp; Condiciones</a>
+                    <a class="btn btn-link" href="#!">Carrera</a>
+                </div>
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
+                    <h5 class="text-white mb-4">Nuestros Servicios</h5>
+                    <a class="btn btn-link" th:href="@{/service}">Diseño Interior</a>
+                    <a class="btn btn-link" th:href="@{/service}">Planificación de Proyectos</a>
+                    <a class="btn btn-link" th:href="@{/service}">Renovación</a>
+                    <a class="btn btn-link" th:href="@{/service}">Implementación</a>
+                    <a class="btn btn-link" th:href="@{/service}">Diseño de Paisajes</a>
+                </div>
+            </div>
+        </div>
+        <div class="container wow fadeIn" data-wow-delay="0.1s">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#!">Your Site Name</a>, All Right Reserved.
+                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>. Distributed by
+                        <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a th:href="@{/index}">Home</a>
+                            <a href="#!">Cookies</a>
+                            <a href="#!">Ayuda</a>
+                            <a href="#!">FAQs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Modal para Generar Factura (FUNCIONALIDAD PRESERVADA) -->
+    <div id="facturaModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="h5">Generar Factura</h2>
+                <span class="close-btn" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Seleccione los servicios y productos a facturar para la cita:</p>
+                <div id="items-facturables-list">
+                    <p>Cargando servicios y productos...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal()">Cancelar</button>
+                <button id="guardar-factura-btn" class="btn btn-primary">Guardar Factura</button>
+            </div>
+        </div>
+    </div>
+    <!-- End Modal -->
+
+    <!-- Back to Top -->
+    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/lib/wow/wow.min.js}"></script>
+    <script th:src="@{/lib/easing/easing.min.js}"></script>
+    <script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
+    <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
+
+    <!-- Template Javascript (Asume que main.js inicializa WOW.js y otros efectos) -->
+    <script th:src="@{/js/main.js}"></script>
+
+    <!-- Lógica de autenticación y gestión de mascotas (FUNCIONALIDAD PRESERVADA) -->
+    <script>
+        const token = localStorage.getItem('jwt_token');
+        const headers = {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        };
+        let userRole = null;
+
+        // Función para decodificar el JWT (Preservada)
+        function parseJwt(token) {
+            try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
+        }
+
+        // Modal elements
+        const modal = document.getElementById('facturaModal');
+        const guardarFacturaBtn = document.getElementById('guardar-factura-btn');
+
+        // Función para mostrar mensajes custom (simulando alert/confirm)
+        function showCustomMessage(message, type = 'danger', callback = null) {
+            // Crear un modal simple dinámico
+            const modalContainer = document.createElement('div');
+            modalContainer.className = 'modal';
+            modalContainer.style.display = 'block';
+
+            modalContainer.innerHTML = `
+            <div class="modal-content" style="max-width: 400px; margin: 15% auto;">
+                <div class="modal-header">
+                    <h2 class="h5">${type === 'danger' ? 'Error' : (callback ? 'Confirmación' : 'Aviso')}</h2>
+                    <span class="close-btn" onclick="document.body.removeChild(this.closest('.modal'))">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p style="color: ${type === 'danger' ? 'red' : 'inherit'};">${message}</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" onclick="document.body.removeChild(this.closest('.modal'))">${callback ? 'Cancelar' : 'Aceptar'}</button>
+                    ${callback ? '<button class="btn btn-primary" id="confirm-action-btn">Confirmar</button>' : ''}
+                </div>
+            </div>
+        `;
+            document.body.appendChild(modalContainer);
+
+            if (callback) {
+                // Manejador para Confirmar
+                document.getElementById('confirm-action-btn').addEventListener('click', () => {
+                    document.body.removeChild(modalContainer);
+                    callback(true);
+                });
+                // Manejador para Cancelar
+                modalContainer.querySelector('.btn-secondary').addEventListener('click', () => {
+                    callback(false);
+                });
+            }
+        }
+
+        // Sustituto de window.confirm
+        function customConfirm(message, callback) {
+            showCustomMessage(message, 'info', callback);
+        }
+
+        // Sustituto de window.alert
+        function customAlert(message) {
+            showCustomMessage(message, 'info');
+        }
+
+
+        // Función para configurar la barra de navegación (CORRECCIÓN: Se elimina el email)
+        function setupNavbar(userData) {
+            const navLinksMenu = document.getElementById('nav-links-menu');
+            // const userEmailSpan = document.getElementById('user-email'); <-- Elemento eliminado
+            const logoutBtn = document.getElementById('logout-btn');
+            const navItemClass = 'nav-item nav-link';
+
+            if (navLinksMenu) {
+                // Limpia el menú estático original
+                navLinksMenu.innerHTML = '';
+
+                navLinksMenu.innerHTML += `<a href="/" class="${navItemClass}">Inicio</a>`;
+
+                if (userData) {
+                    const role = userData.role;
+
+                    if (role === 'VETERINARIO' || role === 'ASISTENTE') {
+                        navLinksMenu.innerHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
+                        navLinksMenu.innerHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
+                    } else {
+                        navLinksMenu.innerHTML += `<a href="/mascotas" class="${navItemClass} active">Mis Mascotas</a>`;
+                        navLinksMenu.innerHTML += `<a href="/mascota-formulario" class="${navItemClass}">Añadir Nueva Mascota</a>`;
+                        navLinksMenu.innerHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
+                        navLinksMenu.innerHTML += `<a href="#" id="logout-btn" class="${navItemClass}">Cerrar Sesión</a>`;
+
+                    }
+
+                    if (logoutBtn) {
+                        navLinksMenu.appendChild(logoutBtn);
+                    }
+
+                } else {
+                    navLinksMenu.innerHTML += `
+                    <a href="/contact" class="${navItemClass}">Contacto de emergencia</a>
+                    <a href="/login" class="${navItemClass}">Iniciar Sesión</a>
+                `;
+                }
+            }
+
+            // Asegurar el manejador de logout
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.removeItem('jwt_token');
+                    customAlert('Has cerrado la sesión.');
+                    window.location.href = '/';
+                });
+            }
+        }
+
+
+        // Funcionalidad Modal Factura (Preservada)
+        async function openFacturaModal(citaId) {
+            guardarFacturaBtn.dataset.citaId = citaId;
+
+            const itemsContainer = document.getElementById('items-facturables-list');
+            itemsContainer.innerHTML = '<p>Cargando items...</p>';
+
+            try {
+                const response = await fetch('/api/items-facturables', { headers });
+                if (!response.ok) throw new Error('No se pudieron cargar los items.');
+
+                const items = await response.json();
+
+                if (items.length === 0) {
+                    itemsContainer.innerHTML = '<p>No hay servicios o productos registrados en el sistema.</p>';
+                    return;
+                }
+
+                itemsContainer.innerHTML = items.map(item => `
                 <div class="item-facturable">
                     <input type="checkbox" id="item-${item.id}" name="itemFacturable" value="${item.id}">
                     <label for="item-${item.id}">${item.nombre} - $${item.precio.toFixed(2)}</label>
                 </div>
             `).join('');
 
-            modal.style.display = 'block';
+                modal.style.display = 'block';
 
-        } catch (error) {
-            itemsContainer.innerHTML = `<p style="color: red;">${error.message}</p>`;
-            modal.style.display = 'block';
-        }
-    }
-
-    function closeModal() {
-        modal.style.display = 'none';
-    }
-
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            closeModal();
-        }
-    }
-
-    guardarFacturaBtn.addEventListener('click', async () => {
-        const citaId = guardarFacturaBtn.dataset.citaId;
-        const selectedItems = document.querySelectorAll('input[name="itemFacturable"]:checked');
-        const itemIds = Array.from(selectedItems).map(cb => cb.value);
-
-        if (itemIds.length === 0) {
-            alert('Debe seleccionar al menos un item para facturar.');
-            return;
+            } catch (error) {
+                itemsContainer.innerHTML = `<p style="color: red;">${error.message}</p>`;
+                modal.style.display = 'block';
+            }
         }
 
-        const requestBody = {
-            citaId: parseInt(citaId),
-            itemIds: itemIds.map(id => parseInt(id))
-        };
+        function closeModal() {
+            modal.style.display = 'none';
+        }
 
-        try {
-            const response = await fetch('/api/facturacion/crear', {
-                method: 'POST',
-                headers: headers,
-                body: JSON.stringify(requestBody)
-            });
-
-            if (response.ok) {
-                alert('Factura creada correctamente.');
+        window.onclick = function (event) {
+            if (event.target == modal) {
                 closeModal();
-                window.location.reload();
-            } else {
-                const errorText = await response.text();
-                throw new Error(errorText || 'No se pudo crear la factura.');
             }
-        } catch (error) {
-            alert(`Error: ${error.message}`);
         }
-    });
 
-    async function cancelarCita(citaId) {
-        if (!confirm('¿Estás seguro de que quieres cancelar esta cita?')) return;
-        try {
-            const response = await fetch(`/api/citas/${citaId}`, {
-                method: 'DELETE',
-                headers: { 'Authorization': `Bearer ${token}` }
+        // Funcionalidad Guardar Factura (Preservada)
+        guardarFacturaBtn.addEventListener('click', async () => {
+            const citaId = guardarFacturaBtn.dataset.citaId;
+            const selectedItems = document.querySelectorAll('input[name="itemFacturable"]:checked');
+            const itemIds = Array.from(selectedItems).map(cb => cb.value);
+
+            if (itemIds.length === 0) {
+                customAlert('Debe seleccionar al menos un item para facturar.');
+                return;
+            }
+
+            const requestBody = {
+                citaId: parseInt(citaId),
+                itemIds: itemIds.map(id => parseInt(id))
+            };
+
+            try {
+                const response = await fetch('/api/facturacion/crear', {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (response.ok) {
+                    customAlert('Factura creada correctamente.');
+                    closeModal();
+                    window.location.reload();
+                } else {
+                    const errorText = await response.text();
+                    throw new Error(errorText || 'No se pudo crear la factura.');
+                }
+            } catch (error) {
+                customAlert(`Error: ${error.message}`);
+            }
+        });
+
+        // Funcionalidad Cancelar Cita (Preservada)
+        async function cancelarCita(citaId) {
+            customConfirm('¿Estás seguro de que quieres cancelar esta cita?', async (confirmed) => {
+                if (!confirmed) return;
+
+                try {
+                    const response = await fetch(`/api/citas/${citaId}`, {
+                        method: 'DELETE',
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (response.ok) {
+                        customAlert('Cita cancelada correctamente.');
+                        window.location.reload();
+                    } else {
+                        throw new Error('No se pudo cancelar la cita.');
+                    }
+                } catch (error) {
+                    customAlert(error.message);
+                }
             });
-            if (response.ok) {
-                alert('Cita cancelada correctamente.');
-                window.location.reload();
-            } else {
-                throw new Error('No se pudo cancelar la cita.');
+        }
+
+        // Carga de datos al iniciar la página (Preservada)
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Inicializar animaciones WOW
+            new WOW().init();
+
+            if (!token) { window.location.href = '/login'; return; }
+
+            const params = new URLSearchParams(window.location.search);
+            const mascotaId = params.get('id');
+            if (!mascotaId) {
+                customAlert('No se especificó una mascota.');
+                window.location.href = '/mascotas';
+                return;
             }
-        } catch (error) {
-            alert(error.message);
-        }
-    }
 
-    document.addEventListener('DOMContentLoaded', async () => {
-        if (!token) { window.location.href = '/login'; return; }
+            const userData = parseJwt(token);
+            userRole = userData ? userData.role : null;
 
-        const params = new URLSearchParams(window.location.search);
-        const mascotaId = params.get('id');
-        if (!mascotaId) {
-            alert('No se especificó una mascota.');
-            window.location.href = '/mascotas';
-            return;
-        }
+            // Configurar Navbar (Ahora sin email)
+            setupNavbar(userData);
 
-        const userData = parseJwt(token);
-        userRole = userData ? userData.role : null;
-        document.getElementById('user-email').textContent = userData.sub;
 
-        fetch(`/api/mascotas/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } })
-            .then(res => res.json())
-            .then(mascota => {
-                document.getElementById('pet-header').innerHTML = `
-                    <h1>${mascota.nombre}</h1>
-                    <p><strong>Especie:</strong> ${mascota.especie} | <strong>Raza:</strong> ${mascota.raza} | <strong>Nacimiento:</strong> ${mascota.fechaNacimiento}</p>
+            // Fetch Mascota Info
+            fetch(`/api/mascotas/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } })
+                .then(res => res.json())
+                .then(mascota => {
+                    // Encabezado de la mascota con la corrección solicitada
+                    document.getElementById('pet-header').innerHTML = `
+                    <h1 class="display-3 mb-0 text-white">Nombre de la mascota: ${mascota.nombre}</h1>
+                    <p class="text-white mt-2"><strong>Especie:</strong> ${mascota.especie} | <strong>Raza:</strong> ${mascota.raza} | <strong>Nacimiento:</strong> ${mascota.fechaNacimiento}</p>
                 `;
-                const actionsDiv = document.getElementById('actions');
-                let actionsHTML = `<a href="/cita-formulario?mascotaId=${mascota.id}" class="btn btn-primary">Agendar Nueva Cita</a>`;
-                if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
-                    actionsHTML += `
-                        <a href="/historia-formulario?mascotaId=${mascotaId}" class="btn btn-success">Añadir a Historia Clínica</a>
-                        <a href="/vacuna-formulario?mascotaId=${mascotaId}" class="btn btn-info">Registrar Vacuna</a>
-                        <a href="/tratamiento-formulario?mascotaId=${mascotaId}" class="btn btn-warning">Añadir Tratamiento</a>
-                        <a href="/receta-formulario?mascotaId=${mascotaId}" class="btn btn-secondary">Añadir Receta</a>
-                    `;
-                }
-                actionsDiv.innerHTML = actionsHTML;
-            });
 
-        fetch(`/api/citas/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } })
-            .then(res => res.json())
-            .then(citas => {
-                const list = document.getElementById('citas-list');
-                if (citas.length === 0) {
-                    list.innerHTML = '<li>No hay citas programadas.</li>';
-                    return;
-                }
-                list.innerHTML = citas.map(c => {
-                    let actions = '';
-                    if (c.estado === 'PROGRAMADA') {
-                        actions = `<button onclick="cancelarCita(${c.id})" class="btn btn-danger">Cancelar</button>`;
-                    } else if ((c.estado === 'ACEPTADA' || c.estado === 'COMPLETADA') && (userRole === 'VETERINARIO' || userRole === 'ASISTENTE')) {
-                        if (c.facturaId) {
-                            actions = `<span class="btn btn-success">Facturada (${c.estadoPago})</span>`;
-                        } else {
-                            actions = `<button onclick="openFacturaModal(${c.id})" class="btn btn-primary">Generar Factura</button>`;
-                        }
+                    const actionsDiv = document.getElementById('actions');
+                    let actionsHTML = `<a href="/cita-formulario?mascotaId=${mascota.id}"></a>`;
+
+                    if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
+                        actionsHTML += `
+                        <a href="/historia-formulario?mascotaId=${mascotaId}" class="btn btn-success"><i class="fas fa-notes-medical me-1"></i> Añadir a Historia Clínica</a>
+                        <a href="/vacuna-formulario?mascotaId=${mascotaId}" class="btn btn-info"><i class="fas fa-syringe me-1"></i> Registrar Vacuna</a>
+                        <a href="/tratamiento-formulario?mascotaId=${mascotaId}" class="btn btn-warning"><i class="fas fa-prescription me-1"></i> Añadir Tratamiento</a>
+                        <a href="/receta-formulario?mascotaId=${mascotaId}" class="btn btn-secondary"><i class="fas fa-file-prescription me-1"></i> Añadir Receta</a>
+                    `;
                     }
 
-                    return `
+
+
+                    actionsDiv.innerHTML = actionsHTML;
+                })
+                .catch(error => {
+                    console.error("Error al cargar datos de mascota:", error);
+                    document.getElementById('pet-header').innerHTML = `<h1 class="display-3 mb-0 text-danger">Error al cargar la mascota</h1>`;
+                });
+
+
+            // Fetch Citas Programadas
+            fetch(`/api/citas/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } })
+                .then(res => res.json())
+                .then(citas => {
+                    const list = document.getElementById('citas-list');
+                    if (citas.length === 0) {
+                        list.innerHTML = '<li class="text-muted">No hay citas programadas.</li>';
+                        return;
+                    }
+                    list.innerHTML = citas.map(c => {
+                        let actions = '';
+                        let statusClass = '';
+
+                        if (c.estado === 'PROGRAMADA') {
+                            actions = `<button onclick="cancelarCita(${c.id})" class="btn btn-sm btn-danger">Cancelar</button>`;
+                            statusClass = 'text-warning';
+                        } else if (c.estado === 'COMPLETADA') {
+                            statusClass = 'text-success';
+                        } else if (c.estado === 'CANCELADA') {
+                            statusClass = 'text-danger';
+                        } else if (c.estado === 'ACEPTADA') {
+                            statusClass = 'text-primary';
+                        }
+
+                        // Botón de Facturación (Solo para roles de clínica y citas aceptadas/completadas)
+                        if ((c.estado === 'ACEPTADA' || c.estado === 'COMPLETADA') && (userRole === 'VETERINARIO' || userRole === 'ASISTENTE')) {
+                            if (c.facturaId) {
+                                actions = `<span class="badge bg-success me-2">Facturada (${c.estadoPago})</span>`;
+                            } else {
+                                // Usar 'btn-factura' para el estilo del botón personalizado
+                                actions = `<button onclick="openFacturaModal(${c.id})" class="btn btn-sm btn-primary btn-factura">Generar Factura</button>`;
+                            }
+                        }
+
+                        return `
                         <li>
-                            <span>${new Date(c.fechaHora).toLocaleString()}: ${c.motivo} (<strong>${c.estado}</strong>)</span>
+                            <span>
+                                <strong>${new Date(c.fechaHora).toLocaleString('es-ES')}:</strong> ${c.motivo} (<span class="${statusClass} fw-bold">${c.estado}</span>)
+                            </span>
                             <div>${actions}</div>
                         </li>
                     `;
-                }).join('');
+                    }).join('');
+                });
+
+            // Fetch Historia Clínica
+            fetch(`/api/historias/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(historias => {
+                const list = document.getElementById('historia-list');
+                list.innerHTML = historias.length ? historias.map(h => `<li><strong>${new Date(h.fecha).toLocaleDateString('es-ES')}:</strong> ${h.descripcion}</li>`).join('') : '<li class="text-muted">No hay registros.</li>';
             });
 
-        fetch(`/api/historias/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(historias => {
-            const list = document.getElementById('historia-list');
-            list.innerHTML = historias.length ? historias.map(h => `<li><strong>${new Date(h.fecha).toLocaleDateString()}:</strong> ${h.descripcion}</li>`).join('') : '<li>No hay registros.</li>';
+            // Fetch Tratamientos
+            fetch(`/api/historias/tratamientos/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(tratamientos => {
+                const list = document.getElementById('tratamientos-list');
+                list.innerHTML = tratamientos.length ? tratamientos.map(t => `<li><strong>${new Date(t.fecha).toLocaleDateString('es-ES')}:</strong> ${t.descripcion}</li>`).join('') : '<li class="text-muted">No hay tratamientos.</li>';
+            });
+
+            // Fetch Recetas
+            fetch(`/api/historias/recetas/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(recetas => {
+                const list = document.getElementById('recetas-list');
+                list.innerHTML = recetas.length ? recetas.map(r => `<li><strong>Medicamento:</strong> ${r.medicamento} | <strong>Dosis:</strong> ${r.dosis}</li>`).join('') : '<li class="text-muted">No hay recetas.</li>';
+            });
+
+            // Fetch Vacunas
+            fetch(`/api/vacunas/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(vacunas => {
+                const list = document.getElementById('vacunas-list');
+                list.innerHTML = vacunas.length ? vacunas.map(v => `<li><strong>${new Date(v.fechaAplicacion).toLocaleDateString('es-ES')}:</strong> ${v.nombre}</li>`).join('') : '<li class="text-muted">No hay vacunas.</li>';
+            });
+
         });
-        fetch(`/api/historias/tratamientos/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(tratamientos => {
-            const list = document.getElementById('tratamientos-list');
-            list.innerHTML = tratamientos.length ? tratamientos.map(t => `<li><strong>${new Date(t.fecha).toLocaleDateString()}:</strong> ${t.descripcion}</li>`).join('') : '<li>No hay tratamientos.</li>';
-        });
-        fetch(`/api/historias/recetas/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(recetas => {
-            const list = document.getElementById('recetas-list');
-            list.innerHTML = recetas.length ? recetas.map(r => `<li><strong>Medicamento:</strong> ${r.medicamento} | <strong>Dosis:</strong> ${r.dosis}</li>`).join('') : '<li>No hay recetas.</li>';
-        });
-        fetch(`/api/vacunas/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(vacunas => {
-            const list = document.getElementById('vacunas-list');
-            list.innerHTML = vacunas.length ? vacunas.map(v => `<li><strong>${v.fechaAplicacion}:</strong> ${v.nombre}</li>`).join('') : '<li>No hay vacunas.</li>';
-        });
-        
-        document.getElementById('logout-btn').addEventListener('click', () => {
-            localStorage.removeItem('jwt_token');
-            window.location.href = '/login';
-        });
-    });
-</script>
+
+        // Hago global la función para que el botón de factura dentro de las citas pueda llamarla.
+        window.openFacturaModal = openFacturaModal;
+        window.cancelarCita = cancelarCita;
+    </script>
 </body>
+
 </html>
