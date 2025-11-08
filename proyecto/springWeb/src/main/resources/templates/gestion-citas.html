@@ -41,6 +41,7 @@
         const confirmacion = confirm(`¿Estás seguro de que quieres cambiar el estado de esta cita a ${nuevoEstado}?`);
         if (!confirmacion) return;
 
+        
         try {
             const citaResponse = await fetch(`/api/citas/${citaId}`, {
                 headers: { 'Authorization': `Bearer ${token}` }
