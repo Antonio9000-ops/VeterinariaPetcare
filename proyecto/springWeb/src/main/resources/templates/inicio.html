@@ -56,10 +56,10 @@
         <div class="container py-5">
             <div class="row g-5 align-items-center mb-5">
                 <div class="col-lg-12 text-center wow fadeIn" data-wow-delay="0.3s">
-                    <h1 class="display-3 mb-4 text-primary animated slideInRight">Clínica Veterinaria PetCare</h1>
+                    <h1 id="titulo-principal" class="display-3 mb-4 text-primary animated slideInRight">Clínica Veterinaria PetCare</h1>
 
                     <div id="bienvenida-seccion" class="container bg-white p-5 shadow rounded d-none">
-                        <h1>Bienvenido a la veterinaria PetCare</h1>
+                        <h1 id="mensaje-bienvenida-header">Bienvenido a la veterinaria PetCare</h1>
                         <p class="lead">Administre las citas, historias clínicas y el cuidado de sus mascotas de forma
                             fácil y eficiente.</p>
 
@@ -287,91 +287,100 @@
     <script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
     <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
 
-    <script th:src="@{/js/main.js}"></script>
+<script th:src="@{/js/main.js}"></script>
 
-    <script>
-        function parseJwt(token) {
-            try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
+
+<script>
+    function parseJwt(token) {
+        try {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            return JSON.parse(atob(base64));
+        } catch (e) {
+            return null;
         }
+    }
 
-        window.addEventListener('DOMContentLoaded', () => {
-            const navLinksMenu = document.getElementById('nav-links-menu');
+    function configurarInterfazUsuario() {
+        const token = localStorage.getItem('jwt_token');
+        const navLinksMenu = document.getElementById('nav-links-menu');
+        const navItemClass = 'nav-item nav-link';
+
+        if (token) {
+            // --- Lógica para usuarios logueados ---
+            const userData = parseJwt(token);
+            const userRole = userData ? userData.role : 'USER';
+            const userName = userData ? userData.nombre : 'Usuario';
+
+            // 1. Configurar el mensaje de bienvenida
+            const tituloPrincipal = document.getElementById('titulo-principal');
             const bienvenidaSeccion = document.getElementById('bienvenida-seccion');
-            const token = localStorage.getItem('jwt_token');
+            const mensajeHeader = document.getElementById('mensaje-bienvenida-header');
+            const mensajeParrafo = bienvenidaSeccion ? bienvenidaSeccion.querySelector('p') : null;
 
-            // Clases de Bootstrap
-            const navItemClass = 'nav-item nav-link';
+            if (tituloPrincipal) tituloPrincipal.style.display = 'none';
+            
+            if (mensajeHeader && mensajeParrafo) {
+    
+    if (userRole === 'DUEÑO') {
+        mensajeHeader.textContent = `Bienvenido ${userName}`;
+        mensajeParrafo.textContent = 'Aquí puede gestionar la información y las citas de sus mascotas.';
+    } 
+    
+    else if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
+        mensajeHeader.textContent = `Bienvenido ${userRole} ${userName}`; 
+        mensajeParrafo.textContent = 'Acceda a las herramientas de gestión de citas, mascotas y servicios.';
+    }
+    
+    else {
+        mensajeHeader.textContent = `Bienvenido ${userName}`;
+        mensajeParrafo.textContent = 'Gestione su cuenta y la de sus mascotas.';
+    }
 
-            if (token) {
-                // USUARIO LOGEADO
+    bienvenidaSeccion.classList.remove('d-none');
+}
 
-                // 1. Mostrar la sección de Bienvenida
-                if (bienvenidaSeccion) {
-                    bienvenidaSeccion.classList.remove('d-none');
-                    bienvenidaSeccion.classList.add('d-block');
-                }
-
-                const userData = parseJwt(token);
-                const userRole = userData ? userData.role : null;
-
-                // 2. Construir TODOS los enlaces en la BARRA SUPERIOR
-                let menuHTML =
-                    `<a href="/" class="${navItemClass} active">Inicio</a>`;
-
-                if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
-                    menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
-                    menuHTML += `<a href="/agenda" class="${navItemClass}">Mascotas</a>`;
-                    // --- NUEVO ENLACE AÑADIDO AQUÍ ---
-                    menuHTML += `<a href="/gestion-servicios" class="${navItemClass}">Gestión de Servicios</a>`;
-                    menuHTML += `<a href="/pagos" class="${navItemClass}">Pagos</a>`;
-
-                } else {
-                    menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
-                    // --- NUEVO ENLACE AÑADIDO AQUÍ ---
-                    menuHTML += `<a href="/pagos" class="${navItemClass}">Mis Pagos</a>`;
-                    menuHTML += `<a href="/mascota-formulario" class="${navItemClass}">Añadir Nueva Mascota</a>`;
-                }
-
-                menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
-
-                // Botón Cerrar Sesión
-                menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
-
-                if (navLinksMenu) {
-                    navLinksMenu.innerHTML = menuHTML;
-                }
-
+            // 2. Configurar el menú de navegación
+            let menuHTML = `<a href="/" class="${navItemClass} active">Inicio</a>`;
+            if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
+                menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
+                menuHTML += `<a href="/agenda" class="${navItemClass}">Mascotas</a>`;
+                menuHTML += `<a href="/gestion-servicios" class="${navItemClass}">Gestión de Servicios</a>`;
+                menuHTML += `<a href="/pagos" class="${navItemClass}">Pagos</a>`;
             } else {
-                // USUARIO NO LOGEADO
-
-                // 1. Ocultar la sección de Bienvenida
-                if (bienvenidaSeccion) {
-                    bienvenidaSeccion.classList.add('d-none');
-                }
-
-                // 2. Construir los enlaces de la BARRA SUPERIOR
-                let menuHTML =
-                    `<a href="/" class="${navItemClass} active">Inicio</a>
-                 <a href="/contact" class="${navItemClass}">Contact</a>
-                 <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`; // Botón de Iniciar Sesión
-
-                if (navLinksMenu) {
-                    navLinksMenu.innerHTML = menuHTML;
-                }
+                menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
+                menuHTML += `<a href="/pagos" class="${navItemClass}">Mis Pagos</a>`;
+                menuHTML += `<a href="/mascota-formulario" class="${navItemClass}">Añadir Nueva Mascota</a>`;
             }
+            menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
+            menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
+            
+            if (navLinksMenu) navLinksMenu.innerHTML = menuHTML;
 
-            // 3. Manejador de eventos para el cierre de sesión
-            document.addEventListener('click', (e) => {
-                if (e.target.id === 'logout-btn-menu') {
-                    e.preventDefault();
-                    localStorage.removeItem('jwt_token');
-                    alert('Has cerrado la sesión.');
-                    window.location.href = '/';
-                }
-            });
+        } else {
+            // --- Lógica para usuarios NO logueados ---
+            let menuHTML = `<a href="/" class="${navItemClass} active">Inicio</a>
+                            <a href="/contact" class="${navItemClass}">Contact</a>
+                            <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`;
+            if (navLinksMenu) navLinksMenu.innerHTML = menuHTML;
+        }
+    }
 
+    // --- Ejecución del código ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // Ejecuta la configuración principal
+        configurarInterfazUsuario();
+
+        // Lógica para el botón de logout
+        document.addEventListener('click', (e) => {
+            if (e.target && e.target.id === 'logout-btn-menu') {
+                e.preventDefault();
+                localStorage.removeItem('jwt_token');
+                window.location.href = '/';
+            }
         });
-    </script>
+    });
+</script>
 </body>
 
 </html>

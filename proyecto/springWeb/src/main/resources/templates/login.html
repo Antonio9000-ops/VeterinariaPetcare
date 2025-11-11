@@ -240,7 +240,6 @@
             const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
             return JSON.parse(atob(base64));
         } catch (e) {
-            console.error("Error al parsear JWT:", e);
             return null;
         }
     }
@@ -278,7 +277,7 @@
                         break;
                     case 'VETERINARIO':
                     case 'ASISTENTE':
-                        window.location.href = '/agenda';
+                        window.location.href = '/';
                         break;
                     default:
                         window.location.href = '/';
@@ -290,7 +289,6 @@
                 errorMessageDiv.style.display = 'block';
             }
         } catch (error) {
-            console.error("Error en la solicitud de login:", error);
             errorMessageDiv.textContent = 'Error de conexión. Inténtalo de nuevo.';
             errorMessageDiv.style.display = 'block';
         }

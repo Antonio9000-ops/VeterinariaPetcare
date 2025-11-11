@@ -14,7 +14,7 @@
         li { display: flex; justify-content: space-between; align-items: center; background: #f4f4f4; border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; flex-wrap: wrap; }
         .cita-info { flex-grow: 1; min-width: 300px; }
         .cita-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-        .btn { padding: 8px 12px; color: #fff; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; text-align: center; }
+        .btn { padding: 8px 12px; color: #2b1010; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; text-align: center; }
         .btn-success { background-color: #28a745; }
         .btn-danger { background-color: #dc3545; }
         .btn-info { background-color: #17a2b8; }
@@ -27,6 +27,7 @@
 </div>
 
 <div class="container">
+    <button class="btn" onclick="history.back()">Volver Atrás</button>
     <h1>Citas Pendientes de Aprobación</h1>
     <ul id="citas-list"></ul>
 </div>
