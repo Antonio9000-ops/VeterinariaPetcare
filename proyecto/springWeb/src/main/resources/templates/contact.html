@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <title>PetCare - Contacto de Emergencia 🚑</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Información de contacto de emergencia para PetCare" name="keywords">
+    <meta content="Números de teléfono de emergencia 24/7 y ubicación de clínica veterinaria PetCare" name="description">
+
+    <link href="/img/favicon.ico" rel="icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Space+Grotesk&display=swap" rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link href="/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/css/style.css" rel="stylesheet">
+
+    <style>
+        /* Estilo para asegurar que el mapa se vea bien */
+        .map-container {
+            border-radius: 0.5rem;
+            overflow: hidden;
+            height: 400px; /* Altura fija para el mapa */
+            border: 1px solid var(--bs-primary);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        
+        /* Asegura que el spinner no aparezca en una página estática, aunque se mantiene el div por consistencia de la plantilla */
+        .spinner-border {
+            display: none;
+        }
+
+        /* Estilo para las tarjetas de información de contacto */
+        .contact-info-card {
+            background-color: var(--bs-light);
+            border-left: 5px solid var(--bs-primary);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        .contact-info-card:hover {
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+            transform: translateY(-2px);
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Cargando...</span>
+        </div>
+    </div>
+
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
+                <a href="/" class="navbar-brand">
+                    <h1>PetCare</h1>
+                </a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto" id="nav-links-menu">
+                        <p class="nav-item nav-link text-muted">Cargando...</p>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="container-fluid pb-5 bg-primary hero-header">
+        <div class="container py-5">
+            <div class="row g-3 align-items-center">
+                <div class="col-lg-12 text-center text-lg-start">
+                    <h1 class="display-1 mb-0 animated slideInLeft text-white">Contacto de Emergencia 🆘</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid py-5 bg-white">
+        <div class="container">
+            <div class="text-center wow fadeIn" data-wow-delay="0.1s">
+                <p class="fs-4 fw-medium text-primary">Atención 24/7</p>
+                <h1 class="display-5 mb-5">Llámanos ante cualquier emergencia</h1>
+            </div>
+            
+            <div class="row g-4">
+                
+                <div class="col-lg-4 col-md-6 wow fadeIn" data-wow-delay="0.1s">
+                    <div class="contact-info-card text-center">
+                        <i class="fa fa-phone-alt fa-3x text-primary mb-3"></i>
+                        <h4 class="mb-3">Teléfono de Emergencia</h4>
+                        <p class="fs-4 text-dark font-weight-bold">
+                            <a href="tel:+11234567890" class="text-danger text-decoration-none">+1 (123) 456-7890</a>
+                        </p>
+                        <p class="text-muted mb-0">Disponible las 24 horas del día, los 7 días de la semana.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 wow fadeIn" data-wow-delay="0.3s">
+                    <div class="contact-info-card text-center">
+                        <i class="fa fa-phone fa-3x text-success mb-3"></i>
+                        <h4 class="mb-3">Oficina y Consultas Generales</h4>
+                        <p class="fs-4 text-dark font-weight-bold">
+                            <a href="tel:+19876543210" class="text-success text-decoration-none">+1 (987) 654-3210</a>
+                        </p>
+                        <p class="text-muted mb-0">Horario de oficina: Lun - Vie, 9:00 AM - 6:00 PM.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-12 wow fadeIn" data-wow-delay="0.5s">
+                    <div class="contact-info-card text-center">
+                        <i class="fa fa-envelope-open-text fa-3x text-secondary mb-3"></i>
+                        <h4 class="mb-3">Correo Electrónico</h4>
+                        <p class="fs-4 text-dark font-weight-bold">
+                            <a href="mailto:emergencia@petcare.com" class="text-secondary text-decoration-none">emergencia@petcare.com</a>
+                        </p>
+                        <p class="text-muted mb-0">Para consultas no urgentes o envío de documentación.</p>
+                    </div>
+                </div>
+
+                <div class="col-lg-12 pt-4 wow fadeIn" data-wow-delay="0.7s">
+                    <div class="contact-info-card">
+                        <i class="fa fa-map-marker-alt fa-3x text-primary mb-3"></i>
+                        <h4 class="mb-3">Nuestra Ubicación (Clínica Central)</h4>
+                        <p class="fs-5 text-dark font-weight-bold">
+                            Av. Mascotas Felices #456, Distrito Central, Ciudad Ejemplo
+                        </p>
+                        <p class="text-muted mb-0">
+                            **Importante:** Acceso directo desde la Vía Principal "Peluditos". Contamos con estacionamiento.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row pt-5 wow fadeIn" data-wow-delay="0.9s">
+                <div class="col-12">
+                    <h2 class="mb-4 text-primary">Encuéntranos fácilmente</h2>
+                    <div class="map-container">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3900.7303867606366!2d-77.03664798485747!3d-12.11584854580665!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c81d867c2957%3A0xf6d628d09f3e43a9!2sKennedy%20Park!5e0!3m2!1sen!2spe!4v1678822000000!5m2!1sen!2spe"
+                            allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="container-fluid footer pt-5">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
+                    <a href="/" class="d-inline-block mb-3">
+                        <h1 class="text">PetCare</h1>
+                    </a>
+                    <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
+                        amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
+                        clita duo justo et tempor</p>
+                </div>
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
+                    <h5 class="text-white mb-4">Contáctanos</h5>
+                    <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+                    <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                    <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                                class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                                class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                                class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                                class="fab fa-instagram"></i></a>
+                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
+                                class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
+                    <h5 class="text-white mb-4">Enlaces Populares</h5>
+                    <a class="btn btn-link" href="/about">Acerca de Nosotros</a>
+                    <a class="btn btn-link" href="/contact">Contáctanos</a>
+                    <a class="btn btn-link" href="#!">Política de Privacidad</a>
+                    <a class="btn btn-link" href="#!">Términos & Condiciones</a>
+                    <a class="btn btn-link" href="#!">Carrera</a>
+                </div>
+                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
+                    <h5 class="text-white mb-4">Nuestros Servicios</h5>
+                    <a class="btn btn-link" href="/service">Diseño Interior</a>
+                    <a class="btn btn-link" href="/service">Planificación de Proyectos</a>
+                    <a class="btn btn-link" href="/service">Renovación</a>
+                    <a class="btn btn-link" href="/service">Implementación</a>
+                    <a class="btn btn-link" href="/service">Diseño de Paisajes</a>
+                </div>
+            </div>
+        </div>
+        <div class="container wow fadeIn" data-wow-delay="0.1s">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#!">Your Site Name</a>, All Right Reserved.
+                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>. Distributed by
+                        <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="/index">Home</a>
+                            <a href="#!">Cookies</a>
+                            <a href="#!">Ayuda</a>
+                            <a href="#!">FAQs</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/wow/wow.min.js"></script>
+    <script src="/lib/easing/easing.min.js"></script>
+    <script src="/lib/waypoints/waypoints.min.js"></script>
+    <script src="/lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <script src="/js/main.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // Inicializa la animación WOW (del diseño de la plantilla)
+            new WOW().init();
+
+            // **********************************************
+            // Lógica para Configurar el Navbar (Modificada para que Contacto esté siempre visible)
+            const token = localStorage.getItem('jwt_token');
+
+            function parseJwt(token) {
+                try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
+            }
+            
+            function setupNavbar(token) {
+                const navLinksMenu = document.getElementById('nav-links-menu');
+                const navItemClass = 'nav-item nav-link';
+                // El enlace de contacto estará activo
+                const navItemContactClass = `${navItemClass} active`; 
+                let menuHTML = '';
+
+                const userData = token ? parseJwt(token) : null;
+
+                // Enlaces base
+                menuHTML += `<a href="/" class="${navItemClass}">Inicio</a>`;
+
+                if (userData) {
+                    const userRole = userData.role;
+
+                    // Enlaces específicos por rol (Autenticado)
+                    if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
+                        menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
+                        menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
+                    } else {
+                        // Usuario Dueño
+                        menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
+                        menuHTML += `<a href="/pagos" class="${navItemClass}">Mis Pagos</a>`;
+                    }
+                    
+                    // El enlace de contacto de emergencia SIEMPRE está disponible para todos
+                    menuHTML += `<a href="/contact" class="${navItemContactClass}">Contacto de emergencia</a>`;
+                    
+                    // Enlaces de cierre de sesión
+                    menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
+
+                } else {
+                    // Usuario No Autenticado
+                    // El enlace de contacto de emergencia SIEMPRE está disponible para todos
+                    menuHTML += `<a href="/contact" class="${navItemContactClass}">Contacto de emergencia</a>`;
+                    menuHTML += `<a href="/login" class="${navItemClass}">Iniciar Sesión</a>`;
+                }
+
+                if (navLinksMenu) {
+                    navLinksMenu.innerHTML = menuHTML;
+                }
+
+                const logoutBtn = document.getElementById('logout-btn-menu');
+                if (logoutBtn) {
+                    logoutBtn.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        localStorage.removeItem('jwt_token');
+                        alert('Has cerrado la sesión.');
+                        window.location.href = '/';
+                    });
+                }
+            }
+            
+            // Llamada inicial
+            setupNavbar(token);
+            // **********************************************
+        });
+    </script>
+</body>
+
+</html>

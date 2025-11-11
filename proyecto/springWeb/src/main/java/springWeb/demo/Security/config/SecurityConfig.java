@@ -50,18 +50,13 @@ public class SecurityConfig {
                                 "/gestion-citas", "/gestion-citas.html",
                                 "/tratamiento-formulario", "/receta-formulario",
                                 "/pagos", "/pagos.html",
+                                "/contact", "/contact.html",
                                 "/css/**", "/js/**", "/images/**", "/favicon.ico", "/img/**", "/lib/**", "/scss/**")
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/facturacion/crear")
                         .hasAnyAuthority("VETERINARIO", "ASISTENTE")
                         .requestMatchers(HttpMethod.GET, "/api/facturacion/cita/**")
                         .hasAnyAuthority("DUEÑO", "VETERINARIO", "ASISTENTE")
-                        // El patrón '/api/facturacion/**/pagar' causa PatternParseException porque '**'
-                        // no
-                        // puede ir seguido de más datos. El controlador maneja
-                        // '/api/facturacion/{facturaId}/pagar'
-                        // por lo que aquí usamos la misma plantilla de ruta compatible con
-                        // PathPatternParser.
                         .requestMatchers(HttpMethod.PUT, "/api/facturacion/{facturaId}/pagar")
                         .hasAnyAuthority("VETERINARIO", "ASISTENTE")
                         .requestMatchers("/api/pagos/**").hasAuthority("DUEÑO")
