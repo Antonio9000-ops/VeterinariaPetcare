@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.ui.Model;
 
-
 @Controller
 public class VistaController {
 
@@ -14,12 +13,12 @@ public class VistaController {
         return "inicio";
     }
 
-    @GetMapping({"/login", "/login.html"})
+    @GetMapping({ "/login", "/login.html" })
     public String mostrarPaginaLogin() {
         return "login";
     }
 
-    @GetMapping({"/register", "/register.html"})
+    @GetMapping({ "/register", "/register.html" })
     public String mostrarPaginaRegister() {
         return "register";
     }
@@ -49,23 +48,28 @@ public class VistaController {
         return "agenda";
     }
 
-   @GetMapping("/historia-formulario")
-public String mostrarPaginaHistoriaFormulario(@RequestParam("mascotaId") Long mascotaId, Model model) {
-    
-    model.addAttribute("mascotaId", mascotaId);
-    return "historia-formulario";
-}
+    @GetMapping("/historia-formulario")
+    public String mostrarPaginaHistoriaFormulario(@RequestParam("mascotaId") Long mascotaId, Model model) {
+
+        model.addAttribute("mascotaId", mascotaId);
+        return "historia-formulario";
+    }
 
     @GetMapping("/vacuna-formulario")
-public String mostrarPaginaVacunaFormulario(@RequestParam("mascotaId") Long mascotaId, Model model) {
-    
-    model.addAttribute("mascotaId", mascotaId);
-    return "vacuna-formulario";
-}
+    public String mostrarPaginaVacunaFormulario(@RequestParam("mascotaId") Long mascotaId, Model model) {
+
+        model.addAttribute("mascotaId", mascotaId);
+        return "vacuna-formulario";
+    }
 
     // --- MÉTODO NUEVO QUE SOLUCIONA EL PROBLEMA ---
     @GetMapping("/gestion-citas")
     public String mostrarPaginaGestionCitas() {
         return "gestion-citas";
+    }
+
+    @GetMapping("/catalogo")
+    public String mostrarPaginaCatalogo() {
+        return "catalogo";
     }
 }

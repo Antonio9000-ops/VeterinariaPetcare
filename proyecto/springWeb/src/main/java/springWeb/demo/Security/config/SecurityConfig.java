@@ -42,15 +42,16 @@ public class SecurityConfig {
                                 "/", "/inicio.html", "/login", "/login.html",
                                 "/register", "/register.html", "/auth/**",
                                 "/mascotas", "/mascota-detalle", "/mascota-formulario",
-                                "/cita-formulario", "/agenda", "/agenda.html",
+                                "/cita-formulario", "/agenda", "/agenda.html", "/catalogo", "/catalogo.html",
                                 "/historia-formulario", "/historia-formulario.html",
                                 "/vacuna-formulario", "/vacuna-formulario.html",
                                 "/gestion-citas", "/gestion-citas.html",
-                                "/css/**", "/js/**", "/images/**", "/favicon.ico", "/img/**", "/lib/**" ,"/scss/**"
-                        ).permitAll()
+                                "/css/**", "/js/**", "/images/**", "/favicon.ico", "/img/**", "/lib/**", "/scss/**")
+                        .permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/api/historias", "/api/vacunas").hasAuthority("VETERINARIO")
-                        .requestMatchers(HttpMethod.GET, "/api/citas/pendientes").hasAnyAuthority("VETERINARIO", "ASISTENTE")
+                        .requestMatchers(HttpMethod.GET, "/api/citas/pendientes")
+                        .hasAnyAuthority("VETERINARIO", "ASISTENTE")
                         .requestMatchers(HttpMethod.PUT, "/api/citas/**").hasAnyAuthority("VETERINARIO", "ASISTENTE")
 
                         .requestMatchers("/api/mascotas/dueno/**").hasAuthority("DUEÑO")
@@ -63,11 +64,11 @@ public class SecurityConfig {
                         .requestMatchers("/api/vacunas/**").hasAnyAuthority("DUEÑO", "VETERINARIO")
                         .requestMatchers("/api/usuarios/**").permitAll()
 
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new JwtAuthFilter(jwtService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthFilter(jwtService, usuarioRepository),
+                        UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

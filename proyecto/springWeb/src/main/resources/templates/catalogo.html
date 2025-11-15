@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <title>Catálogo | PetCare</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <link th:href="@{/img/favicon.ico}" rel="icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Space+Grotesk&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link th:href="@{/lib/animate/animate.min.css}" rel="stylesheet" />
+    <link
+      th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}"
+      rel="stylesheet"
+    />
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+    <!-- ======== ESTILO AGREGADO PARA ANIMAR TARJETAS ======== -->
+    <style>
+      .producto-card {
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .producto-card:hover {
+        transform: translateY(-8px) scale(1.03);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      }
+
+      .producto-card img {
+        transition: transform 0.4s ease;
+      }
+
+      .producto-card:hover img {
+        transform: scale(1.07);
+      }
+    </style>
+    <!-- ===================================================== -->
+  </head>
+
+  <body>
+    <!-- ========================================================= -->
+    <!-- ===================== NAVBAR ORIGINAL ==================== -->
+    <!-- ========================================================= -->
+    <div
+      id="spinner"
+      class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
+    >
+      <div
+        class="spinner-grow text-primary"
+        style="width: 3rem; height: 3rem"
+        role="status"
+      >
+        <span class="sr-only">Cargando...</span>
+      </div>
+    </div>
+    <div class="container-fluid sticky-top">
+      <div class="container">
+        <nav
+          class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white"
+        >
+          <a th:href="@{/}" class="navbar-brand">
+            <h1>PetCare</h1>
+          </a>
+          <button
+            type="button"
+            class="navbar-toggler ms-auto me-0"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarCollapse"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto" id="nav-links-menu">
+              <a th:href="@{/}" class="nav-item nav-link active">Inicio</a>
+              <a th:href="@{/contact}" class="nav-item nav-link"
+                >Contacto de emergencia</a
+              >
+              <p class="nav-item nav-link text-muted">Cargando...</p>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- ======================= CATÁLOGO ========================= -->
+    <!-- ========================================================= -->
+    <div class="container py-5">
+      <h1 class="text-center mb-5 text-primary">Catálogo de Productos</h1>
+
+      <!-- ================= SECCIÓN: COMIDA ================= -->
+      <h2 class="mb-4">Comida para Mascotas 🍗</h2>
+      <div class="row g-4">
+        <!-- Producto 1 -->
+        <div class="col-md-3">
+          <div class="card producto-card shadow">
+            <img src="/img/catalogo-prod1.jpg" class="card-img-top" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Dog Chow Adulto</h5>
+              <p class="card-text">Bolsa 10kg</p>
+              <button class="btn btn-primary btn-sm">Agregar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Producto 2 -->
+        <div class="col-md-3">
+          <div class="card producto-card shadow">
+            <img src="/img/catalogo-prod2.jpg" class="card-img-top" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Ricocan Pollo</h5>
+              <p class="card-text">Bolsa 15kg</p>
+              <button class="btn btn-primary btn-sm">Agregar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Producto 3 -->
+        <div class="col-md-3">
+          <div class="card producto-card shadow">
+            <img src="/img/catalogo-prod3.jpg" class="card-img-top" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Galletas Dog Treats</h5>
+              <p class="card-text">Sabor Res</p>
+              <button class="btn btn-primary btn-sm">Agregar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Producto 4 -->
+        <div class="col-md-3">
+          <div class="card producto-card shadow">
+            <img src="/img/catalogo-prod4.jpg" class="card-img-top" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Whiskas Adulto</h5>
+              <p class="card-text">Bolsa 8kg</p>
+              <button class="btn btn-primary btn-sm">Agregar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-5" />
+
+      <!-- ================= SECCIÓN: JUGUETES ================= -->
+      <h2 class="mb-4">Juguetes 🧸</h2>
+      <div class="row g-4">
+        <div class="col-md-3">
+          <div class="card producto-card shadow">
+            <img src="/img/catalogo-jug1.jpg" class="card-img-top" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Pelota Antiestrés</h5>
+              <p class="card-text">Rebote alto</p>
+              <button class="btn btn-primary btn-sm">Agregar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card producto-card shadow">
+            <img src="/img/catalogo-jug2.jpg" class="card-img-top" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Hueso de Goma</h5>
+              <p class="card-text">Durable</p>
+              <button class="btn btn-primary btn-sm">Agregar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card producto-card shadow">
+            <img src="/img/catalogo-jug3.jpg" class="card-img-top" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Ratón de Peluche</h5>
+              <p class="card-text">Ideal para gatos</p>
+              <button class="btn btn-primary btn-sm">Agregar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card producto-card shadow">
+            <img src="/img/catalogo-jug4.jpg" class="card-img-top" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Soga Trenzada</h5>
+              <p class="card-text">Juego de fuerza</p>
+              <button class="btn btn-primary btn-sm">Agregar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr class="my-5" />
+
+      <!-- ================= SECCIÓN: ACCESORIOS ================= -->
+      <h2 class="mb-4">Accesorios 🎒</h2>
+      <div class="row g-4">
+        <div class="col-md-3">
+          <div class="card producto-card shadow">
+            <img src="/img/catalogo-acc1.jpg" class="card-img-top" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Correa Ajustable</h5>
+              <p class="card-text">Tamaño M</p>
+              <button class="btn btn-primary btn-sm">Agregar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card producto-card shadow">
+            <img src="/img/catalogo-acc2.jpg" class="card-img-top" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Plato Doble</h5>
+              <p class="card-text">Acero</p>
+              <button class="btn btn-primary btn-sm">Agregar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card producto-card shadow">
+            <img src="/img/catalogo-acc3.jpg" class="card-img-top" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Arenero Gato</h5>
+              <p class="card-text">Tamaño XL</p>
+              <button class="btn btn-primary btn-sm">Agregar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-3">
+          <div class="card producto-card shadow">
+            <img src="/img/catalogo-acc4.jpg" class="card-img-top" />
+            <div class="card-body text-center">
+              <h5 class="card-title">Collar Rojo</h5>
+              <p class="card-text">Antialérgico</p>
+              <button class="btn btn-primary btn-sm">Agregar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ======= SCRIPTS ORIGINALES ======= -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/lib/wow/wow.min.js}"></script>
+    <script th:src="@{/lib/easing/easing.min.js}"></script>
+    <script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
+    <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
+    <script th:src="@{/js/main.js}"></script>
+  </body>
+</html>
