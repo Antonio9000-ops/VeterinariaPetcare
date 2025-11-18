@@ -51,6 +51,8 @@ public class SecurityConfig {
                                 "/tratamiento-formulario", "/receta-formulario",
                                 "/pagos", "/pagos.html",
                                 "/contact", "/contact.html",
+                                //...
+                                "/about", "/about.html", "/error",
                                 "/css/**", "/js/**", "/images/**", "/favicon.ico", "/img/**", "/lib/**", "/scss/**")
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/facturacion/crear")
