@@ -243,8 +243,8 @@
                     <h5 class="text-white mb-4">Enlaces Populares</h5>
                     <a class="btn btn-link" th:href="@{/about}">Acerca de Nosotros</a>
                     <a class="btn btn-link" th:href="@{/contact}">Contáctanos</a>
-                    <a class="btn btn-link" href="#!">Política de Privacidad</a>
-                    <a class="btn btn-link" href="#!">Términos &amp; Condiciones</a>
+                    <a class="btn btn-link" th:href="@{/privacy}">Política de Privacidad</a>
+                    <a class="btn btn-link" th:href="@{/terms}">Términos &amp; Condiciones</a>
                     <a class="btn btn-link" href="#!">Carrera</a>
                 </div>
                 <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
@@ -260,11 +260,7 @@
         <div class="container wow fadeIn" data-wow-delay="0.1s">
             <div class="copyright">
                 <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#!">Your Site Name</a>, All Right Reserved.
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>. Distributed by
-                        <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                    </div>
+
                     <div class="col-md-6 text-center text-md-end">
                         <div class="footer-menu">
                             <a th:href="@{/index}">Home</a>
