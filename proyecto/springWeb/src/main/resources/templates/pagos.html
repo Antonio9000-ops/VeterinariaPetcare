@@ -289,11 +289,6 @@
             // Inicializa la animación WOW (del diseño de la plantilla)
             new WOW().init();
 
-
-            // **********************************************
-            // Lógica para Configurar el Navbar (NUEVA FUNCIÓN ADAPTADA DE LA PLANTILLA)
-            // Ya que el script anterior no tenía setupNavbar, se incluye la versión de la plantilla
-            // para que el menú se cargue correctamente basado en el rol.
             function parseJwt(token) {
                 try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
             }
@@ -344,10 +339,6 @@
                 }
             }
 
-            // **********************************************
-
-
-            // Función para cargar la deuda pendiente (Lógica del script anterior)
             async function loadPendingDebt() {
                 if (!token) return;
 
@@ -493,8 +484,7 @@
                     buttonText.textContent = 'Pagar Ahora';
                     spinner.style.display = 'none';
 
-                    // Re-habilitar el botón si aún hay deuda, si no, lo mantendrá deshabilitado loadPendingDebt
-                    // Como loadPendingDebt es llamado, se omite la lógica de re-habilitación aquí
+                    
                 }
             });
 

@@ -34,7 +34,7 @@ public class CitaServiceImpl implements CitaService {
         Mascota mascota = mascotaRepository.findById(citaDTO.getMascotaId())
                 .orElseThrow(() -> new RuntimeException("Mascota no encontrada con id " + citaDTO.getMascotaId()));
 
-        // Al agendar, el veterinario puede ser pre-seleccionado
+       
         Usuario veterinario = usuarioRepository.findById(citaDTO.getVeterinarioId())
                 .orElseThrow(() -> new RuntimeException("Veterinario no encontrado con id " + citaDTO.getVeterinarioId()));
 

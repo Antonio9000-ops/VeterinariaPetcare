@@ -54,11 +54,8 @@ public class PagoController {
         
         pagoRepository.save(pago);
 
-        // --- LÓGICA ACTUALIZADA ---
-        // 1. Buscar todas las facturas pendientes del usuario
         List<Factura> facturasPendientes = facturaRepository.findByCita_Mascota_DuenoAndEstadoPago(usuario, EstadoPago.PENDIENTE);
 
-        // 2. Marcar cada una como pagada usando el servicio
         for (Factura factura : facturasPendientes) {
             facturacionService.marcarFacturaComoPagada(factura.getId());
         }

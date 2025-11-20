@@ -19,7 +19,7 @@ public class UsuarioMapper {
                                 .email(usuario.getEmail())
                                 .rol(usuario.getRol())
                                 .contraseña(usuario.getContraseña())
-                                // Convertir relaciones a IDs o nombres
+                                
                                 .mascotas(usuario.getMascotas() != null
                                                 ? usuario.getMascotas().stream()
                                                                 .map(m -> m.getNombre())
@@ -44,7 +44,7 @@ public class UsuarioMapper {
                                 .email(dto.getEmail())
                                 .rol(dto.getRol())
                                 .contraseña(dto.getContraseña())
-                                // Relaciones se dejan como null o se llenan después en el service
+                                
                                 .mascotas(null)
                                 .citasAsignadas(null)
                                 .build();

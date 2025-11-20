@@ -46,23 +46,23 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // Devolvemos una lista con una única autoridad basada en el rol del usuario.
+
         return List.of(new SimpleGrantedAuthority(rol.name()));
     }
 
     @Override
     public String getPassword() {
-        // Spring Security usará este método para obtener la contraseña hasheada.
+
         return contraseña;
     }
 
     @Override
     public String getUsername() {
-        // En nuestra aplicación, el "username" es el email.
+
         return email;
     }
 
-    
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

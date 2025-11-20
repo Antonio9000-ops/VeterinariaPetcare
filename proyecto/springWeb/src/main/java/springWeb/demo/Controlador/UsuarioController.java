@@ -53,18 +53,18 @@ public class UsuarioController {
             String email = loginData.get("email");
             String contraseña = loginData.get("contraseña");
 
-            //simplemente se llama al metodo para verificar
+
              usuarioService.verificarUsuario(email, contraseña);
 
-            // Convertir a DTO para la respuesta (igual que en registro)
+
             UsuarioDTO usuarioDTO = usuarioService.buscarPorEmail(email)
                     .orElseThrow(() -> new RuntimeException("Error al convertir usuario"));
 
             return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
 
         } catch (RuntimeException e) {
-            //usamos el constructor que solo toma el httpStatus
-             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+
+             return new ResponseEntity< >(HttpStatus.UNAUTHORIZED);
         }
     }
 

@@ -22,10 +22,10 @@ public class UsuarioServiceImpl implements UsuarioService {
         // Convertir DTO a entidad
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
 
-        // Guardar en BD
+
         Usuario nuevoUsuario = usuarioRepository.save(usuario);
 
-        // Convertir de vuelta a DTO
+
         return usuarioMapper.toDTO(nuevoUsuario);
     }
 
@@ -56,16 +56,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public Usuario verificarUsuario(String email, String contraseña) {
-        // Buscar usuario por email
+
         Usuario usuario = usuarioRepository.findByEmail(email)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
-        // Verificar contraseña directamente en la entidad
+
         if (!usuario.getContraseña().equals(contraseña)) {
             throw new RuntimeException("Contraseña incorrecta");
         }
 
-        // Retornar la entidad Usuario completa (con contraseña)
+
         return usuario;
     }
 

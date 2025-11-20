@@ -28,7 +28,7 @@ public class VacunaMapper {
                 .id(dto.getId())
                 .nombre(dto.getNombre())
                 .fechaAplicacion(dto.getFechaAplicacion())
-                // Relaciones se llenan en el service
+
                 .mascota(null)
                 .veterinario(null)
                 .build();

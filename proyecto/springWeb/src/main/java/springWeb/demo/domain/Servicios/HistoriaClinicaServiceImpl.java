@@ -32,8 +32,7 @@ public class HistoriaClinicaServiceImpl implements HistoriaClinicaService {
 
     private final HistoriaClinicaRepository historiaClinicaRepository;
     private final MascotaRepository mascotaRepository;
-    // No se necesita la instancia del mapper si todos los métodos son estáticos
-
+    
     @Override
     public HistoriaClinicaDTO registrarEntrada(HistoriaClinicaDTO dto) {
         // Convertir DTO a entidad
