@@ -1,5 +1,6 @@
 # Archivos de construcción de Maven
-/target/
+/target
+/test
 *.log
 .idea/
 *.iml
