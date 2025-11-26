@@ -30,14 +30,12 @@
             padding: 50px 0;
         }
 
-        /* Adaptación de la tabla al estilo PetCare */
         .table-custom-items {
             width: 100%;
             margin-top: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
             overflow: hidden;
-            /* Para contener el border-radius */
         }
 
         .table-custom-items thead {
@@ -56,7 +54,6 @@
             vertical-align: middle;
         }
 
-        /* Estilo para los botones dentro de la tabla */
         .table-custom-items .btn-sm {
             padding: 5px 10px;
             font-size: 0.85rem;
@@ -65,7 +62,6 @@
 
         .table-custom-items .btn-warning {
             color: #212529;
-            /* Color oscuro para el texto del botón amarillo */
         }
 
         .modal-content {
@@ -271,16 +267,13 @@
         const API_URL = '/api/items-facturables';
         const token = localStorage.getItem('jwt_token');
 
-        // Redirigir si no hay token (Mantenido)
         if (!token) {
             window.location.href = '/login';
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Inicializar WOW.js (desde el script principal)
             if (window.WOW) { new WOW().init(); }
 
-            // Usamos jQuery para inicializar el modal de Bootstrap (ya que la plantilla lo usa)
             const itemModalElement = document.getElementById('itemModal');
             const itemModal = new bootstrap.Modal(itemModalElement);
 
@@ -327,7 +320,6 @@
                 }
             };
 
-            // Abrir modal para añadir
             document.getElementById('btn-anadir').addEventListener('click', () => {
                 form.reset();
                 document.getElementById('item-id').value = '';
@@ -335,7 +327,6 @@
                 itemModal.show();
             });
 
-            // Guardar o Actualizar
             form.addEventListener('submit', async (e) => {
                 e.preventDefault();
                 const id = document.getElementById('item-id').value;
@@ -366,14 +357,11 @@
                 }
             });
 
-            // Editar y Eliminar (usando delegación de eventos)
             document.getElementById('items-tabla-body').addEventListener('click', async (e) => {
                 const target = e.target;
                 const id = target.dataset.id;
 
                 if (target.classList.contains('btn-editar')) {
-                    // Nota: Para editar de forma más limpia, es mejor obtener el item individualmente,
-                    // pero para mantener la lógica original, se obtiene la lista completa y se filtra.
                     const response = await fetch(`${API_URL}`, { headers: { 'Authorization': `Bearer ${token}` } });
                     const items = await response.json();
                     const item = items.find(i => i.id == id);

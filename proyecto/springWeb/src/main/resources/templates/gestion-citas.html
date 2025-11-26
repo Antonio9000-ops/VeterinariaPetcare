@@ -46,7 +46,6 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             border-left: 5px solid var(--bs-warning);
-            /* Cambiado a warning para citas pendientes */
         }
 
         .cita-info {
@@ -63,12 +62,12 @@
         }
 
         .cita-actions .btn-success {
-            background-color: #198754; /* Color de éxito de Bootstrap */
+            background-color: #198754;
             border-color: #198754;
         }
 
         .cita-actions .btn-danger {
-            background-color: #dc3545; /* Color de peligro de Bootstrap */
+            background-color: #dc3545;
             border-color: #dc3545;
         }
     </style>
@@ -210,7 +209,6 @@
     <script th:src="@{/js/main.js}"></script>
 
     <script>
-        // Funciones del script original deben ser globales para que funcionen los onclick
         window.parseJwt = function (token) {
             try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
         }
@@ -250,7 +248,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', async () => {
-            // Inicializar WOW.js (desde el script principal)
             if (window.WOW) { new WOW().init(); }
 
             const token = localStorage.getItem('jwt_token');
@@ -271,7 +268,6 @@
                 return;
             }
 
-            // Limpiar el mensaje de carga inicial
             list.innerHTML = '';
 
             try {
@@ -287,7 +283,6 @@
                     return;
                 }
 
-                // Aplicamos las clases de diseño para que se vea bien
                 list.innerHTML = citas.map(cita => `
                     <li class="cita-item wow fadeIn" data-wow-delay="0.1s">
                         <div class="cita-info">

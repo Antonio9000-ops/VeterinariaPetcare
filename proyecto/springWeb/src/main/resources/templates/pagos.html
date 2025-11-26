@@ -29,13 +29,11 @@
             display: none;
         }
 
-        /* Estilos de la plantilla "Mis Mascotas" adaptados para Pagos */
         .container-pagos {
             min-height: 70vh;
             padding: 50px 0;
         }
 
-        /* Estilo para un mejor contraste en la deuda pendiente (adoptando el look de lista de mascotas) */
         .debt-item {
             display: flex;
             justify-content: space-between;
@@ -52,12 +50,12 @@
             margin-top: 20px;
             padding: 15px;
             border-radius: 8px;
-            background-color: var(--bs-light); /* Fondo claro de Bootstrap */
+            background-color: var(--bs-light);
             border: 1px solid var(--bs-gray-300);
         }
         
         .card-header-styled {
-            background-color: var(--bs-primary); /* Usar el color primario de la plantilla */
+            background-color: var(--bs-primary);
             color: #fff;
             padding: 15px;
             border-top-left-radius: 0.5rem;
@@ -280,21 +278,16 @@
             const spinner = submitButton.querySelector('.spinner-border');
             const successAlert = document.getElementById('payment-success-alert');
 
-            const debtDetailsListContainer = document.getElementById('debt-details-list'); // Contenedor principal
+            const debtDetailsListContainer = document.getElementById('debt-details-list');
             const totalAmountDisplay = document.getElementById('total-amount-display');
             const amountInput = document.getElementById('amount');
             const noDebtAlert = document.getElementById('no-debt-alert');
 
             const token = localStorage.getItem('jwt_token');
 
-            // Inicializa la animación WOW (del diseño de la plantilla)
             new WOW().init();
 
 
-            // **********************************************
-            // Lógica para Configurar el Navbar (NUEVA FUNCIÓN ADAPTADA DE LA PLANTILLA)
-            // Ya que el script anterior no tenía setupNavbar, se incluye la versión de la plantilla
-            // para que el menú se cargue correctamente basado en el rol.
             function parseJwt(token) {
                 try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
             }
@@ -345,10 +338,7 @@
                 }
             }
 
-            // **********************************************
 
-
-            // Función para cargar la deuda pendiente (Lógica del script anterior)
             async function loadPendingDebt() {
                 if (!token) return;
 
@@ -363,14 +353,12 @@
 
                     const deuda = await response.json();
 
-                    debtDetailsListContainer.innerHTML = ''; // Limpiar el contenedor
+                    debtDetailsListContainer.innerHTML = '';
 
                     if (deuda.detalles.length === 0) {
-                        // Usamos la clase debt-item para mantener el estilo visual
                         debtDetailsListContainer.innerHTML = '<div class="debt-item bg-success text-white">¡Felicidades! No tienes deudas pendientes.</div>';
                     } else {
                         deuda.detalles.forEach(item => {
-                            // Aplicamos el estilo de la lista de mascotas (debt-item)
                             const itemHTML = `
                                 <div class="debt-item wow fadeIn" data-wow-delay="0.1s">
                                     <div class="debt-info">
@@ -405,7 +393,6 @@
                 }
             }
 
-            // Función para cargar el historial de pagos (Lógica del script anterior)
             async function loadPaymentHistory() {
                 if (!token) return;
 
@@ -429,7 +416,6 @@
 
                     payments.sort((a, b) => new Date(b.fechaCreacion) - new Date(a.fechaCreacion));
                     payments.forEach(pago => {
-                        // Ajuste de clases de badge para usar las clases de la plantilla si existen, o default de Bootstrap
                         const statusClass = pago.estado.toUpperCase() === 'COMPLETADO' ? 'badge-success' : 'badge-warning';
                         const row = `
                             <tr class="wow fadeIn" data-wow-delay="0.1s">
@@ -449,7 +435,6 @@
                 }
             }
 
-            // Evento de submit del formulario (Lógica del script anterior)
             paymentForm.addEventListener('submit', async (e) => {
                 e.preventDefault();
 
@@ -473,7 +458,7 @@
                     if (response.ok) {
                         successAlert.textContent = '¡Pago realizado con éxito!';
                         successAlert.style.display = 'block';
-                        paymentForm.reset(); // Limpia el formulario (excepto el campo readonly)
+                        paymentForm.reset();
 
                         await loadPaymentHistory();
                         await loadPendingDebt();
@@ -494,12 +479,9 @@
                     buttonText.textContent = 'Pagar Ahora';
                     spinner.style.display = 'none';
 
-                    // Re-habilitar el botón si aún hay deuda, si no, lo mantendrá deshabilitado loadPendingDebt
-                    // Como loadPendingDebt es llamado, se omite la lógica de re-habilitación aquí
                 }
             });
 
-            // Llamadas iniciales
             setupNavbar(token);
             loadPendingDebt();
             loadPaymentHistory();

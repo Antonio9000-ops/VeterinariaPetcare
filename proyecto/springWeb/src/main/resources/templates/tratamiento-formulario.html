@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Añadir Tratamiento</title>
-    <!-- Puedes añadir tus estilos CSS aquí -->
 </head>
 <body>
     <div class="container">
         <h1>Añadir Tratamiento</h1>
         <form id="tratamiento-form">
-            <input type="hidden" id="historiaClinicaId"> <!-- Lo llenaremos dinámicamente -->
+            <input type="hidden" id="historiaClinicaId">
             
             <div>
                 <label for="fecha">Fecha:</label>
@@ -35,8 +34,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // Para añadir un tratamiento, primero necesitamos saber a qué historia clínica pertenece.
-    // Asumiremos que se añade a la última (o única) historia clínica de la mascota.
     try {
         const response = await fetch(`/api/historias/mascota/${mascotaId}`, {
             headers: { 'Authorization': `Bearer ${token}` }
@@ -47,7 +44,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             window.location.href = `/mascota-detalle?id=${mascotaId}`;
             return;
         }
-        // Usamos la historia más reciente (o la primera si solo hay una)
         document.getElementById('historiaClinicaId').value = historias[0].id;
     } catch (error) {
         alert('Error al cargar la historia clínica de la mascota.');

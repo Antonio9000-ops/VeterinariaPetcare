@@ -303,12 +303,10 @@
         const navItemClass = 'nav-item nav-link';
 
         if (token) {
-            // --- Lógica para usuarios logueados ---
             const userData = parseJwt(token);
             const userRole = userData ? userData.role : 'USER';
             const userName = userData ? userData.nombre : 'Usuario';
 
-            // 1. Configurar el mensaje de bienvenida
             const tituloPrincipal = document.getElementById('titulo-principal');
             const bienvenidaSeccion = document.getElementById('bienvenida-seccion');
             const mensajeHeader = document.getElementById('mensaje-bienvenida-header');
@@ -352,7 +350,6 @@
             if (navLinksMenu) navLinksMenu.innerHTML = menuHTML;
 
         } else {
-            // --- Lógica para usuarios NO logueados ---
             let menuHTML = `<a href="/" class="${navItemClass} active">Inicio</a>
                             <a href="/contact" class="${navItemClass}">Contacto de emergencia</a>
                             <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`;
@@ -360,12 +357,9 @@
         }
     }
 
-    // --- Ejecución del código ---
     document.addEventListener('DOMContentLoaded', () => {
-        // Ejecuta la configuración principal
         configurarInterfazUsuario();
 
-        // Lógica para el botón de logout
         document.addEventListener('click', (e) => {
             if (e.target && e.target.id === 'logout-btn-menu') {
                 e.preventDefault();

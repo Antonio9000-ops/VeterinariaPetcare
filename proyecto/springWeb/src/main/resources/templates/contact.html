@@ -25,11 +25,10 @@
     <link href="/css/style.css" rel="stylesheet">
 
     <style>
-        /* Estilo para asegurar que el mapa se vea bien */
         .map-container {
             border-radius: 0.5rem;
             overflow: hidden;
-            height: 400px; /* Altura fija para el mapa */
+            height: 400px;
             border: 1px solid var(--bs-primary);
         }
 
@@ -39,12 +38,10 @@
             border: 0;
         }
         
-        /* Asegura que el spinner no aparezca en una página estática, aunque se mantiene el div por consistencia de la plantilla */
         .spinner-border {
             display: none;
         }
 
-        /* Estilo para las tarjetas de información de contacto */
         .contact-info-card {
             background-color: var(--bs-light);
             border-left: 5px solid var(--bs-primary);
@@ -250,11 +247,8 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
 
-            // Inicializa la animación WOW (del diseño de la plantilla)
             new WOW().init();
 
-            // **********************************************
-            // Lógica para Configurar el Navbar (Modificada para que Contacto esté siempre visible)
             const token = localStorage.getItem('jwt_token');
 
             function parseJwt(token) {
@@ -264,33 +258,27 @@
             function setupNavbar(token) {
                 const navLinksMenu = document.getElementById('nav-links-menu');
                 const navItemClass = 'nav-item nav-link';
-                // El enlace de contacto estará activo
                 const navItemContactClass = `${navItemClass} active`; 
                 let menuHTML = '';
 
                 const userData = token ? parseJwt(token) : null;
 
-                // Enlaces base
                 menuHTML += `<a href="/" class="${navItemClass}">Inicio</a>`;
 
                 if (userData) {
                     const userRole = userData.role;
 
-                    // Enlaces específicos por rol (Autenticado)
                     if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
                         menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
                         menuHTML += `<a href="/agenda" class="${navItemClass}">Agenda</a>`;
                         menuHTML += `<a href="/gestion-servicios" class="${navItemClass}">Gestion de Servicios</a>`;
                     } else {
-                        // Usuario Dueño
                         menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
                         menuHTML += `<a href="/pagos" class="${navItemClass}">Mis Pagos</a>`;
                     }
                     
-                    // El enlace de contacto de emergencia SIEMPRE está disponible para todos
                     menuHTML += `<a href="/contact" class="${navItemContactClass}">Contacto de emergencia</a>`;
                     
-                    // Enlaces de cierre de sesión
                     menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
 
                 } else {

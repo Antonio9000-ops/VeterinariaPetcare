@@ -30,12 +30,11 @@
             padding: 50px 0;
         }
 
-        /* Estilos generales de tabla para Bootstrap, pero con mejor apariencia */
         .table-custom {
             width: 100%;
             margin-top: 20px;
             border-collapse: separate;
-            border-spacing: 0 10px; /* Espacio entre filas */
+            border-spacing: 0 10px;
         }
 
         .table-custom th, .table-custom td {
@@ -73,7 +72,6 @@
             border-bottom-right-radius: 6px;
         }
 
-        /* Estilos para el botón de acción dentro de la tabla */
         .table-custom .btn {
             padding: 8px 15px;
             font-size: 0.9rem;
@@ -234,7 +232,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             const token = localStorage.getItem('jwt_token');
-            // Inicializar WOW.js (desde el script principal)
             if (window.WOW) { new WOW().init(); }
             
             // Lógica de Redirección y Fetch
@@ -244,7 +241,6 @@
             }
 
             const tbody = document.getElementById('mascotas-tbody');
-            // Limpiar la fila de "Cargando..." que pusimos en el HTML
             tbody.innerHTML = ''; 
 
             try {
@@ -259,7 +255,6 @@
                 const mascotas = await response.json();
 
                 if (mascotas.length === 0) {
-                    // Colspan actualizado a 5
                     tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-3">No hay mascotas registradas en el sistema.</td></tr>';
                     return;
                 }
@@ -268,8 +263,6 @@
 
                 mascotas.forEach(mascota => {
                     const tr = document.createElement('tr');
-
-                    // Fila actualizada para incluir el nombre del dueño
                     tr.innerHTML = `
                         <td>${mascota.nombre}</td>
                         <td>${mascota.especie}</td>
@@ -282,7 +275,6 @@
                 });
 
             } catch (error) {
-                // Colspan actualizado a 5
                 tbody.innerHTML = `<tr><td colspan="5" class="text-center alert-danger py-3">Error al cargar las mascotas: ${error.message}</td></tr>`;
             }
         });
