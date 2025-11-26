@@ -532,7 +532,12 @@
 
                     if (role === 'VETERINARIO' || role === 'ASISTENTE') {
                         navLinksMenu.innerHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
-                        navLinksMenu.innerHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
+                        navLinksMenu.innerHTML += `<a href="/agenda" class="${navItemClass}">Agenda</a>`;
+                        navLinksMenu.innerHTML += `<a href="/gestion-servicios" class="${navItemClass}">Gestion de Servicios</a>`;
+                        navLinksMenu.innerHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
+                        navLinksMenu.innerHTML += `<a href="#" id="logout-btn" class="${navItemClass}">Cerrar Sesión</a>`;
+                        
+
                     } else {
                         navLinksMenu.innerHTML += `<a href="/mascotas" class="${navItemClass} active">Mis Mascotas</a>`;
                         navLinksMenu.innerHTML += `<a href="/mascota-formulario" class="${navItemClass}">Añadir Nueva Mascota</a>`;

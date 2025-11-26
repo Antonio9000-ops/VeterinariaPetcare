@@ -279,7 +279,8 @@
                     // Enlaces específicos por rol (Autenticado)
                     if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
                         menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
-                        menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
+                        menuHTML += `<a href="/agenda" class="${navItemClass}">Agenda</a>`;
+                        menuHTML += `<a href="/gestion-servicios" class="${navItemClass}">Gestion de Servicios</a>`;
                     } else {
                         // Usuario Dueño
                         menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
