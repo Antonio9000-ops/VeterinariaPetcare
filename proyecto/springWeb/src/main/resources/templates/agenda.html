@@ -286,6 +286,22 @@
                 tbody.innerHTML = `<tr><td colspan="5" class="text-center alert-danger py-3">Error al cargar las mascotas: ${error.message}</td></tr>`;
             }
         });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutBtn = document.getElementById('logout-btn-menu');
+
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    localStorage.removeItem('jwt_token');
+
+                    alert('Has cerrado la sesión.');
+
+                    window.location.href = '/';
+                });
+            }
+        });
     </script>
 </body>
 

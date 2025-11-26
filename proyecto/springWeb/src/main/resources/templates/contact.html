@@ -294,8 +294,6 @@
                     menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
 
                 } else {
-                    // Usuario No Autenticado
-                    // El enlace de contacto de emergencia SIEMPRE está disponible para todos
                     menuHTML += `<a href="/contact" class="${navItemContactClass}">Contacto de emergencia</a>`;
                     menuHTML += `<a href="/login" class="${navItemClass}">Iniciar Sesión</a>`;
                 }
@@ -315,9 +313,7 @@
                 }
             }
             
-            // Llamada inicial
             setupNavbar(token);
-            // **********************************************
         });
     </script>
 </body>

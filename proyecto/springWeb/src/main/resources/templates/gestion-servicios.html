@@ -36,7 +36,8 @@
             margin-top: 20px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            overflow: hidden; /* Para contener el border-radius */
+            overflow: hidden;
+            /* Para contener el border-radius */
         }
 
         .table-custom-items thead {
@@ -61,11 +62,12 @@
             font-size: 0.85rem;
             margin-right: 5px;
         }
-        
+
         .table-custom-items .btn-warning {
-            color: #212529; /* Color oscuro para el texto del botón amarillo */
+            color: #212529;
+            /* Color oscuro para el texto del botón amarillo */
         }
-        
+
         .modal-content {
             border-radius: 10px;
         }
@@ -106,8 +108,10 @@
         <div class="container py-5">
             <div class="row g-3 align-items-center">
                 <div class="col-lg-8 text-center text-lg-start">
-                    <h1 class="display-1 mb-0 animated slideInLeft" id="hero-title">Gestión de Servicios y Productos</h1>
-                    <p class="text-white mt-3 animated slideInLeft">Administración de ítems facturables de la clínica.</p>
+                    <h1 class="display-1 mb-0 animated slideInLeft" id="hero-title">Gestión de Servicios y Productos
+                    </h1>
+                    <p class="text-white mt-3 animated slideInLeft">Administración de ítems facturables de la clínica.
+                    </p>
                 </div>
                 <div class="col-lg-4 text-center text-lg-end">
                     <button class="btn btn-secondary py-3 px-5 animated slideInRight" onclick="history.back()">Volver
@@ -121,7 +125,8 @@
 
             <div class="row wow fadeIn" data-wow-delay="0.1s">
                 <div class="col-12 text-center text-lg-start">
-                    <button id="btn-anadir" class="btn btn-primary mb-4 py-2 px-4"><i class="fa fa-plus me-2"></i> Añadir Nuevo Item</button>
+                    <button id="btn-anadir" class="btn btn-primary mb-4 py-2 px-4"><i class="fa fa-plus me-2"></i>
+                        Añadir Nuevo Item</button>
                     <div class="table-responsive">
                         <table class="table table-striped table-custom-items">
                             <thead>
@@ -135,7 +140,9 @@
                                 </tr>
                             </thead>
                             <tbody id="items-tabla-body">
-                                <tr><td colspan="6" class="text-center text-muted py-4">Cargando ítems...</td></tr>
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted py-4">Cargando ítems...</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -148,7 +155,8 @@
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
                     <h5 class="modal-title" id="itemModalLabel">Añadir Nuevo Item</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="item-form">
@@ -275,14 +283,14 @@
             // Usamos jQuery para inicializar el modal de Bootstrap (ya que la plantilla lo usa)
             const itemModalElement = document.getElementById('itemModal');
             const itemModal = new bootstrap.Modal(itemModalElement);
-            
+
             const form = document.getElementById('item-form');
             const modalTitle = document.getElementById('itemModalLabel');
 
             const cargarItems = async () => {
                 const tbody = document.getElementById('items-tabla-body');
                 tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-3">Cargando ítems...</td></tr>';
-                
+
                 try {
                     const response = await fetch(API_URL, {
                         headers: { 'Authorization': `Bearer ${token}` }
@@ -291,7 +299,7 @@
                         throw new Error(`Error ${response.status}: No se pudieron cargar los ítems.`);
                     }
                     const items = await response.json();
-                    
+
                     tbody.innerHTML = '';
                     if (items.length === 0) {
                         tbody.innerHTML = '<tr><td colspan="6" class="text-center text-muted py-3">No hay servicios o productos registrados.</td></tr>';
@@ -397,6 +405,22 @@
             });
 
             cargarItems();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutBtn = document.getElementById('logout-btn-menu');
+
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    localStorage.removeItem('jwt_token');
+
+                    alert('Has cerrado la sesión.');
+
+                    window.location.href = '/';
+                });
+            }
         });
     </script>
 </body>

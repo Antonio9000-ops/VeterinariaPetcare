@@ -307,6 +307,22 @@
                 list.innerHTML = `<li class="text-center alert-danger py-3">Error al cargar las citas: ${error.message}</li>`;
             }
         });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const logoutBtn = document.getElementById('logout-btn-menu');
+
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+
+                    localStorage.removeItem('jwt_token');
+
+                    alert('Has cerrado la sesión.');
+
+                    window.location.href = '/';
+                });
+            }
+        });
     </script>
 </body>
 
