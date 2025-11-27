@@ -1,4 +1,6 @@
 ![Logo UTP](https://portalestudiante.utp.edu.pe/Images/newlogoUTP.jpg)
+
+---
 ![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
 ![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)
 ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
@@ -27,33 +29,33 @@ Las versiones del repositorio actual, se dividirán de la **siguiente** forma:
 ## Funcionalidad de la página:
 Como se indicó anteriormente, este trabajo se **regirá** por la metodología de trabajo Sprint:
 
-### 🐾 Plan de Desarrollo del Proyecto (Sprints)
+### Plan de Desarrollo del Proyecto (Sprints)
 
 Este documento detalla las funcionalidades planificadas, organizadas por Sprints, incluyendo el módulo y el rol responsable.
 
 | Sprint | Módulo | Funcionalidad | Rol Asociado | Estado |
 | :--- | :--- | :--- | :--- | :--- |
 | **Sprint 1** | **Páginas Estáticas** | Inicio | General | Finalizado |
-| **Sprint 1** | **Páginas Estáticas** | Sobre nosotros | General | Finalizado |
-| **Sprint 1** | **Páginas Estáticas** | Contacto de Emergencia | General | Finalizado |
-| **Sprint 1** | **Autenticación** | Login | General | Finalizado |
-| **Sprint 1** | **Autenticación** | Registro (Register) | General | Finalizado |
-| **Sprint 1** | **Gestión de Mascotas** | Agregar Mascota | Dueño de Mascota | Finalizado |
-| **Sprint 1** | **Gestión de Mascotas** | Solicitar Citas | Dueño de Mascota | Finalizado |
-| **Sprint 1** | **Gestión de Mascotas** | Editar datos de mascota | Dueño de Mascota | Finalizado |
-| **Sprint 1** | **Gestión de Mascotas** | Eliminar mascota | Dueño de Mascota | Finalizado |
+| | **Páginas Estáticas** | Sobre nosotros | General | Finalizado |
+| | **Páginas Estáticas** | Contacto de Emergencia | General | Finalizado |
+| | **Autenticación** | Login | General | Finalizado |
+| | **Autenticación** | Registro (Register) | General | Finalizado |
+| | **Gestión de Mascotas** | Agregar Mascota | Dueño de Mascota | Finalizado |
+| | **Gestión de Mascotas** | Solicitar Citas | Dueño de Mascota | Finalizado |
+| | **Gestión de Mascotas** | Editar datos de mascota | Dueño de Mascota | Finalizado |
+| | **Gestión de Mascotas** | Eliminar mascota | Dueño de Mascota | Finalizado |
 | **Sprint 2** | **Páginas Estáticas** | Política de Privacidad | General | Finalizado |
-| **Sprint 2** | **Páginas Estáticas** | Términos y Condiciones | General | Finalizado |
-| **Sprint 2** | **Páginas Estáticas** | Catálogo (*Revisar*) | General | Finalizado |
-| **Sprint 2** | **Finanzas** | Gestión de Pagos | Dueño de Mascota | Finalizado |
-| **Sprint 2** | **Gestión Clínica** | Agregar recetas médicas | Veterinario | Finalizado |
-| **Sprint 2** | **Gestión Clínica** | Aceptar y rechazar citas clínicas | Veterinario | Finalizado |
-| **Sprint 2** | **Gestión Clínica** | Historial Clínico | Veterinario | Finalizado |
-| **Sprint 2** | **Gestión Clínica** | Recetar medicinas | Veterinario | Finalizado |
+| | **Páginas Estáticas** | Términos y Condiciones | General | Finalizado |
+| | **Páginas Estáticas** | Catálogo (*Revisar*) | General | Finalizado |
+| | **Finanzas** | Gestión de Pagos | Dueño de Mascota | Finalizado |
+| | **Gestión Clínica** | Agregar recetas médicas | Veterinario | Finalizado |
+| | **Gestión Clínica** | Aceptar y rechazar citas clínicas | Veterinario | Finalizado |
+| | **Gestión Clínica** | Historial Clínico | Veterinario | Finalizado |
+| | **Gestión Clínica** | Recetar medicinas | Veterinario | Finalizado |
 | **Sprint 3** | **Gestión de Usuarios** | Editar Usuario | General | Pendiente |
-| **Sprint 3** | **Rol Asistente** | Agregar datos de mascotas no existentes | Asistente | Pendiente |
-| **Sprint 3** | **Rol Asistente** | Agendar citas de emergencia | Asistente | Pendiente |
-| **Sprint 3** | **Correciones** | Corrección general de los entregables pasados | Todos | Pendiente |
+| | **Rol Asistente** | Agregar datos de mascotas no existentes | Asistente | Pendiente |
+| | **Rol Asistente** | Agendar citas de emergencia | Asistente | Pendiente |
+| | **Correciones** | Corrección general de los entregables pasados | Todos | Pendiente |
 
 ---
 
