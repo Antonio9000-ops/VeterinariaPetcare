@@ -80,60 +80,6 @@ Nuestro objetivo final es poder adquirir experiencia en la **elaboración** de p
 
 ### Estructura del Proyecto
 
-VETERINARIAPETCARE/
-├── .vscode/
-├── proyecto/
-│   └── springWeb/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── springWeb/
-│   │   │       └── demo/
-│   │   │           ├── Controlador/
-│   │   │           ├── domain/
-│   │   │           ├── Security/
-│   │   │           └── DemoApplication.java
-│   │   ├── resources/
-│   │   │   ├── modelosHTML/
-│   │   │   ├── static/
-│   │   │   │   ├── css/
-│   │   │   │   ├── img/
-│   │   │   │   ├── js/
-│   │   │   │   └── lib/
-│   │   │   ├── scss/
-│   │   │   ├── templates/
-│   │   │   │   ├── about.html
-│   │   │   │   ├── agenda.html
-│   │   │   │   ├── cita-formulario.html
-│   │   │   │   ├── contact.html
-│   │   │   │   ├── gestion-citas.html
-│   │   │   │   ├── gestion-servicios.html
-│   │   │   │   ├── historia-formulario.html
-│   │   │   │   ├── inicio.html
-│   │   │   │   ├── login.html
-│   │   │   │   ├── mascota-detalle.html
-│   │   │   │   ├── mascota-formulario.html
-│   │   │   │   ├── mascotas.html
-│   │   │   │   ├── pagos.html
-│   │   │   │   ├── privacy.html
-│   │   │   │   ├── receta-formulario.html
-│   │   │   │   ├── register.html
-│   │   │   │   ├── terms.html
-│   │   │   │   ├── tratamiento-formulario.html
-│   │   │   │   └── vacuna-formulario.html
-│   │   │   └── application.properties
-│   │   └── test/
-│   │       └── java/
-│   │           └── springWeb/
-│   │               └── demo/
-│   │                   └── DemoApplicationTests.java
-├── .gitattributes
-├── .gitignore
-├── nb-actions.xml
-├── pom.xml
-├── .gitignore 
-├── LICENSE
-├── project-structure.md
-└── README.MD
+<img src="/proyecto//springWeb/src/main/resources/static/img/EstructuraProyecto.png">
 
 <img src="https://img.freepik.com/foto-gratis/acercamiento-al-medico-veterinario-cuidando-mascota_23-2149267942.jpg?semt=ais_hybrid&w=740&q=80" width=auto height=auto>
