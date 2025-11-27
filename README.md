@@ -73,13 +73,19 @@ Nuestro objetivo final es poder adquirir experiencia en la **elaboración** de p
 - *Frontend*:
     - Bootstrap
 
+---
+
+
+### Equipo de Desarrolladores
+
 | Colaboradores | Área |
 |---|---|
 | Salvador | BackEnd |
 | Antonio | FrontEnd |
+| Walter | FrontEnd |
 
 ### Estructura del Proyecto
 
 <img src="/proyecto//springWeb/src/main/resources/static/img/EstructuraProyecto.png">
 
-<img src="https://img.freepik.com/foto-gratis/acercamiento-al-medico-veterinario-cuidando-mascota_23-2149267942.jpg?semt=ais_hybrid&w=740&q=80" width=auto height=auto>
+---
