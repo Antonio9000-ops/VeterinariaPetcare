@@ -65,6 +65,18 @@
         border-left: 5px solid var(--bs-warning);
       }
 
+      .citahistorial-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid var(--bs-secondary);
+      }
+
       .cita-info {
         font-size: 1.1rem;
         line-height: 1.6;
@@ -148,7 +160,7 @@
               Gestión de Citas
             </h1>
             <p class="text-white mt-3 animated slideInLeft">
-              Citas Pendientes de Aprobación
+              Crear y administrar citas.
             </p>
           </div>
           <div class="col-lg-4 text-center text-lg-end">
@@ -167,8 +179,9 @@
         <div class="d-flex justify-content-end mb-4">
           <button
             class="btn btn-primary px-4 py-2"
+            id="btnCrearCita"
             data-bs-toggle="modal"
-            data-bs-target="#modalCrearMascota"
+            data-bs-target="#modalIngresarCorreo"
           >
             <i class="fa fa-plus me-2"></i> Crear Cita
           </button>
@@ -179,6 +192,16 @@
             <ul id="citas-list" class="cita-list">
               <li class="text-center text-muted py-5">
                 Cargando citas pendientes...
+              </li>
+            </ul>
+
+            <br>
+            Citas Pasadas.
+            <br>
+
+            <ul id="citasHistorial-list" class="cita-list">
+              <li class="text-center text-muted py-5">
+                Cargando historial de citas...
               </li>
             </ul>
           </div>
@@ -278,6 +301,71 @@
                 <a href="#!">FAQs</a>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Ingresar Correo -->
+    <div class="modal fade" id="modalIngresarCorreo" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Ingrese Correo del Usuario</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <form id="formCorreo">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Correo Electrónico</label>
+                <input
+                  type="email"
+                  name="correo"
+                  id="inputCorreo"
+                  class="form-control"
+                  placeholder="ejemplo@correo.com"
+                  required
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Cancelar
+              </button>
+              <button type="button" class="btn btn-primary" id="btnBuscarMascotas">
+                Buscar Mascotas
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Seleccionar Mascota -->
+    <div class="modal fade" id="modalSeleccionarMascota" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Seleccione una Mascota</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div id="listaMascotas" class="list-group">
+              <p class="text-center text-muted">Cargando mascotas...</p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Cancelar
+            </button>
           </div>
         </div>
       </div>
@@ -410,10 +498,99 @@
 
     <script>
       let mascotaIdGuardada = null;
+      let duenoCorreoGuardado = null;
 
       // IDs por defecto
       const DUENO_ID_DEFAULT = 1;
       const VETERINARIO_ID_DEFAULT = 2;
+
+      // Evento para buscar mascotas por correo
+      document.getElementById("btnBuscarMascotas").addEventListener("click", async () => {
+        const correo = document.getElementById("inputCorreo").value.trim();
+        
+        if (!correo) {
+          alert("Por favor ingrese un correo válido.");
+          return;
+        }
+
+        duenoCorreoGuardado = correo;
+        const listaMascotas = document.getElementById("listaMascotas");
+        listaMascotas.innerHTML = '<p class="text-center text-muted">Cargando mascotas...</p>';
+
+        try {
+          // Primero buscar el dueño por correo para obtener su ID
+          const ownerResp = await fetch(`/api/usuarios/correo/${correo}`);
+
+          if (!ownerResp.ok) {
+            if (ownerResp.status === 404) {
+              listaMascotas.innerHTML = '<p class="text-center text-warning">No se encontró un propietario con ese correo.</p>';
+            } else {
+              throw new Error("Error al buscar el dueño por correo");
+            }
+            return;
+          }
+
+          const dueno = await ownerResp.json();
+          const duenoId = dueno.id;
+
+          // Ahora obtener las mascotas usando el id del dueño
+          const response = await fetch(`/api/mascotas/dueno/${duenoId}`);
+
+          if (!response.ok) {
+            if (response.status === 404) {
+              listaMascotas.innerHTML = '<p class="text-center text-warning">No se encontraron mascotas para este propietario.</p>';
+            } else {
+              throw new Error("Error al obtener las mascotas");
+            }
+            return;
+          }
+
+          const mascotas = await response.json();
+
+          if (mascotas.length === 0) {
+            listaMascotas.innerHTML = '<p class="text-center text-warning">No hay mascotas registradas para este usuario.</p>';
+            return;
+          }
+
+          listaMascotas.innerHTML = mascotas
+            .map(
+              (mascota) => `
+                <button type="button" class="list-group-item list-group-item-action" onclick="seleccionarMascota(${mascota.id}, '${mascota.nombre}')">
+                  <strong>${mascota.nombre}</strong> - ${mascota.especie} (${mascota.raza || 'Raza no especificada'})
+                </button>
+              `
+            )
+            .join("");
+        } catch (error) {
+          listaMascotas.innerHTML = `<p class="text-center text-danger">Error: ${error.message}</p>`;
+        }
+
+        // Cerrar modal de correo y abrir modal de mascotas
+        const modalCorreo = bootstrap.Modal.getInstance(document.getElementById("modalIngresarCorreo"));
+        modalCorreo.hide();
+
+        const modalMascotas = new bootstrap.Modal(document.getElementById("modalSeleccionarMascota"));
+        modalMascotas.show();
+      });
+
+      // Función para seleccionar mascota
+      window.seleccionarMascota = function (mascotaId, nombreMascota) {
+        mascotaIdGuardada = mascotaId;
+        
+        // Cerrar modal de mascotas y abrir modal de cita
+        const modalMascotas = bootstrap.Modal.getInstance(
+          document.getElementById("modalSeleccionarMascota")
+        );
+        modalMascotas.hide();
+
+        // Limpiar formulario de cita
+        document.getElementById("formCita").reset();
+
+        const modalCita = new bootstrap.Modal(
+          document.getElementById("modalCrearCita")
+        );
+        modalCita.show();
+      };
 
       // Borrar formulario mascota
       document
@@ -508,6 +685,9 @@
             );
             modalCita.hide();
             document.getElementById("formMascota").reset();
+            document.getElementById("formCorreo").reset();
+            mascotaIdGuardada = null;
+            duenoCorreoGuardado = null;
           } catch (err) {
             alert("Error al crear la cita: " + err.message);
           }
@@ -563,6 +743,7 @@
 
         const token = localStorage.getItem("jwt_token");
         const list = document.getElementById("citas-list");
+        const listHistorial = document.getElementById("citasHistorial-list");
 
         if (!token) {
           window.location.href = "/login";
@@ -601,12 +782,15 @@
               (cita) => `
                     <li class="cita-item wow fadeIn" data-wow-delay="0.1s">
                         <div class="cita-info">
+                            <strong>ID cita:</strong> ${cita.id} <br>
                             <strong>Mascota:</strong> ${cita.mascotaNombre} <br>
-                            <strong>Dueño:</strong> ${cita.duenoNombre} <br>
                             <strong>Fecha:</strong> ${new Date(
                               cita.fechaHora
                             ).toLocaleString()} <br>
                             <strong>Motivo:</strong> ${cita.motivo}
+                            <br>
+                            <br>
+                            <strong>Estado:</strong> ${cita.estado} <br>
                         </div>
                         <div class="cita-actions">
                             <button onclick="actualizarEstadoCita(${
@@ -623,8 +807,49 @@
         } catch (error) {
           list.innerHTML = `<li class="text-center alert-danger py-3">Error al cargar las citas: ${error.message}</li>`;
         }
+
+        listHistorial.innerHTML = "";
+
+        try {
+          const response = await fetch("/api/citas/historial", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (!response.ok) throw new Error("No se pudieron cargar las citas.");
+
+          const citas = await response.json();
+
+          if (citas.length === 0) {
+            listHistorial.innerHTML =
+              '<li class="text-center text-muted py-3">No hay citas registradas en este momento.</li>';
+            return;
+          }
+
+          listHistorial.innerHTML = citas
+            .map(
+              (cita) => `
+                    <li class="citahistorial-item wow fadeIn" data-wow-delay="0.1s">
+                        <div class="cita-info">
+                            <strong>ID cita:</strong> ${cita.id} <br>
+                            <strong>Mascota:</strong> ${cita.mascotaNombre} <br>
+                            <strong>Fecha:</strong> ${new Date(
+                              cita.fechaHora
+                            ).toLocaleString()} <br>
+                            <strong>Motivo:</strong> ${cita.motivo}
+                            <br>
+                            <br>
+                            <strong>Estado:</strong> ${cita.estado} <br>
+                        </div>
+                    </li>
+                `
+            )
+            .join("");
+        } catch (error) {
+          list.innerHTML = `<li class="text-center alert-danger py-3">Error al cargar las citas: ${error.message}</li>`;
+        }
+        
       });
 
+      
       document.addEventListener("DOMContentLoaded", () => {
         const logoutBtn = document.getElementById("logout-btn-menu");
 

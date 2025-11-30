@@ -108,4 +108,15 @@ public class CitaServiceImpl implements CitaService {
                 .map(citaMapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<CitaDTO> listarCitasPorEstados(String estado1, String estado2, String estado3) {
+        EstadoCita e1 = EstadoCita.valueOf(estado1.toUpperCase());
+        EstadoCita e2 = EstadoCita.valueOf(estado2.toUpperCase());
+        EstadoCita e3 = EstadoCita.valueOf(estado3.toUpperCase());
+        java.util.List<EstadoCita> estados = java.util.Arrays.asList(e1, e2, e3);
+        return citaRepository.findByEstadoIn(estados).stream()
+                .map(citaMapper::toDTO)
+                .collect(Collectors.toList());
+    }
 }
