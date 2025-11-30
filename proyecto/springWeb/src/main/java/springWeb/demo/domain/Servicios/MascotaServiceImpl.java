@@ -20,18 +20,18 @@ public class MascotaServiceImpl implements MascotaService {
     private final MascotaRepository mascotaRepository;
     private final MascotaMapper mascotaMapper;
 
-   @Override
+    @Override
     public List<MascotaDTO> listarTodasLasMascotas() {
         return mascotaRepository.findAll()
                 .stream()
-               
-                .map(mascotaMapper::toDTO) 
+
+                .map(mascotaMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
     @Override
     public MascotaDTO registrarMascota(MascotaDTO mascotaDTO) {
-        
+
         Mascota mascota = mascotaMapper.toEntity(mascotaDTO);
         Mascota nuevaMascota = mascotaRepository.save(mascota);
         return mascotaMapper.toDTO(nuevaMascota);
@@ -41,7 +41,7 @@ public class MascotaServiceImpl implements MascotaService {
     public List<MascotaDTO> listarMascotasPorDueño(Long duenoId) {
         return mascotaRepository.findByDuenoId(duenoId)
                 .stream()
-               
+
                 .map(mascotaMapper::toDTO)
                 .toList();
     }
@@ -49,22 +49,25 @@ public class MascotaServiceImpl implements MascotaService {
     @Override
     public Optional<MascotaDTO> obtenerMascotaPorId(Long id) {
         return mascotaRepository.findById(id)
-                
+
                 .map(mascotaMapper::toDTO);
     }
 
     @Override
     public MascotaDTO actualizarMascota(MascotaDTO mascotaDTO) {
-       
+
         Mascota mascota = mascotaMapper.toEntity(mascotaDTO);
         Mascota actualizada = mascotaRepository.save(mascota);
         return mascotaMapper.toDTO(actualizada);
     }
 
-
     @Override
     public void eliminarMascota(Long id) {
         mascotaRepository.deleteById(id);
+    }
+
+    public List<Mascota> findMascotasConCitaAceptada() {
+        return mascotaRepository.findMascotasConCitaAceptada();
     }
 
 }

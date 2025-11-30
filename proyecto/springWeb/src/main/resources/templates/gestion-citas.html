@@ -1,203 +1,403 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="utf-8">
+  <head>
+    <meta charset="utf-8" />
     <title>PetCare - Gestión de Citas</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Gestión y aprobación de citas médicas pendientes" name="keywords">
-    <meta content="Listado de citas pendientes para personal de clínica" name="description">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta
+      content="Gestión y aprobación de citas médicas pendientes"
+      name="keywords"
+    />
+    <meta
+      content="Listado de citas pendientes para personal de clínica"
+      name="description"
+    />
 
-    <link th:href="@{/img/favicon.ico}" rel="icon">
+    <link th:href="@{/img/favicon.ico}" rel="icon" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Space+Grotesk&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Space+Grotesk&display=swap"
+      rel="stylesheet"
+    />
 
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+      rel="stylesheet"
+    />
 
-    <link th:href="@{/lib/animate/animate.min.css}" rel="stylesheet">
-    <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
+    <link th:href="@{/lib/animate/animate.min.css}" rel="stylesheet" />
+    <link
+      th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}"
+      rel="stylesheet"
+    />
 
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 
-    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
 
     <style>
-        .container-citas {
-            min-height: 70vh;
-            padding: 50px 0;
-        }
+      .container-citas {
+        min-height: 70vh;
+        padding: 50px 0;
+      }
 
-        .cita-list {
-            list-style: none;
-            padding: 0;
-            margin-top: 20px;
-        }
+      .cita-list {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+      }
 
-        .cita-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            margin-bottom: 15px;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            border-left: 5px solid var(--bs-warning);
-        }
+      .cita-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid var(--bs-warning);
+      }
 
-        .cita-info {
-            font-size: 1.1rem;
-            line-height: 1.6;
-        }
+      .cita-info {
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
 
-        .cita-actions button {
-            margin-left: 10px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            padding: 8px 15px;
-            transition: all 0.2s;
-        }
+      .cita-actions button {
+        margin-left: 10px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        padding: 8px 15px;
+        transition: all 0.2s;
+      }
 
-        .cita-actions .btn-success {
-            background-color: #198754;
-            border-color: #198754;
-        }
+      .cita-actions .btn-success {
+        background-color: #198754;
+        border-color: #198754;
+      }
 
-        .cita-actions .btn-danger {
-            background-color: #dc3545;
-            border-color: #dc3545;
-        }
+      .cita-actions .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+      }
     </style>
-</head>
+  </head>
 
-<body>
-    <div id="spinner"
-        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Cargando...</span>
-        </div>
+  <body>
+    <div
+      id="spinner"
+      class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
+    >
+      <div
+        class="spinner-grow text-primary"
+        style="width: 3rem; height: 3rem"
+        role="status"
+      >
+        <span class="sr-only">Cargando...</span>
+      </div>
     </div>
     <div class="container-fluid sticky-top">
-        <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
-                <a th:href="@{/}" class="navbar-brand">
-                    <h1>PetCare</h1>
-                </a>
-                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto" id="nav-links-menu">
-                        <a th:href="@{/}" class="nav-item nav-link">Inicio</a>
-                        <a th:href="@{/gestion-citas}" class="nav-item nav-link active">Gestión Citas</a>
-                        <a th:href="@{/agenda}" class="nav-item nav-link">Mi Agenda</a>
-                        <a th:href="@{/gestion-servicios}" class="nav-item nav-link">Gestion de Servicios</a>
-                        <a th:href="@{/contact}" class="nav-item nav-link">Contacto de emergencia</a>
-                        <a href="#" id="logout-btn-menu" class="nav-item nav-link">Cerrar Sesión</a>
-                    </div>
-                </div>
-            </nav>
-        </div>
+      <div class="container">
+        <nav
+          class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white"
+        >
+          <a th:href="@{/}" class="navbar-brand">
+            <h1>PetCare</h1>
+          </a>
+          <button
+            type="button"
+            class="navbar-toggler ms-auto me-0"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarCollapse"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto" id="nav-links-menu">
+              <a th:href="@{/}" class="nav-item nav-link">Inicio</a>
+              <a th:href="@{/gestion-citas}" class="nav-item nav-link active"
+                >Gestión Citas</a
+              >
+              <a th:href="@{/agenda}" class="nav-item nav-link">Mi Agenda</a>
+              <a th:href="@{/gestion-servicios}" class="nav-item nav-link"
+                >Gestion de Servicios</a
+              >
+              <a th:href="@{/contact}" class="nav-item nav-link"
+                >Contacto de emergencia</a
+              >
+              <a href="#" id="logout-btn-menu" class="nav-item nav-link"
+                >Cerrar Sesión</a
+              >
+            </div>
+          </div>
+        </nav>
+      </div>
     </div>
     <div class="container-fluid pb-5 bg-primary hero-header">
-        <div class="container py-5">
-            <div class="row g-3 align-items-center">
-                <div class="col-lg-8 text-center text-lg-start">
-                    <h1 class="display-1 mb-0 animated slideInLeft" id="hero-title">Gestión de Citas</h1>
-                    <p class="text-white mt-3 animated slideInLeft">Citas Pendientes de Aprobación</p>
-                </div>
-                <div class="col-lg-4 text-center text-lg-end">
-                    <button class="btn btn-secondary py-3 px-5 animated slideInRight" onclick="history.back()">Volver
-                        Atrás <i class="fa fa-arrow-left ms-2"></i></button>
-                </div>
-            </div>
+      <div class="container py-5">
+        <div class="row g-3 align-items-center">
+          <div class="col-lg-8 text-center text-lg-start">
+            <h1 class="display-1 mb-0 animated slideInLeft" id="hero-title">
+              Gestión de Citas
+            </h1>
+            <p class="text-white mt-3 animated slideInLeft">
+              Citas Pendientes de Aprobación
+            </p>
+          </div>
+          <div class="col-lg-4 text-center text-lg-end">
+            <button
+              class="btn btn-secondary py-3 px-5 animated slideInRight"
+              onclick="history.back()"
+            >
+              Volver Atrás <i class="fa fa-arrow-left ms-2"></i>
+            </button>
+          </div>
         </div>
+      </div>
     </div>
     <div class="container-fluid py-5 bg-white container-citas">
-        <div class="container">
-
-            <div class="row wow fadeIn" data-wow-delay="0.3s">
-                <div class="col-12">
-                    <ul id="citas-list" class="cita-list">
-                        <li class="text-center text-muted py-5">Cargando citas pendientes...</li>
-                    </ul>
-                </div>
-            </div>
+      <div class="container">
+        <div class="d-flex justify-content-end mb-4">
+          <button
+            class="btn btn-primary px-4 py-2"
+            data-bs-toggle="modal"
+            data-bs-target="#modalCrearMascota"
+          >
+            <i class="fa fa-plus me-2"></i> Crear Cita
+          </button>
         </div>
+
+        <div class="row wow fadeIn" data-wow-delay="0.3s">
+          <div class="col-12">
+            <ul id="citas-list" class="cita-list">
+              <li class="text-center text-muted py-5">
+                Cargando citas pendientes...
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="container-fluid footer pt-5">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-                    <a th:href="@{/index}" class="d-inline-block mb-3">
-                        <h1 class="text">PetCare</h1>
-                    </a>
-                    <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                        amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
-                        clita duo justo et tempor</p>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
-                    <h5 class="text-white mb-4">Contáctanos</h5>
-                    <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                                class="fab fa-twitter"></i></a>
-                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                                class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                                class="fab fa-youtube"></i></a>
-                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                                class="fab fa-instagram"></i></a>
-                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                                class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
-                    <h5 class="text-white mb-4">Enlaces Populares</h5>
-                    <a class="btn btn-link" th:href="@{/about}">Acerca de Nosotros</a>
-                    <a class="btn btn-link" th:href="@{/contact}">Contáctanos</a>
-                    <a class="btn btn-link" href="#!">Política de Privacidad</a>
-                    <a class="btn btn-link" href="#!">Términos &amp; Condiciones</a>
-                    <a class="btn btn-link" href="#!">Carrera</a>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
-                    <h5 class="text-white mb-4">Nuestros Servicios</h5>
-                    <a class="btn btn-link" th:href="@{/service}">Diseño Interior</a>
-                    <a class="btn btn-link" th:href="@{/service}">Planificación de Proyectos</a>
-                    <a class="btn btn-link" th:href="@{/service}">Renovación</a>
-                    <a class="btn btn-link" th:href="@{/service}">Implementación</a>
-                    <a class="btn btn-link" th:href="@{/service}">Diseño de Paisajes</a>
-                </div>
+      <div class="container py-5">
+        <div class="row g-5">
+          <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
+            <a th:href="@{/index}" class="d-inline-block mb-3">
+              <h1 class="text">PetCare</h1>
+            </a>
+            <p class="mb-0">
+              Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor
+              sit. Aliqu diam amet diam et eos labore. Clita erat ipsum et lorem
+              et sit, sed stet no labore lorem sit. Sanctus clita duo justo et
+              tempor
+            </p>
+          </div>
+          <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
+            <h5 class="text-white mb-4">Contáctanos</h5>
+            <p>
+              <i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA
+            </p>
+            <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+            <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
+            <div class="d-flex pt-2">
+              <a
+                class="btn btn-outline-primary btn-square border-2 me-2"
+                href="#!"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a
+                class="btn btn-outline-primary btn-square border-2 me-2"
+                href="#!"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a
+                class="btn btn-outline-primary btn-square border-2 me-2"
+                href="#!"
+                ><i class="fab fa-youtube"></i
+              ></a>
+              <a
+                class="btn btn-outline-primary btn-square border-2 me-2"
+                href="#!"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a
+                class="btn btn-outline-primary btn-square border-2 me-2"
+                href="#!"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
             </div>
+          </div>
+          <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
+            <h5 class="text-white mb-4">Enlaces Populares</h5>
+            <a class="btn btn-link" th:href="@{/about}">Acerca de Nosotros</a>
+            <a class="btn btn-link" th:href="@{/contact}">Contáctanos</a>
+            <a class="btn btn-link" href="#!">Política de Privacidad</a>
+            <a class="btn btn-link" href="#!">Términos &amp; Condiciones</a>
+            <a class="btn btn-link" href="#!">Carrera</a>
+          </div>
+          <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
+            <h5 class="text-white mb-4">Nuestros Servicios</h5>
+            <a class="btn btn-link" th:href="@{/service}">Diseño Interior</a>
+            <a class="btn btn-link" th:href="@{/service}"
+              >Planificación de Proyectos</a
+            >
+            <a class="btn btn-link" th:href="@{/service}">Renovación</a>
+            <a class="btn btn-link" th:href="@{/service}">Implementación</a>
+            <a class="btn btn-link" th:href="@{/service}">Diseño de Paisajes</a>
+          </div>
         </div>
-        <div class="container wow fadeIn" data-wow-delay="0.1s">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#!">Your Site Name</a>, All Right Reserved.
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>. Distributed by
-                        <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a th:href="@{/index}">Home</a>
-                            <a href="#!">Cookies</a>
-                            <a href="#!">Ayuda</a>
-                            <a href="#!">FAQs</a>
-                        </div>
-                    </div>
-                </div>
+      </div>
+      <div class="container wow fadeIn" data-wow-delay="0.1s">
+        <div class="copyright">
+          <div class="row">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+              &copy; <a class="border-bottom" href="#!">Your Site Name</a>, All
+              Right Reserved. Designed By
+              <a class="border-bottom" href="https://htmlcodex.com"
+                >HTML Codex</a
+              >. Distributed by
+              <a
+                class="border-bottom"
+                href="https://themewagon.com"
+                target="_blank"
+                >ThemeWagon</a
+              >
             </div>
+            <div class="col-md-6 text-center text-md-end">
+              <div class="footer-menu">
+                <a th:href="@{/index}">Home</a>
+                <a href="#!">Cookies</a>
+                <a href="#!">Ayuda</a>
+                <a href="#!">FAQs</a>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
-    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
+    <!-- Modal Crear Mascota -->
+    <div class="modal fade" id="modalCrearMascota" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Crear Mascota</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <form id="formMascota">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input
+                  type="text"
+                  name="nombre"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Especie</label>
+                <input
+                  type="text"
+                  name="especie"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Raza</label>
+                <input type="text" name="raza" class="form-control" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Fecha de Nacimiento</label>
+                <input
+                  type="date"
+                  name="fechaNacimiento"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="btnBorrarMascota"
+              >
+                Borrar
+              </button>
+              <button type="button" class="btn btn-primary" id="btnNextMascota">
+                Siguiente
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Crear Cita -->
+    <div class="modal fade" id="modalCrearCita" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Crear Cita</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <form id="formCita">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Fecha y Hora</label>
+                <input
+                  type="datetime-local"
+                  name="fechaHora"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Motivo</label>
+                <input
+                  type="text"
+                  name="motivo"
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="btnBorrarCita"
+              >
+                Borrar
+              </button>
+              <button type="button" class="btn btn-success" id="btnListoCita">
+                Listo
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"
+      ><i class="bi bi-arrow-up"></i
+    ></a>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -209,116 +409,237 @@
     <script th:src="@{/js/main.js}"></script>
 
     <script>
-        window.parseJwt = function (token) {
-            try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
+      let mascotaIdGuardada = null;
+
+      // IDs por defecto
+      const DUENO_ID_DEFAULT = 1;
+      const VETERINARIO_ID_DEFAULT = 2;
+
+      // Borrar formulario mascota
+      document
+        .getElementById("btnBorrarMascota")
+        .addEventListener("click", () => {
+          document.getElementById("formMascota").reset();
+        });
+
+      // Next a formulario cita
+      document
+        .getElementById("btnNextMascota")
+        .addEventListener("click", async () => {
+          const form = document.getElementById("formMascota");
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+
+          const dataMascota = {
+            nombre: form.nombre.value,
+            especie: form.especie.value,
+            raza: form.raza.value,
+            fechaNacimiento: form.fechaNacimiento.value,
+            duenoId: DUENO_ID_DEFAULT,
+          };
+
+          try {
+            const res = await fetch("/api/mascotas", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(dataMascota),
+            });
+
+            const mascota = await res.json();
+            mascotaIdGuardada = mascota.id;
+
+            const modalMascota = bootstrap.Modal.getInstance(
+              document.getElementById("modalCrearMascota")
+            );
+            modalMascota.hide();
+
+            const modalCita = new bootstrap.Modal(
+              document.getElementById("modalCrearCita")
+            );
+            modalCita.show();
+          } catch (err) {
+            alert("Error al guardar la mascota: " + err.message);
+          }
+        });
+
+      // Borrar formulario cita
+      document.getElementById("btnBorrarCita").addEventListener("click", () => {
+        document.getElementById("formCita").reset();
+      });
+
+      // Listo cita
+      document
+        .getElementById("btnListoCita")
+        .addEventListener("click", async () => {
+          const form = document.getElementById("formCita");
+
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+
+          if (!mascotaIdGuardada) {
+            alert("No hay mascota registrada.");
+            return;
+          }
+
+          const dataCita = {
+            fechaHora: form.fechaHora.value,
+            motivo: form.motivo.value,
+            mascotaId: mascotaIdGuardada,
+            veterinarioId: VETERINARIO_ID_DEFAULT,
+          };
+
+          try {
+            const res = await fetch("/api/citas", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(dataCita),
+            });
+
+            const cita = await res.json();
+            alert("Cita creada correctamente ");
+
+            form.reset();
+            const modalCita = bootstrap.Modal.getInstance(
+              document.getElementById("modalCrearCita")
+            );
+            modalCita.hide();
+            document.getElementById("formMascota").reset();
+          } catch (err) {
+            alert("Error al crear la cita: " + err.message);
+          }
+        });
+
+      window.parseJwt = function (token) {
+        try {
+          return JSON.parse(atob(token.split(".")[1]));
+        } catch (e) {
+          return null;
+        }
+      };
+
+      window.actualizarEstadoCita = async function (citaId, nuevoEstado) {
+        const token = localStorage.getItem("jwt_token");
+        const confirmacion = confirm(
+          `¿Estás seguro de que quieres cambiar el estado de esta cita a ${nuevoEstado}?`
+        );
+        if (!confirmacion) return;
+
+        try {
+          const citaResponse = await fetch(`/api/citas/${citaId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const citaDTO = await citaResponse.json();
+
+          citaDTO.estado = nuevoEstado;
+
+          const response = await fetch(`/api/citas/${citaId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(citaDTO),
+          });
+
+          if (response.ok) {
+            alert("Estado de la cita actualizado correctamente.");
+            window.location.reload();
+          } else {
+            throw new Error("No se pudo actualizar el estado de la cita.");
+          }
+        } catch (error) {
+          alert(`Error: ${error.message}`);
+        }
+      };
+
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (window.WOW) {
+          new WOW().init();
         }
 
-        window.actualizarEstadoCita = async function (citaId, nuevoEstado) {
-            const token = localStorage.getItem('jwt_token');
-            const confirmacion = confirm(`¿Estás seguro de que quieres cambiar el estado de esta cita a ${nuevoEstado}?`);
-            if (!confirmacion) return;
+        const token = localStorage.getItem("jwt_token");
+        const list = document.getElementById("citas-list");
 
-
-            try {
-                const citaResponse = await fetch(`/api/citas/${citaId}`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                const citaDTO = await citaResponse.json();
-
-                citaDTO.estado = nuevoEstado;
-
-                const response = await fetch(`/api/citas/${citaId}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify(citaDTO)
-                });
-
-                if (response.ok) {
-                    alert('Estado de la cita actualizado correctamente.');
-                    window.location.reload();
-                } else {
-                    throw new Error('No se pudo actualizar el estado de la cita.');
-                }
-            } catch (error) {
-                alert(`Error: ${error.message}`);
-            }
+        if (!token) {
+          window.location.href = "/login";
+          return;
         }
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            if (window.WOW) { new WOW().init(); }
+        const userData = parseJwt(token);
+        const userRole = userData ? userData.role : null;
 
-            const token = localStorage.getItem('jwt_token');
-            const list = document.getElementById('citas-list');
+        if (userRole !== "VETERINARIO" && userRole !== "ASISTENTE") {
+          alert(
+            "Acceso denegado. Esta página es solo para personal de la clínica."
+          );
+          window.location.href = "/";
+          return;
+        }
 
+        list.innerHTML = "";
 
-            if (!token) {
-                window.location.href = '/login';
-                return;
-            }
+        try {
+          const response = await fetch("/api/citas/pendientes", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (!response.ok) throw new Error("No se pudieron cargar las citas.");
 
-            const userData = parseJwt(token);
-            const userRole = userData ? userData.role : null;
+          const citas = await response.json();
 
-            if (userRole !== 'VETERINARIO' && userRole !== 'ASISTENTE') {
-                alert('Acceso denegado. Esta página es solo para personal de la clínica.');
-                window.location.href = '/';
-                return;
-            }
+          if (citas.length === 0) {
+            list.innerHTML =
+              '<li class="text-center text-muted py-3">No hay citas pendientes en este momento.</li>';
+            return;
+          }
 
-            list.innerHTML = '';
-
-            try {
-                const response = await fetch('/api/citas/pendientes', {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-                if (!response.ok) throw new Error('No se pudieron cargar las citas.');
-
-                const citas = await response.json();
-
-                if (citas.length === 0) {
-                    list.innerHTML = '<li class="text-center text-muted py-3">No hay citas pendientes en este momento.</li>';
-                    return;
-                }
-
-                list.innerHTML = citas.map(cita => `
+          list.innerHTML = citas
+            .map(
+              (cita) => `
                     <li class="cita-item wow fadeIn" data-wow-delay="0.1s">
                         <div class="cita-info">
                             <strong>Mascota:</strong> ${cita.mascotaNombre} <br>
                             <strong>Dueño:</strong> ${cita.duenoNombre} <br>
-                            <strong>Fecha:</strong> ${new Date(cita.fechaHora).toLocaleString()} <br>
+                            <strong>Fecha:</strong> ${new Date(
+                              cita.fechaHora
+                            ).toLocaleString()} <br>
                             <strong>Motivo:</strong> ${cita.motivo}
                         </div>
                         <div class="cita-actions">
-                            <button onclick="actualizarEstadoCita(${cita.id}, 'ACEPTADA')" class="btn btn-success">Aceptar</button>
-                            <button onclick="actualizarEstadoCita(${cita.id}, 'RECHAZADA')" class="btn btn-danger">Rechazar</button>
+                            <button onclick="actualizarEstadoCita(${
+                              cita.id
+                            }, 'ACEPTADA')" class="btn btn-success">Aceptar</button>
+                            <button onclick="actualizarEstadoCita(${
+                              cita.id
+                            }, 'RECHAZADA')" class="btn btn-danger">Rechazar</button>
                         </div>
                     </li>
-                `).join('');
+                `
+            )
+            .join("");
+        } catch (error) {
+          list.innerHTML = `<li class="text-center alert-danger py-3">Error al cargar las citas: ${error.message}</li>`;
+        }
+      });
 
-            } catch (error) {
-                list.innerHTML = `<li class="text-center alert-danger py-3">Error al cargar las citas: ${error.message}</li>`;
-            }
-        });
+      document.addEventListener("DOMContentLoaded", () => {
+        const logoutBtn = document.getElementById("logout-btn-menu");
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const logoutBtn = document.getElementById('logout-btn-menu');
+        if (logoutBtn) {
+          logoutBtn.addEventListener("click", (e) => {
+            e.preventDefault();
 
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
+            localStorage.removeItem("jwt_token");
 
-                    localStorage.removeItem('jwt_token');
+            alert("Has cerrado la sesión.");
 
-                    alert('Has cerrado la sesión.');
-
-                    window.location.href = '/';
-                });
-            }
-        });
+            window.location.href = "/";
+          });
+        }
+      });
     </script>
-</body>
-
+  </body>
 </html>

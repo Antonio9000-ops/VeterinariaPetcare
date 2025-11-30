@@ -36,7 +36,8 @@ public class CitaServiceImpl implements CitaService {
 
         // Al agendar, el veterinario puede ser pre-seleccionado
         Usuario veterinario = usuarioRepository.findById(citaDTO.getVeterinarioId())
-                .orElseThrow(() -> new RuntimeException("Veterinario no encontrado con id " + citaDTO.getVeterinarioId()));
+                .orElseThrow(
+                        () -> new RuntimeException("Veterinario no encontrado con id " + citaDTO.getVeterinarioId()));
 
         cita.setMascota(mascota);
         cita.setVeterinario(veterinario);
@@ -82,7 +83,8 @@ public class CitaServiceImpl implements CitaService {
             if (nuevoEstado == EstadoCita.ACEPTADA) {
                 String emailVeterinario = userDetails.getUsername();
                 Usuario veterinarioAsignado = usuarioRepository.findByEmail(emailVeterinario)
-                        .orElseThrow(() -> new RuntimeException("Veterinario no encontrado con email: " + emailVeterinario));
+                        .orElseThrow(
+                                () -> new RuntimeException("Veterinario no encontrado con email: " + emailVeterinario));
                 citaExistente.setVeterinario(veterinarioAsignado);
             }
         }
