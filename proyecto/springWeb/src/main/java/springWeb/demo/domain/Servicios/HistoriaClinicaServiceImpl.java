@@ -32,7 +32,7 @@ public class HistoriaClinicaServiceImpl implements HistoriaClinicaService {
 
     private final HistoriaClinicaRepository historiaClinicaRepository;
     private final MascotaRepository mascotaRepository;
-    
+
     @Override
     public HistoriaClinicaDTO registrarEntrada(HistoriaClinicaDTO dto) {
         // Convertir DTO a entidad
@@ -93,9 +93,11 @@ public class HistoriaClinicaServiceImpl implements HistoriaClinicaService {
     }
 
     @Override
-    public List<RecetaDTO> listarRecetasPorMascota(Long mascotaId) {
-        return recetaRepository.findByMascotaId(mascotaId).stream()
-                .map(RecetaMapper::toDTO)
-                .collect(Collectors.toList());
-    }
+public List<RecetaDTO> listarRecetasPorMascota(Long mascotaId) {
+    return recetaRepository.findByHistoriaClinicaMascotaId(mascotaId)
+            .stream()
+            .map(RecetaMapper::toDTO)
+            .collect(Collectors.toList());
+}
+
 }
