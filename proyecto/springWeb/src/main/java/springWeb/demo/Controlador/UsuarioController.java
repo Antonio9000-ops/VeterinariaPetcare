@@ -47,6 +47,13 @@ public class UsuarioController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/correo/{email}")
+    public ResponseEntity<UsuarioDTO> ObtenerUsuarioPorEmail(@PathVariable String email) {
+        return usuarioService.buscarPorEmail(email)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     @PostMapping("/login")
     public ResponseEntity<UsuarioDTO> loginUsuario(@RequestBody Map<String, String> loginData) {
         try {

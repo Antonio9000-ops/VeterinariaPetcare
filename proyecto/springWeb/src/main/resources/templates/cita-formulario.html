@@ -30,7 +30,6 @@
             padding: 50px 0;
         }
 
-        /* Estilos específicos para mejorar la presentación del formulario (similar a mascota-formulario) */
         .form-container-custom {
             max-width: 600px;
             margin: 0 auto;
@@ -49,7 +48,6 @@
             color: #6c757d;
         }
 
-        /* Estilos para mensajes de error/éxito (tomados de la plantilla original) */
         .message-container {
             padding: 15px;
             margin-top: 20px;
@@ -71,7 +69,7 @@
 
 <body>
     <div id="spinner"
-         class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
             <span class="sr-only">Cargando...</span>
         </div>
@@ -217,20 +215,17 @@
     <script th:src="@{/js/main.js}"></script>
 
     <script>
-        // Función para decodificar el JWT (tomado del código anterior)
         function parseJwt(token) {
             try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
         }
         
-        // Función para mostrar mensajes de éxito o error (adaptada al contenedor 'message-container')
         function showMessage(type, message) {
             const container = document.getElementById('message-container');
             container.textContent = message;
             container.style.display = 'block';
-            container.className = `my-3 message-container alert-${type}`; // bootstrap class: alert-success, alert-danger
+            container.className = `my-3 message-container alert-${type}`;
         }
         
-        // Función para configurar el Navbar dinámico (tomado del código anterior)
         function setupNavbar(token) {
             const navLinksMenu = document.getElementById('nav-links-menu');
             const navItemClass = 'nav-item nav-link';
@@ -239,27 +234,22 @@
             const userData = token ? parseJwt(token) : null;
 
             if (userData) {
-                // USUARIO LOGEADO
                 const userRole = userData.role;
 
                 menuHTML += `<a href="/" class="${navItemClass}">Inicio</a>`;
 
                 if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
-                    // Enlaces de gestión para personal de clínica
                     menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
                     menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
                 } else {
-                    // Enlaces de usuario normal 
                     menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
                     menuHTML += `<a href="/mascota-formulario" class="${navItemClass}">Añadir Nueva Mascota</a>`;
                 }
 
-                // Contacto y Cerrar Sesión
                 menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
                 menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
 
             } else {
-                // USUARIO NO LOGEADO
                 menuHTML =
                     `<a href="/" class="${navItemClass}">Inicio</a>
                     <a href="/contact" class="${navItemClass}">Contacto de emergencia</a>
@@ -270,7 +260,6 @@
                 navLinksMenu.innerHTML = menuHTML;
             }
 
-            // Manejador de eventos para el cierre de sesión 
             document.addEventListener('click', (e) => {
                 if (e.target.id === 'logout-btn-menu') {
                     e.preventDefault();
@@ -282,12 +271,11 @@
         }
 
 
-        // Lógica original de agendamiento de cita
         document.addEventListener('DOMContentLoaded', async () => {
-            new WOW().init(); // Inicializar WOW.js
+            new WOW().init();
 
             const token = localStorage.getItem('jwt_token');
-            setupNavbar(token); // Configurar el Navbar
+            setupNavbar(token);
 
             if (!token) { 
                 window.location.href = '/login'; 
@@ -297,29 +285,26 @@
             const params = new URLSearchParams(window.location.search);
             const mascotaId = params.get('mascotaId');
             
-            // Si la mascotaId no viene en la URL, se asume que se cancela/redirige.
             if (!mascotaId) {
                 showMessage('danger', 'Error: ID de mascota no encontrado. Redirigiendo...');
                 setTimeout(() => { window.location.href = '/mascotas'; }, 2000);
                 return;
             }
             
-            // Asignar el ID de mascota al campo oculto para usarlo en el fetch
             document.getElementById('mascotaIdInput').value = mascotaId;
-            // Configurar botón cancelar para volver a la página de detalle
             document.getElementById('btn-cancel').href = `/mascota-detalle?id=${mascotaId}`;
 
             const form = document.getElementById('cita-form');
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
-                document.getElementById('message-container').style.display = 'none'; // Ocultar mensajes previos
+                document.getElementById('message-container').style.display = 'none';
 
                 const citaData = {
                     fechaHora: document.getElementById('fechaHora').value,
                     motivo: document.getElementById('motivo').value,
                     estado: 'PROGRAMADA',
                     mascotaId: mascotaId,
-                    veterinarioId: document.getElementById('veterinarioId').value // Valor por defecto
+                    veterinarioId: document.getElementById('veterinarioId').value
                 };
 
                 try {
@@ -335,9 +320,9 @@
                     if (response.ok) {
                         showMessage('success', '¡Cita agendada con éxito! Redirigiendo...');
                         setTimeout(() => {
-                             window.location.href = `/mascota-detalle?id=${mascotaId}`;
+                            window.location.href = `/mascota-detalle?id=${mascotaId}`;
                         }, 1500);
-                       
+                    
                     } else {
                         const errorData = await response.json();
                         const errorMessage = errorData.message || 'Error al agendar la cita. Verifique la fecha/hora.';

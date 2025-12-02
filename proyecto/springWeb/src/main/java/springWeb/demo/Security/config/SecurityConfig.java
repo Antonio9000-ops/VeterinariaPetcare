@@ -70,7 +70,7 @@ public class SecurityConfig {
                         .hasAnyAuthority("VETERINARIO", "ASISTENTE")
                         .requestMatchers(HttpMethod.PUT, "/api/citas/**").hasAnyAuthority("VETERINARIO", "ASISTENTE")
 
-                        .requestMatchers("/api/mascotas/dueno/**").hasAuthority("DUEÑO")
+                        .requestMatchers("/api/mascotas/dueno/**").hasAnyAuthority("DUEÑO", "ASISTENTE", "VETERINARIO")
                         .requestMatchers("/api/mascotas/**").hasAnyAuthority("DUEÑO", "ASISTENTE", "VETERINARIO")
 
                         .requestMatchers("/api/citas/veterinario/**").hasAnyAuthority("VETERINARIO", "ASISTENTE")

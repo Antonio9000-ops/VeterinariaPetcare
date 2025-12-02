@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springWeb.demo.domain.Dto.MascotaDTO;
+import springWeb.demo.domain.Modelos.Mascota;
 import springWeb.demo.domain.Servicios.interfaces.MascotaService;
 
 @RestController
@@ -21,12 +22,13 @@ import springWeb.demo.domain.Servicios.interfaces.MascotaService;
 public class MascotaController {
 
     private final MascotaService mascotaService;
-    
-     @GetMapping
+
+    @GetMapping
     public ResponseEntity<List<MascotaDTO>> listarTodasLasMascotas() {
         List<MascotaDTO> mascotas = mascotaService.listarTodasLasMascotas();
         return ResponseEntity.ok(mascotas);
     }
+
     @PostMapping
     public ResponseEntity<MascotaDTO> registrarMascota(@RequestBody MascotaDTO mascotaDTO) {
         MascotaDTO nuevaMascota = mascotaService.registrarMascota(mascotaDTO);
@@ -60,4 +62,10 @@ public class MascotaController {
         mascotaService.eliminarMascota(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/agenda")
+    public List<Mascota> obtenerMascotasConCitaAceptada() {
+        return mascotaService.findMascotasConCitaAceptada();
+    }
+
 }

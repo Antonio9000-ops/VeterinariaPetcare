@@ -15,4 +15,5 @@ public interface CitaRepository extends JpaRepository<Cita, Long> {
     List<Cita> findByMascotaId(Long mascotaId);
     List<Cita> findByEstado(EstadoCita estado);
     List<Cita> findByMascota_DuenoAndEstadoPago(Usuario dueno, EstadoPago estado);
+    java.util.List<Cita> findByEstadoIn(java.util.Collection<EstadoCita> estados);
 }

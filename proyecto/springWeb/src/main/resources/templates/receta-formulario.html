@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Añadir Receta</title>
-    <!-- Puedes añadir tus estilos CSS aquí -->
 </head>
 <body>
     <div class="container">
         <h1>Añadir Receta</h1>
         <form id="receta-form">
-            <input type="hidden" id="historiaClinicaId"> <!-- Lo llenaremos dinámicamente -->
+            <input type="hidden" id="historiaClinicaId">
             
             <div>
                 <label for="medicamento">Medicamento:</label>
@@ -39,7 +38,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
-    // Igual que con el tratamiento, necesitamos el ID de la historia clínica.
     try {
         const response = await fetch(`/api/historias/mascota/${mascotaId}`, {
             headers: { 'Authorization': `Bearer ${token}` }

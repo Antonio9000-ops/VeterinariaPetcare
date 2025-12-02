@@ -7,35 +7,27 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Detalle, historial y citas de una mascota específica" name="description">
 
-    <!-- Favicon -->
     <link th:href="@{/img/favicon.ico}" rel="icon">
 
-    <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Space+Grotesk&family=Inter:wght@400;600;700&display=swap"
         rel="stylesheet">
 
-    <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
     <link th:href="@{/lib/animate/animate.min.css}" rel="stylesheet">
     <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
-    <!-- Estilos Específicos para Detalle de Mascota (Adaptados al tema) -->
     <style>
         :root {
             --bs-primary: #1280e0;
-            /* Color primario de la plantilla PetCare */
             --bs-success: #198754;
             --bs-warning: #ffc107;
             --bs-info: #0dcaf0;
@@ -123,13 +115,10 @@
             color: white;
         }
 
-        /* Estilos para el Modal (Factura) */
         .modal {
             display: none;
-            /* Oculto por defecto */
             position: fixed;
             z-index: 1050;
-            /* Z-index alto para estar encima de todo */
             left: 0;
             top: 0;
             width: 100%;
@@ -142,7 +131,6 @@
         .modal-content {
             background-color: #fefefe;
             margin: 10% auto;
-            /* 10% del top y centrado */
             padding: 20px;
             border: 1px solid #888;
             width: 90%;
@@ -226,17 +214,13 @@
 </head>
 
 <body>
-    <!-- Spinner Start (De la plantilla PetCare) -->
     <div id="spinner"
         class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
             <span class="sr-only">Cargando...</span>
         </div>
     </div>
-    <!-- Spinner End -->
 
-
-    <!-- Navbar Start (Diseño PetCare) -->
     <div class="container-fluid sticky-top">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
@@ -248,24 +232,18 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <!-- El email del usuario se elimina de la navegación aquí -->
                     <div class="navbar-nav ms-auto" id="nav-links-menu">
-                        <!-- Los enlaces se cargan por JS según el rol y la sesión -->
-                        <!-- El elemento <p class="nav-item nav-link text-muted" id="user-email">Cargando...</p> ha sido eliminado del HTML estático. -->
                     </div>
                 </div>
             </nav>
         </div>
     </div>
-    <!-- Navbar End -->
 
-    <!-- Hero Header Start (Diseño PetCare) -->
     <div class="container-fluid pb-5 bg-primary hero-header">
         <div class="container py-5">
             <div class="row g-3 align-items-center">
                 <div class="col-lg-12 text-center text-lg-start">
                     <div id="pet-header" class="animated slideInLeft">
-                        <!-- Información de la mascota se carga aquí -->
                         <h1 class="display-3 mb-0 text-white">Cargando Mascota...</h1>
                         <p class="text-white mt-2">ID: ...</p>
                     </div>
@@ -273,18 +251,11 @@
             </div>
         </div>
     </div>
-    <!-- Hero Header End -->
 
-    <!-- Contenido Dinámico: Detalle de Mascota Start -->
     <div class="container-fluid py-5 container-detalle">
         <div class="container">
-
-            <!-- Acciones: Botones -->
             <div id="actions" class="wow fadeIn" data-wow-delay="0.1s">
-                <!-- Botones de acción se cargan aquí por JS (Agendar Cita, Añadir Historia, etc.) -->
             </div>
-
-            <!-- Secciones de Historial -->
 
             <div class="row g-4">
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.2s">
@@ -339,9 +310,7 @@
             </div>
         </div>
     </div>
-    <!-- Contenido Dinámico: Detalle de Mascota End -->
 
-    <!-- Footer Start (Utilizado de la plantilla original) -->
     <div class="container-fluid footer pt-5">
         <div class="container py-5">
             <div class="row g-5">
@@ -409,10 +378,7 @@
             </div>
         </div>
     </div>
-    <!-- Footer End -->
 
-
-    <!-- Modal para Generar Factura (FUNCIONALIDAD PRESERVADA) -->
     <div id="facturaModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -431,13 +397,10 @@
             </div>
         </div>
     </div>
-    <!-- End Modal -->
 
-    <!-- Back to Top -->
     <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
 
-    <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/lib/wow/wow.min.js}"></script>
@@ -445,10 +408,8 @@
     <script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
     <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
 
-    <!-- Template Javascript (Asume que main.js inicializa WOW.js y otros efectos) -->
     <script th:src="@{/js/main.js}"></script>
 
-    <!-- Lógica de autenticación y gestión de mascotas (FUNCIONALIDAD PRESERVADA) -->
     <script>
         const token = localStorage.getItem('jwt_token');
         const headers = {
@@ -457,18 +418,14 @@
         };
         let userRole = null;
 
-        // Función para decodificar el JWT (Preservada)
         function parseJwt(token) {
             try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
         }
 
-        // Modal elements
         const modal = document.getElementById('facturaModal');
         const guardarFacturaBtn = document.getElementById('guardar-factura-btn');
 
-        // Función para mostrar mensajes custom (simulando alert/confirm)
         function showCustomMessage(message, type = 'danger', callback = null) {
-            // Crear un modal simple dinámico
             const modalContainer = document.createElement('div');
             modalContainer.className = 'modal';
             modalContainer.style.display = 'block';
@@ -491,38 +448,30 @@
             document.body.appendChild(modalContainer);
 
             if (callback) {
-                // Manejador para Confirmar
                 document.getElementById('confirm-action-btn').addEventListener('click', () => {
                     document.body.removeChild(modalContainer);
                     callback(true);
                 });
-                // Manejador para Cancelar
                 modalContainer.querySelector('.btn-secondary').addEventListener('click', () => {
                     callback(false);
                 });
             }
         }
-
-        // Sustituto de window.confirm
         function customConfirm(message, callback) {
             showCustomMessage(message, 'info', callback);
         }
 
-        // Sustituto de window.alert
         function customAlert(message) {
             showCustomMessage(message, 'info');
         }
 
 
-        // Función para configurar la barra de navegación (CORRECCIÓN: Se elimina el email)
         function setupNavbar(userData) {
             const navLinksMenu = document.getElementById('nav-links-menu');
-            // const userEmailSpan = document.getElementById('user-email'); <-- Elemento eliminado
             const logoutBtn = document.getElementById('logout-btn');
             const navItemClass = 'nav-item nav-link';
 
             if (navLinksMenu) {
-                // Limpia el menú estático original
                 navLinksMenu.innerHTML = '';
 
                 navLinksMenu.innerHTML += `<a href="/" class="${navItemClass}">Inicio</a>`;
@@ -532,7 +481,12 @@
 
                     if (role === 'VETERINARIO' || role === 'ASISTENTE') {
                         navLinksMenu.innerHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
-                        navLinksMenu.innerHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
+                        navLinksMenu.innerHTML += `<a href="/agenda" class="${navItemClass}">Agenda</a>`;
+                        navLinksMenu.innerHTML += `<a href="/gestion-servicios" class="${navItemClass}">Gestion de Servicios</a>`;
+                        navLinksMenu.innerHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
+                        navLinksMenu.innerHTML += `<a href="#" id="logout-btn" class="${navItemClass}">Cerrar Sesión</a>`;
+                        
+
                     } else {
                         navLinksMenu.innerHTML += `<a href="/mascotas" class="${navItemClass} active">Mis Mascotas</a>`;
                         navLinksMenu.innerHTML += `<a href="/mascota-formulario" class="${navItemClass}">Añadir Nueva Mascota</a>`;
@@ -553,7 +507,6 @@
                 }
             }
 
-            // Asegurar el manejador de logout
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -564,8 +517,6 @@
             }
         }
 
-
-        // Funcionalidad Modal Factura (Preservada)
         async function openFacturaModal(citaId) {
             guardarFacturaBtn.dataset.citaId = citaId;
 
@@ -608,7 +559,6 @@
             }
         }
 
-        // Funcionalidad Guardar Factura (Preservada)
         guardarFacturaBtn.addEventListener('click', async () => {
             const citaId = guardarFacturaBtn.dataset.citaId;
             const selectedItems = document.querySelectorAll('input[name="itemFacturable"]:checked');
@@ -644,7 +594,6 @@
             }
         });
 
-        // Funcionalidad Cancelar Cita (Preservada)
         async function cancelarCita(citaId) {
             customConfirm('¿Estás seguro de que quieres cancelar esta cita?', async (confirmed) => {
                 if (!confirmed) return;
@@ -666,9 +615,7 @@
             });
         }
 
-        // Carga de datos al iniciar la página (Preservada)
         document.addEventListener('DOMContentLoaded', async () => {
-            // Inicializar animaciones WOW
             new WOW().init();
 
             if (!token) { window.location.href = '/login'; return; }
@@ -684,15 +631,11 @@
             const userData = parseJwt(token);
             userRole = userData ? userData.role : null;
 
-            // Configurar Navbar (Ahora sin email)
             setupNavbar(userData);
 
-
-            // Fetch Mascota Info
             fetch(`/api/mascotas/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } })
                 .then(res => res.json())
                 .then(mascota => {
-                    // Encabezado de la mascota con la corrección solicitada
                     document.getElementById('pet-header').innerHTML = `
                     <h1 class="display-3 mb-0 text-white">Nombre de la mascota: ${mascota.nombre}</h1>
                     <p class="text-white mt-2"><strong>Especie:</strong> ${mascota.especie} | <strong>Raza:</strong> ${mascota.raza} | <strong>Nacimiento:</strong> ${mascota.fechaNacimiento}</p>
@@ -719,8 +662,6 @@
                     document.getElementById('pet-header').innerHTML = `<h1 class="display-3 mb-0 text-danger">Error al cargar la mascota</h1>`;
                 });
 
-
-            // Fetch Citas Programadas
             fetch(`/api/citas/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } })
                 .then(res => res.json())
                 .then(citas => {
@@ -744,12 +685,10 @@
                             statusClass = 'text-primary';
                         }
 
-                        // Botón de Facturación (Solo para roles de clínica y citas aceptadas/completadas)
                         if ((c.estado === 'ACEPTADA' || c.estado === 'COMPLETADA') && (userRole === 'VETERINARIO' || userRole === 'ASISTENTE')) {
                             if (c.facturaId) {
                                 actions = `<span class="badge bg-success me-2">Facturada (${c.estadoPago})</span>`;
                             } else {
-                                // Usar 'btn-factura' para el estilo del botón personalizado
                                 actions = `<button onclick="openFacturaModal(${c.id})" class="btn btn-sm btn-primary btn-factura">Generar Factura</button>`;
                             }
                         }
@@ -765,25 +704,21 @@
                     }).join('');
                 });
 
-            // Fetch Historia Clínica
             fetch(`/api/historias/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(historias => {
                 const list = document.getElementById('historia-list');
                 list.innerHTML = historias.length ? historias.map(h => `<li><strong>${new Date(h.fecha).toLocaleDateString('es-ES')}:</strong> ${h.descripcion}</li>`).join('') : '<li class="text-muted">No hay registros.</li>';
             });
 
-            // Fetch Tratamientos
             fetch(`/api/historias/tratamientos/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(tratamientos => {
                 const list = document.getElementById('tratamientos-list');
                 list.innerHTML = tratamientos.length ? tratamientos.map(t => `<li><strong>${new Date(t.fecha).toLocaleDateString('es-ES')}:</strong> ${t.descripcion}</li>`).join('') : '<li class="text-muted">No hay tratamientos.</li>';
             });
 
-            // Fetch Recetas
             fetch(`/api/historias/recetas/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(recetas => {
                 const list = document.getElementById('recetas-list');
                 list.innerHTML = recetas.length ? recetas.map(r => `<li><strong>Medicamento:</strong> ${r.medicamento} | <strong>Dosis:</strong> ${r.dosis}</li>`).join('') : '<li class="text-muted">No hay recetas.</li>';
             });
 
-            // Fetch Vacunas
             fetch(`/api/vacunas/mascota/${mascotaId}`, { headers: { 'Authorization': `Bearer ${token}` } }).then(res => res.json()).then(vacunas => {
                 const list = document.getElementById('vacunas-list');
                 list.innerHTML = vacunas.length ? vacunas.map(v => `<li><strong>${new Date(v.fechaAplicacion).toLocaleDateString('es-ES')}:</strong> ${v.nombre}</li>`).join('') : '<li class="text-muted">No hay vacunas.</li>';
@@ -791,7 +726,6 @@
 
         });
 
-        // Hago global la función para que el botón de factura dentro de las citas pueda llamarla.
         window.openFacturaModal = openFacturaModal;
         window.cancelarCita = cancelarCita;
     </script>

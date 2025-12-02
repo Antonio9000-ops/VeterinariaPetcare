@@ -8,29 +8,22 @@
     <meta content="Gestión de mascotas del usuario" name="keywords">
     <meta content="Lista y administración de las mascotas registradas" name="description">
 
-    <!-- Favicon -->
     <link th:href="@{/img/favicon.ico}" rel="icon">
 
-    <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Space+Grotesk&display=swap" rel="stylesheet">
 
-    <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
     <link th:href="@{/lib/animate/animate.min.css}" rel="stylesheet">
     <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
 
-    <!-- Customized Bootstrap Stylesheet -->
     <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
     <link th:href="@{/css/style.css}" rel="stylesheet">
 
-    <!-- Estilos específicos para la gestión de mascotas (adaptados al tema) -->
     <style>
         .container-mascotas {
             min-height: 70vh;
@@ -54,7 +47,6 @@
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
             border-left: 5px solid var(--bs-primary);
-            /* Usa el color primario del template */
         }
 
         .pet-info {
@@ -92,17 +84,14 @@
 </head>
 
 <body>
-    <!-- Spinner Start -->
     <div id="spinner"
         class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
         <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
             <span class="sr-only">Cargando...</span>
         </div>
     </div>
-    <!-- Spinner End -->
 
 
-    <!-- Navbar Start -->
     <div class="container-fluid sticky-top">
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
@@ -123,7 +112,6 @@
             </nav>
         </div>
     </div>
-    <!-- Navbar End -->
 
     <div class="container-fluid pb-5 bg-primary hero-header">
         <div class="container py-5">
@@ -134,7 +122,6 @@
             </div>
         </div>
     </div>
-    <!-- Contenido Dinámico: Mis Mascotas Start -->
     <div class="container-fluid py-5 bg-white container-mascotas">
         <div class="container">
 
@@ -146,17 +133,14 @@
             <div class="row wow fadeIn" data-wow-delay="0.3s">
                 <div class="col-12">
                     <ul id="pet-list" class="pet-list">
-                        <!-- Las mascotas se cargarán aquí mediante JavaScript -->
                         <li class="text-center text-muted py-5">Cargando tus mascotas...</li>
                     </ul>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Contenido Dinámico: Mis Mascotas End -->
 
 
-    <!-- Footer Start (Utilizado de la plantilla original) -->
     <div class="container-fluid footer pt-5">
         <div class="container py-5">
             <div class="row g-5">
@@ -224,14 +208,10 @@
             </div>
         </div>
     </div>
-    <!-- Footer End -->
 
-
-    <!-- Back to Top -->
     <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
 
-    <!-- JavaScript Libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script th:src="@{/lib/wow/wow.min.js}"></script>
@@ -239,23 +219,18 @@
     <script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
     <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
 
-    <!-- Template Javascript (Se asume que main.js inicializa WOW.js y otros efectos) -->
     <script th:src="@{/js/main.js}"></script>
 
-    <!-- Lógica de autenticación y gestión de mascotas -->
     <script>
-        // Función para decodificar el JWT
         function parseJwt(token) {
             try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
         }
 
-        // Función para mostrar mensajes de éxito o error
         function showMessage(message, type = 'danger') {
             const errorMessageDiv = document.getElementById('error-message');
             errorMessageDiv.textContent = message;
             errorMessageDiv.className = `error-message alert-${type}`;
             errorMessageDiv.style.display = 'block';
-            // Ocultar el mensaje después de 5 segundos si es éxito
             if (type === 'success') {
                 setTimeout(() => {
                     errorMessageDiv.style.display = 'none';
@@ -263,7 +238,6 @@
             }
         }
 
-        // FUNCIÓN MODIFICADA: Ahora configura la navegación completa
         function setupNavbar(token) {
             const navLinksMenu = document.getElementById('nav-links-menu');
             const navItemClass = 'nav-item nav-link';
@@ -272,60 +246,50 @@
             const userData = token ? parseJwt(token) : null;
 
             if (userData) {
-                // USUARIO LOGEADO
                 const userRole = userData.role;
 
                 menuHTML += `<a href="/" class="${navItemClass}">Inicio</a>`;
 
                 if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
-                    // Enlaces de gestión para personal de clínica
                     menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
                     menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
                 } else {
-                    // Enlaces de usuario normal (Mis Mascotas está activo en esta página)
                     menuHTML += `<a href="/mascotas" class="${navItemClass} active">Mis Mascotas</a>`;
                     menuHTML += `<a href="/pagos" class="${navItemClass}">Mis Pagos</a>`;
                     menuHTML += `<a href="/mascota-formulario" class="${navItemClass}">Añadir Nueva Mascota</a>`;
                 }
 
-                // Contacto y Cerrar Sesión
                 menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
                 menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
 
             } else {
-                // USUARIO NO LOGEADO
                 menuHTML =
                     `<a href="/" class="${navItemClass}">Inicio</a>
                  <a href="/contact" class="${navItemClass}">Contacto de emergencia</a>
-                 <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`; // Botón de Iniciar Sesión
+                 <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`;
             }
 
             if (navLinksMenu) {
                 navLinksMenu.innerHTML = menuHTML;
             }
 
-            // Manejador de eventos para el cierre de sesión (aplica solo si el usuario está logeado)
             const logoutBtn = document.getElementById('logout-btn-menu');
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     localStorage.removeItem('jwt_token');
                     alert('Has cerrado la sesión.');
-                    // Redirige al inicio
                     window.location.href = '/';
                 });
             }
         }
 
-
-        // Función para eliminar una mascota
         window.eliminarMascota = async function (mascotaId) {
             if (!window.confirm('¿Estás seguro de que quieres eliminar esta mascota?')) {
                 return;
             }
 
             const token = localStorage.getItem('jwt_token');
-            // ... (resto de la lógica de eliminación) ...
             try {
                 const response = await fetch(`/api/mascotas/${mascotaId}`, {
                     method: 'DELETE',
@@ -344,14 +308,12 @@
             }
         }
 
-        // Carga y muestra la lista de mascotas
         window.addEventListener('DOMContentLoaded', async () => {
             new WOW().init();
 
             const token = localStorage.getItem('jwt_token');
             const petList = document.getElementById('pet-list');
 
-            // Configurar el Navbar primero
             setupNavbar(token);
 
             if (!token) {
@@ -363,7 +325,6 @@
             if (!userData || !userData.userId) {
                 petList.innerHTML = '';
                 showMessage('Error: No se pudo obtener el ID del usuario del token.');
-                // Asegurar redirección si el token no es válido o está incompleto
                 setTimeout(() => { localStorage.removeItem('jwt_token'); window.location.href = '/login'; }, 2000);
                 return;
             }
@@ -389,7 +350,6 @@
                 }
 
                 mascotas.forEach(mascota => {
-                    // Uso de rutas relativas directas en los atributos href
                     const listItem = document.createElement('li');
                     listItem.className = 'pet-item wow fadeIn';
                     listItem.setAttribute('data-wow-delay', '0.1s');
