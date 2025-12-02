@@ -93,8 +93,16 @@
 
             <form id="pet-form">
                 <input type="hidden" id="id">
+                <input type="hidden" id="duenoId">
 
                 <div class="row g-3">
+                    <div class="col-12">
+                        <div class="form-floating">
+                            <input type="email" class="form-control" id="correoUsuario" placeholder="Correo electrónico del propietario" required>
+                            <label for="correoUsuario">Correo del Propietario:</label>
+                            <small id="correo-feedback" class="d-block mt-2" style="display: none;"></small>
+                        </div>
+                    </div>
                     <div class="col-12">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="nombre" placeholder="Nombre de tu Mascota" required>
@@ -121,7 +129,7 @@
                     </div>
                     <div class="col-12">
                         <button type="submit" class="btn btn-primary w-100 py-3" id="submit-button">Guardar Mascota</button>
-                        <a th:href="@{/mascotas}" class="btn btn-outline-secondary w-100 py-2 mt-2">Cancelar</a>
+                        <a th:href="@{/agenda}" class="btn btn-outline-secondary w-100 py-2 mt-2">Cancelar</a>
                     </div>
                 </div>
             </form>
@@ -297,6 +305,45 @@
         const heroTitleElement = document.getElementById('hero-title');
         const idInput = document.getElementById('id');
         const submitButton = document.getElementById('submit-button');
+        const correoInput = document.getElementById('correoUsuario');
+        const duenoIdInput = document.getElementById('duenoId');
+        const correoFeedback = document.getElementById('correo-feedback');
+
+
+        // Buscar usuario por correo cuando se cambia el campo
+        correoInput.addEventListener('blur', async () => {
+            const correo = correoInput.value.trim();
+
+            if (!correo) {
+                correoFeedback.style.display = 'none';
+                duenoIdInput.value = '';
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/usuarios/correo/${correo}`);
+
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        correoFeedback.textContent = '❌ No se encontró un propietario con este correo.';
+                        correoFeedback.className = 'text-danger d-block mt-2';
+                        duenoIdInput.value = '';
+                    } else {
+                        throw new Error('Error al buscar el propietario');
+                    }
+                } else {
+                    const owner = await response.json();
+                    duenoIdInput.value = owner.id;
+                    correoFeedback.textContent = `✓ Propietario encontrado: ${owner.nombre || owner.email}`;
+                    correoFeedback.className = 'text-success d-block mt-2';
+                }
+            } catch (error) {
+                console.error('Error al buscar propietario:', error);
+                correoFeedback.textContent = '⚠ Error al buscar el propietario. Intente nuevamente.';
+                correoFeedback.className = 'text-warning d-block mt-2';
+                duenoIdInput.value = '';
+            }
+        });
 
 
         const urlParams = new URLSearchParams(window.location.search);
@@ -326,7 +373,7 @@
             } catch (error) {
                 console.error('Error al cargar la mascota:', error);
                 showMessage('danger', 'Error al cargar los datos de la mascota.');
-                setTimeout(() => { window.location.href = '/mascotas'; }, 2000);
+                setTimeout(() => { window.location.href = '/asistente-mascota'; }, 2000);
             }
         } else {
             formTitleElement.textContent = 'Registrar Nueva Mascota';
@@ -339,12 +386,19 @@
             event.preventDefault();
             document.getElementById('message-container').style.display = 'none';
 
+            const duenoIdValue = duenoIdInput.value;
+
+            if (!duenoIdValue) {
+                showMessage('warning', 'Por favor ingrese un correo válido de propietario y espere a que se valide.');
+                return;
+            }
+
             const mascotaData = {
                 nombre: document.getElementById('nombre').value,
                 especie: document.getElementById('especie').value,
                 raza: document.getElementById('raza').value,
                 fechaNacimiento: document.getElementById('fechaNacimiento').value,
-                duenoId: userData.userId
+                duenoId: parseInt(duenoIdValue)
             };
 
             const currentPetId = idInput.value;
@@ -367,7 +421,7 @@
                 if (response.ok) {
                     showMessage('success', successMessage);
                     setTimeout(() => {
-                        window.location.href = '/mascotas';
+                        window.location.href = '/agenda';
                     }, 1500);
                 } else {
                     const errorData = await response.json();

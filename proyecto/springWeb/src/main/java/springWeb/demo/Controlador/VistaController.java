@@ -39,6 +39,11 @@ public class VistaController {
         return "mascota-formulario";
     }
 
+    @GetMapping("/asistente-mascota")
+    public String mostrarPaginaMascotaFormularioAsistente() {
+        return "asistente-mascota-formulario";
+    }
+
     @GetMapping("/cita-formulario")
     public String mostrarPaginaCitaFormulario() {
         return "cita-formulario";

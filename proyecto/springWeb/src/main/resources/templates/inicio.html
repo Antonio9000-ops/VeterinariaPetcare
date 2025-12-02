@@ -337,8 +337,9 @@
             let menuHTML = `<a href="/" class="${navItemClass} active">Inicio</a>`;
             if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
                 menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
-                menuHTML += `<a href="/agenda" class="${navItemClass}">Agenda</a>`;
-                menuHTML += `<a href="/gestion-servicios" class="${navItemClass}">Gestión de Servicios</a>`;
+                menuHTML += `<a href="/agenda" class="${navItemClass}">Mascotas</a>`;
+                menuHTML += `<a href="/gestion-servicios" class="${navItemClass}">Servicios</a>`;
+                menuHTML += `<a href="/asistente-mascota" class="${navItemClass}">Agregar Mascota</a>`;
             } else {
                 menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
                 menuHTML += `<a href="/pagos" class="${navItemClass}">Mis Pagos</a>`;
