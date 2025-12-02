@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import springWeb.demo.domain.Dto.MascotaDTO;
 import springWeb.demo.domain.Mapper.MascotaMapper;
+import springWeb.demo.domain.Modelos.EstadoCita;
 import springWeb.demo.domain.Modelos.Mascota;
 import springWeb.demo.domain.Repositorios.MascotaRepository;
 import springWeb.demo.domain.Servicios.interfaces.MascotaService;
@@ -67,7 +68,8 @@ public class MascotaServiceImpl implements MascotaService {
     }
 
     public List<Mascota> findMascotasConCitaAceptada() {
-        return mascotaRepository.findMascotasConCitaAceptada();
-    }
+    return mascotaRepository.findDistinctByCitasEstado(EstadoCita.ACEPTADA);
+}
+
 
 }

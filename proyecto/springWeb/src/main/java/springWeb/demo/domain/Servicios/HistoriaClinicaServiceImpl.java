@@ -86,11 +86,13 @@ public class HistoriaClinicaServiceImpl implements HistoriaClinicaService {
         return HistoriaClinicaMapper.toDTO(historiaGuardada);
     }
     @Override
-    public List<TratamientoDTO> listarTratamientosPorMascota(Long mascotaId) {
-        return tratamientoRepository.findByMascotaId(mascotaId).stream()
-                .map(TratamientoMapper::toDTO)
-                .collect(Collectors.toList());
-    }
+public List<TratamientoDTO> listarTratamientosPorMascota(Long mascotaId) {
+    return tratamientoRepository.findByHistoriaClinicaMascotaId(mascotaId)
+            .stream()
+            .map(TratamientoMapper::toDTO)
+            .collect(Collectors.toList());
+}
+
 
     @Override
 public List<RecetaDTO> listarRecetasPorMascota(Long mascotaId) {
