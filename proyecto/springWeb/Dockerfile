@@ -4,10 +4,9 @@ WORKDIR /app
 COPY . .
 RUN mvn clean package -DskipTests
 
-# --- Etapa de Ejecución (Run) ---
 FROM eclipse-temurin:21-jdk
 WORKDIR /app
-# Copiamos el jar generado en la etapa anterior
+
 COPY --from=build /app/target/springWeb-0.0.1-SNAPSHOT.jar app.jar
 
 EXPOSE 8080
