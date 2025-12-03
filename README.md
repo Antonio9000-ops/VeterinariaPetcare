@@ -52,10 +52,11 @@ Este documento detalla las funcionalidades planificadas, organizadas por Sprints
 | | **Gestión Clínica** | Aceptar y rechazar citas clínicas | Veterinario | Finalizado |
 | | **Gestión Clínica** | Historial Clínico | Veterinario | Finalizado |
 | | **Gestión Clínica** | Recetar medicinas | Veterinario | Finalizado |
-| **Sprint 3** | **Gestión de Usuarios** | Editar Usuario | General | Pendiente |
-| | **Rol Asistente** | Agregar datos de mascotas no existentes | Asistente | Pendiente |
-| | **Rol Asistente** | Agendar citas de emergencia | Asistente | Pendiente |
-| | **Correciones** | Corrección general de los entregables pasados | Todos | Pendiente |
+| **Sprint 3** | **Gestión de Usuarios** | Editar Usuario | General | Finalizado |
+| | **Rol Asistente** | Agregar datos de mascotas no existentes | Asistente | Finalizado |
+| | **Rol Asistente** | Agendar citas de emergencia | Asistente | Finalizado |
+| | **Seguridad** | Implementar spring security| General | Finalizado |
+| | **Hosting** | Subir proyecto en la nuber | General | Finalizado |
 
 ---
 
@@ -83,10 +84,135 @@ Nuestro objetivo final es poder adquirir experiencia en la **elaboración** de p
 | Salvador | BackEnd |
 | Antonio | FrontEnd |
 | Walter | FrontEnd |
+| Ravichagua | BackEnd |
+| Alexander | FrontEnd |
 
 ### Estructura del Proyecto
 
-<img src="/proyecto//springWeb/src/main/resources/static/img/EstructuraProyecto.png">
+```
+├── java
+│   └── springWeb
+│       └── demo
+│           ├── Controlador
+│           │   ├── CitaController.java
+│           │   ├── FacturacionController.java
+│           │   ├── HistoriaClinicaController.java
+│           │   ├── HomeController.java
+│           │   ├── ItemFacturableController.java
+│           │   ├── MascotaController.java
+│           │   ├── PagoController.java
+│           │   ├── RecetaController.java
+│           │   ├── TratamientoController.java
+│           │   ├── UsuarioController.java
+│           │   ├── VacunaController.java
+│           │   └── VistaController.java
+│           ├── DemoApplication.java
+│           ├── domain
+│           │   ├── Dto
+│           │   │   ├── CitaDTO.java
+│           │   │   ├── facturacion
+│           │   │   │   ├── DeudaDetalleDTO.java
+│           │   │   │   ├── DeudaTotalDTO.java
+│           │   │   │   └── FacturaRequestDTO.java
+│           │   │   ├── HistoriaClinicaDTO.java
+│           │   │   ├── MascotaDTO.java
+│           │   │   ├── PagoDTO.java
+│           │   │   ├── RecetaDTO.java
+│           │   │   ├── TratamientoDTO.java
+│           │   │   ├── UsuarioDTO.java
+│           │   │   └── VacunaDTO.java
+│           │   ├── Mapper
+│           │   │   ├── CitaMapper.java
+│           │   │   ├── HistoriaClinicaMapper.java
+│           │   │   ├── MascotaMapper.java
+│           │   │   ├── PagoMapper.java
+│           │   │   ├── RecetaMapper.java
+│           │   │   ├── TratamientoMapper.java
+│           │   │   ├── UsuarioMapper.java
+│           │   │   └── VacunaMapper.java
+│           │   ├── Modelos
+│           │   │   ├── Cita.java
+│           │   │   ├── EstadoCita.java
+│           │   │   ├── EstadoPago.java
+│           │   │   ├── Factura.java
+│           │   │   ├── HistoriaClinica.java
+│           │   │   ├── ItemFacturable.java
+│           │   │   ├── Mascota.java
+│           │   │   ├── Pago.java
+│           │   │   ├── Receta.java
+│           │   │   ├── Rol.java
+│           │   │   ├── TipoItem.java
+│           │   │   ├── Tratamiento.java
+│           │   │   ├── Usuario.java
+│           │   │   └── Vacuna.java
+│           │   ├── Repositorios
+│           │   │   ├── CitaRepository.java
+│           │   │   ├── FacturaRepository.java
+│           │   │   ├── HistoriaClinicaRepository.java
+│           │   │   ├── ItemFacturableRepository.java
+│           │   │   ├── MascotaRepository.java
+│           │   │   ├── PagoRepository.java
+│           │   │   ├── RecetaRepository.java
+│           │   │   ├── TratamientoRepository.java
+│           │   │   ├── UsuarioRepository.java
+│           │   │   └── VacunaRepository.java
+│           │   └── Servicios
+│           │       ├── CitaServiceImpl.java
+│           │       ├── FacturacionServiceImpl.java
+│           │       ├── HistoriaClinicaServiceImpl.java
+│           │       ├── interfaces
+│           │       │   ├── CitaService.java
+│           │       │   ├── FacturacionService.java
+│           │       │   ├── HistoriaClinicaService.java
+│           │       │   ├── ItemFacturableService.java
+│           │       │   ├── MascotaService.java
+│           │       │   ├── RecetaService.java
+│           │       │   ├── TratamientoService.java
+│           │       │   ├── UsuarioService.java
+│           │       │   └── VacunaService.java
+│           │       ├── ItemFacturableServiceImpl.java
+│           │       ├── MascotaServiceImpl.java
+│           │       ├── RecetaServiceImpl.java
+│           │       ├── TratamientoServiceImpl.java
+│           │       ├── UsuarioServiceImpl.java
+│           │       └── VacunaServiceImpl.java
+│           └── Security
+│               ├── auth
+│               │   ├── AuthController.java
+│               │   ├── AuthRequest.java
+│               │   ├── AuthResponse.java
+│               │   ├── AuthService.java
+│               │   └── RegisterRequest.java
+│               ├── config
+│               │   └── SecurityConfig.java
+│               └── jwt
+│                   ├── JwtAuthFilter.java
+│                   └── JwtService.java
+└── resources
+    ├── application.properties
+    └── templates
+        ├── about.html
+        ├── agenda.html
+        ├── asistente-mascota-formulario.html
+        ├── cita-formulario.html
+        ├── contact.html
+        ├── gestion-citas.html
+        ├── gestion-servicios.html
+        ├── historia-formulario.html
+        ├── inicio.html
+        ├── login.html
+        ├── mascota-detalle.html
+        ├── mascota-formulario.html
+        ├── mascotas.html
+        ├── pagos.html
+        ├── privacy.html
+        ├── receta-formulario.html
+        ├── register.html
+        ├── terms.html
+        ├── tratamiento-formulario.html
+        └── vacuna-formulario.html
+
+```
 
 ---
 
