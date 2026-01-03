@@ -10,10 +10,7 @@
       <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/agenda.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/agenda.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/cita-formulario.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/cita-formulario.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/contact.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/gestion-servicios.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/gestion-servicios.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/inicio.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/inicio.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/mascota-detalle.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/mascota-detalle.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/gestion-citas.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/gestion-citas.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
