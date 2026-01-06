@@ -162,59 +162,6 @@
 
     <div th:replace="~{common/footer :: footer_piezita}"></div>
  
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-
-      new WOW().init();
-
-      const token = localStorage.getItem('jwt_token');
-
-      function setupNavbar(token) {
-          const navLinksMenu = document.getElementById('nav-links-menu');
-          const navItemClass = 'nav-item nav-link';
-          let menuHTML = '';
-
-          const userData = token ? parseJwt(token) : null;
-
-          menuHTML += `<a href="/" class="${navItemClass}">Inicio</a>`;
-
-          const contactActive = `${navItemClass} active`;
-
-          if (userData) {
-              const role = userData.role;
-
-              if (role === 'VETERINARIO' || role === 'ASISTENTE') {
-                  menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
-                  menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
-              } else {
-                  menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
-                  menuHTML += `<a href="/pagos" class="${navItemClass}">Mis Pagos</a>`;
-              }
-
-              menuHTML += `<a href="/contact" class="${contactActive}">Contacto de emergencia</a>`;
-              menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
-
-          } else {
-              menuHTML += `<a href="/contact" class="${contactActive}">Contacto de emergencia</a>`;
-              menuHTML += `<a href="/login" class="${navItemClass}">Iniciar Sesión</a>`;
-          }
-
-          navLinksMenu.innerHTML = menuHTML;
-
-          const logoutBtn = document.getElementById('logout-btn-menu');
-          if (logoutBtn) {
-              logoutBtn.addEventListener('click', e => {
-                  e.preventDefault();
-                  localStorage.removeItem('jwt_token');
-                  alert('Has cerrado sesión');
-                  window.location.href = '/';
-              });
-          }
-      }
-
-      setupNavbar(token);
-  });
-</script>
     <script src="/js/script.js"></script>
 
 </body>

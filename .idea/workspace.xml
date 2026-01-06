@@ -4,41 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="76282acd-ef42-494d-8f6d-a8ae78e5f767" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/footer.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/footer2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/hero-slider-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/hero-slider-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/hero-slider-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/nav.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/nav3.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/project-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/project-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/project-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/project-4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/project-5.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/project-6.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/service-1.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/service-2.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/service-3.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/static/img/service-4.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/agenda.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/agenda.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/cita-formulario.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/cita-formulario.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/contact.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/contact.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/gestion-citas.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/gestion-citas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/gestion-servicios.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/gestion-servicios.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/inicio.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/inicio.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/mascota-detalle.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/mascota-detalle.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/mascota-formulario.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/mascota-formulario.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/mascotas.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/mascotas.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/pagos.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/pagos.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/privacy.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/privacy.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/terms.html" beforeDir="false" afterPath="$PROJECT_DIR$/proyecto/springWeb/src/main/resources/templates/terms.html" afterDir="false" />
-    </list>
+    <list default="true" id="76282acd-ef42-494d-8f6d-a8ae78e5f767" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
