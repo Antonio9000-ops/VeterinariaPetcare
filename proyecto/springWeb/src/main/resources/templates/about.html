@@ -43,7 +43,7 @@
         <div class="container py-5">
             <div class="row g-3 align-items-center">
                 <div class="col-lg-12 text-center text-lg-start">
-                    <h1 class="display-1 mb-0 animated slideInLeft text-white">Sobre Nosotros 🐾</h1>
+                    <h1 class="display-1 mb-0 animated slideInLeft" id="hero-title">Sobre Nosotros</h1>
                 </div>
             </div>
         </div>
@@ -88,57 +88,7 @@
 
     <div th:replace="~{common/footer :: footer_piezita}"></div>
 
-
-    <!-- NAVBAR DINÁMICO COPIADO DE CONTACT.HTML -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            new WOW().init();
-
-            const token = localStorage.getItem('jwt_token');
-            function parseJwt(token) { try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; } }
-
-            function setupNavbar(token) {
-                const navLinksMenu = document.getElementById('nav-links-menu');
-                const navItemClass = 'nav-item nav-link';
-
-                let menuHTML = '';
-                const userData = token ? parseJwt(token) : null;
-
-                menuHTML += `<a href="/" class="${navItemClass}">Inicio</a>`;
-
-                if (userData) {
-                    const userRole = userData.role;
-
-                    if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
-                        menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
-                        menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
-                    } else {
-                        menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
-                        menuHTML += `<a href="/pagos" class="${navItemClass}">Mis Pagos</a>`;
-                    }
-
-                    menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
-                    menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
-                } else {
-                    menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
-                    menuHTML += `<a href="/login" class="${navItemClass}">Iniciar Sesión</a>`;
-                }
-
-                navLinksMenu.innerHTML = menuHTML;
-
-                const logoutBtn = document.getElementById('logout-btn-menu');
-                if (logoutBtn) {
-                    logoutBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        localStorage.removeItem('jwt_token');
-                        window.location.href = '/';
-                    });
-                }
-            }
-
-            setupNavbar(token);
-        });
-    </script>
+    <script src="/js/script.js"></script>
 
 </body>
 

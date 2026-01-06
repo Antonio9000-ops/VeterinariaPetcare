@@ -166,7 +166,6 @@
 
 <div th:replace="~{common/footer :: footer_piezita}"></div>
 
-
     <script>
         const API_URL = '/api/items-facturables';
         const token = localStorage.getItem('jwt_token');
@@ -176,7 +175,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            if (window.WOW) { new WOW().init(); }
 
             const itemModalElement = document.getElementById('itemModal');
             const itemModal = new bootstrap.Modal(itemModalElement);
@@ -299,22 +297,9 @@
             cargarItems();
         });
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const logoutBtn = document.getElementById('logout-btn-menu');
-
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-
-                    localStorage.removeItem('jwt_token');
-
-                    alert('Has cerrado la sesión.');
-
-                    window.location.href = '/';
-                });
-            }
-        });
     </script>
+    <script src="/js/script.js"></script>
+
 </body>
 
 </html>

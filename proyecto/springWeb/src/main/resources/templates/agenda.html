@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-
-<head>
+  <head>
     <th:block th:replace="~{common/head :: head_piezita}"></th:block>
     <title>PetCare - Listado General de Mascotas</title>
     <style>
@@ -163,8 +162,7 @@
         </div>
       </div>
     </div>
-<div th:replace="~{common/footer :: footer_piezita}"></div>
-
+    <div th:replace="~{common/footer :: footer_piezita}"></div>
 
     <script>
       document.addEventListener("DOMContentLoaded", async () => {
@@ -183,7 +181,7 @@
         tbody.innerHTML = "";
 
         try {
-          const response = await fetch(`/api/mascotas/agenda`, {
+          const response = await fetch(`/api/mascotas`, {
             headers: { Authorization: `Bearer ${token}` },
           });
 
@@ -222,21 +220,9 @@
         }
       });
 
-      document.addEventListener("DOMContentLoaded", () => {
-        const logoutBtn = document.getElementById("logout-btn-menu");
-
-        if (logoutBtn) {
-          logoutBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-
-            localStorage.removeItem("jwt_token");
-
-            alert("Has cerrado la sesión.");
-
-            window.location.href = "/";
-          });
-        }
-      });
     </script>
+    <script src="/js/script.js"></script>
+
   </body>
+
 </html>

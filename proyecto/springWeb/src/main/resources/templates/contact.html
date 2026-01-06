@@ -70,7 +70,7 @@
         <div class="container py-5">
             <div class="row g-3 align-items-center">
                 <div class="col-lg-12 text-center text-lg-start">
-                    <h1 class="display-1 mb-0 animated slideInLeft text-white">Contacto de Emergencia</h1>
+                    <h1 class="display-1 mb-0 animated slideInLeft" id="hero-title">Contacto de Emergencia</h1>
                 </div>
             </div>
         </div>
@@ -147,68 +147,10 @@
         </div>
     </div>
     <div th:replace="~{common/footer :: footer_piezita}"></div>
+ 
 
+    <script src="/js/script.js"></script>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-
-            new WOW().init();
-
-            const token = localStorage.getItem('jwt_token');
-
-            function parseJwt(token) {
-                try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
-            }
-            
-            function setupNavbar(token) {
-                const navLinksMenu = document.getElementById('nav-links-menu');
-                const navItemClass = 'nav-item nav-link';
-                const navItemContactClass = `${navItemClass} active`; 
-                let menuHTML = '';
-
-                const userData = token ? parseJwt(token) : null;
-
-                menuHTML += `<a href="/" class="${navItemClass}">Inicio</a>`;
-
-                if (userData) {
-                    const userRole = userData.role;
-
-                    if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
-                        menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
-                        menuHTML += `<a href="/agenda" class="${navItemClass}">Agenda</a>`;
-                        menuHTML += `<a href="/gestion-servicios" class="${navItemClass}">Gestion de Servicios</a>`;
-                    } else {
-                        menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
-                        menuHTML += `<a href="/pagos" class="${navItemClass}">Mis Pagos</a>`;
-                    }
-                    
-                    menuHTML += `<a href="/contact" class="${navItemContactClass}">Contacto de emergencia</a>`;
-                    
-                    menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
-
-                } else {
-                    menuHTML += `<a href="/contact" class="${navItemContactClass}">Contacto de emergencia</a>`;
-                    menuHTML += `<a href="/login" class="${navItemClass}">Iniciar Sesión</a>`;
-                }
-
-                if (navLinksMenu) {
-                    navLinksMenu.innerHTML = menuHTML;
-                }
-
-                const logoutBtn = document.getElementById('logout-btn-menu');
-                if (logoutBtn) {
-                    logoutBtn.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        localStorage.removeItem('jwt_token');
-                        alert('Has cerrado la sesión.');
-                        window.location.href = '/';
-                    });
-                }
-            }
-            
-            setupNavbar(token);
-        });
-    </script>
 </body>
 
 </html>

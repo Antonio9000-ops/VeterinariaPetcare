@@ -554,14 +554,6 @@
           }
         });
 
-      window.parseJwt = function (token) {
-        try {
-          return JSON.parse(atob(token.split(".")[1]));
-        } catch (e) {
-          return null;
-        }
-      };
-
       window.actualizarEstadoCita = async function (citaId, nuevoEstado) {
         const token = localStorage.getItem("jwt_token");
         const confirmacion = confirm(
@@ -705,27 +697,14 @@
             )
             .join("");
         } catch (error) {
-          list.innerHTML = `<li class="text-center alert-danger py-3">Error al cargar las citas: ${error.message}</li>`;
+          listHistorial.innerHTML = `<li class="text-center alert-danger py-3">Error al cargar las citas: ${error.message}</li>`;
         }
         
       });
 
-      
-      document.addEventListener("DOMContentLoaded", () => {
-        const logoutBtn = document.getElementById("logout-btn-menu");
-
-        if (logoutBtn) {
-          logoutBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-
-            localStorage.removeItem("jwt_token");
-
-            alert("Has cerrado la sesión.");
-
-            window.location.href = "/";
-          });
-        }
-      });
     </script>
+    <script src="/js/script.js"></script>
+
   </body>
+
 </html>

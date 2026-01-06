@@ -118,12 +118,7 @@
     </div>
 <div th:replace="~{common/footer :: footer_piezita}"></div>
 
-
     <script>
-        function parseJwt(token) {
-            try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
-        }
-        
         function showMessage(type, message) {
             const container = document.getElementById('message-container');
             container.textContent = message;
@@ -131,61 +126,10 @@
             container.className = `my-3 message-container alert-${type}`;
         }
         
-        function setupNavbar(token) {
-            const navLinksMenu = document.getElementById('nav-links-menu');
-            const navItemClass = 'nav-item nav-link';
-            let menuHTML = '';
-
-            const userData = token ? parseJwt(token) : null;
-
-            if (userData) {
-                const userRole = userData.role;
-
-                menuHTML += `<a href="/" class="${navItemClass}">Inicio</a>`;
-
-                if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
-                    menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
-                    menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
-                } else {
-                    menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
-                    menuHTML += `<a href="/mascota-formulario" class="${navItemClass}">Añadir Nueva Mascota</a>`;
-                }
-
-                menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
-                menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
-
-            } else {
-                menuHTML =
-                    `<a href="/" class="${navItemClass}">Inicio</a>
-                    <a href="/contact" class="${navItemClass}">Contacto de emergencia</a>
-                    <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`;
-            }
-
-            if (navLinksMenu) {
-                navLinksMenu.innerHTML = menuHTML;
-            }
-
-            document.addEventListener('click', (e) => {
-                if (e.target.id === 'logout-btn-menu') {
-                    e.preventDefault();
-                    localStorage.removeItem('jwt_token');
-                    alert('Has cerrado la sesión.');
-                    window.location.href = '/';
-                }
-            });
-        }
-
-
         document.addEventListener('DOMContentLoaded', async () => {
             new WOW().init();
 
             const token = localStorage.getItem('jwt_token');
-            setupNavbar(token);
-
-            if (!token) { 
-                window.location.href = '/login'; 
-                return; 
-            }
 
             const params = new URLSearchParams(window.location.search);
             const mascotaId = params.get('mascotaId');
@@ -240,6 +184,8 @@
             });
         });
     </script>
+    <script src="/js/script.js"></script>
+
 </body>
 
 </html>

@@ -52,7 +52,7 @@
     <div class="container py-5">
         <div class="row g-3 align-items-center">
             <div class="col-lg-12 text-center text-lg-start">
-                <h1 class="display-1 mb-0 animated slideInLeft text-white">Política de Privacidad</h1>
+                <h1 class="display-1 mb-0 animated slideInLeft" id="hero-title">Politica de Privacidad</h1>
             </div>
         </div>
     </div>
@@ -165,17 +165,13 @@
 </div>
 
     <div th:replace="~{common/footer :: footer_piezita}"></div>
-
+ 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
 
         new WOW().init();
 
         const token = localStorage.getItem('jwt_token');
-
-        function parseJwt(token) {
-            try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
-        }
 
         function setupNavbar(token) {
             const navLinksMenu = document.getElementById('nav-links-menu');
@@ -227,6 +223,8 @@
         setupNavbar(token);
     });
 </script>
+    <script src="/js/script.js"></script>
+
 </body>
 
 </html>
