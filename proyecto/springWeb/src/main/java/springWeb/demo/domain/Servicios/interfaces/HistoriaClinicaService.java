@@ -3,6 +3,8 @@ package springWeb.demo.domain.Servicios.interfaces;
 import java.util.List;
 import java.util.Optional;
 import springWeb.demo.domain.Dto.HistoriaClinicaDTO;
+import springWeb.demo.domain.Dto.RecetaDTO;
+import springWeb.demo.domain.Dto.TratamientoDTO;
 
 public interface HistoriaClinicaService {
 
@@ -14,4 +16,7 @@ public interface HistoriaClinicaService {
 
     void eliminarEntrada(Long id);
     HistoriaClinicaDTO guardarHistoria(HistoriaClinicaDTO historiaClinicaDTO);
+
+    List<TratamientoDTO> listarTratamientosPorMascota(Long mascotaId);
+    List<RecetaDTO> listarRecetasPorMascota(Long mascotaId);
 }

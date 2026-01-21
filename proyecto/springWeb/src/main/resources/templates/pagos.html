@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{common/head :: head_piezita}"></th:block>
+    <title>PetCare - Pagos</title>
+
+    <style>
+        .spinner-border {
+            display: none;
+        }
+
+        .container-pagos {
+            min-height: 70vh;
+            padding: 50px 0;
+        }
+
+        .debt-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            border-left: 5px solid var(--bs-primary);
+        }
+
+        .total-amount-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: var(--bs-light);
+            border: 1px solid var(--bs-gray-300);
+        }
+        
+        .card-header-styled {
+            background-color: var(--bs-primary);
+            color: #fff;
+            padding: 15px;
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Cargando...</span>
+        </div>
+    </div>
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
+                <a href="/" class="navbar-brand">
+                    <h1>PetCare</h1>
+                </a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto" id="nav-links-menu">
+                        <p class="nav-item nav-link text-muted">Cargando...</p>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="container-fluid pb-5 bg-primary hero-header">
+        <div class="container py-5">
+            <div class="row g-3 align-items-center">
+                <div class="col-lg-12 text-center text-lg-start">
+                    <h1 class="display-1 mb-0 animated slideInLeft text-white" id="hero-title">Plataforma de Pagos</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid py-5 bg-white container-pagos">
+        <div class="container">
+            <button class="btn btn-outline-secondary mb-4" onclick="history.back()">
+                <i class="fa fa-arrow-left me-2"></i> Volver Atrás
+            </button>
+            <h1 class="mb-4 text-primary" id="user-greeting">Detalle de tu cuenta:</h1>
+
+            <div class="card shadow mb-5 wow fadeIn" data-wow-delay="0.1s">
+                <div class="card-header-styled">
+                    <h2 class="h5 mb-0">Detalle de Pagos Pendientes</h2>
+                </div>
+                <div class="card-body">
+                    <div id="debt-details-list">
+                        <div class="text-center text-muted py-3">Cargando deuda...</div>
+                    </div>
+
+                    <div class="total-amount-box mt-4 d-flex justify-content-between align-items-center">
+                        <h3 class="h4 mb-0 text-dark">Total a Pagar:</h3>
+                        <span id="total-amount-display" class="font-weight-bold text-dark display-6">
+                            $0.00
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow mb-5 wow fadeIn" data-wow-delay="0.3s">
+                <div class="card-header-styled bg-success">
+                    <h2 class="h5 mb-0">Realizar un Nuevo Pago</h2>
+                </div>
+                <div class="card-body">
+                    <div id="payment-success-alert" class="alert alert-success" style="display: none;"></div>
+                    <div id="no-debt-alert" class="alert alert-info" style="display: none;">No tienes pagos pendientes.
+                    </div>
+
+                    <form id="payment-form">
+                        <div class="form-group mb-3">
+                            <label for="amount">Monto Total a Pagar (USD)</label>
+                            <input type="text" id="amount" class="form-control" readonly>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="card-name">Nombre en la Tarjeta</label>
+                            <input type="text" id="card-name" class="form-control" value="Ingrese el nombre del titular" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="card-number">Número de Tarjeta</label>
+                            <input type="text" id="card-number" class="form-control" value="xxxx xxxx xxxx xxxx"
+                                required>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-md-6 mb-3">
+                                <label for="expiry-date">Fecha de Vencimiento (MM/AA)</label>
+                                <input type="text" id="expiry-date" class="form-control" value="xx/xx" required>
+                            </div>
+                            <div class="form-group col-md-6 mb-3">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" class="form-control" value="xxx" required>
+                            </div>
+                        </div>
+
+                        <button id="submit-button" class="btn btn-primary mt-3 w-100 py-3">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span id="button-text">Pagar Ahora</span>
+                            
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="card shadow mb-5 wow fadeIn" data-wow-delay="0.5s">
+                <div class="card-header-styled bg-secondary">
+                    <h2 class="h5 mb-0">Historial de Pagos</h2>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-striped mb-0">
+                            <thead>
+                                <tr>
+                                    <th>ID Transacción</th>
+                                    <th>Monto</th>
+                                    <th>Moneda</th>
+                                    <th>Estado</th>
+                                    <th>Fecha</th>
+                                </tr>
+                            </thead>
+                            <tbody id="payment-history-body">
+                                </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div th:replace="~{common/footer :: footer_piezita}"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const paymentForm = document.getElementById('payment-form');
+            const submitButton = document.getElementById('submit-button');
+            const buttonText = document.getElementById('button-text');
+            const spinner = submitButton.querySelector('.spinner-border');
+            const successAlert = document.getElementById('payment-success-alert');
+
+            const debtDetailsListContainer = document.getElementById('debt-details-list');
+            const totalAmountDisplay = document.getElementById('total-amount-display');
+            const amountInput = document.getElementById('amount');
+            const noDebtAlert = document.getElementById('no-debt-alert');
+
+            const token = localStorage.getItem('jwt_token');
+
+            new WOW().init();
+
+
+            async function loadPendingDebt() {
+                if (!token) return;
+
+                try {
+                    const response = await fetch("/api/facturacion/deuda-pendiente", {
+                        headers: { "Authorization": `Bearer ${token}` }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error("No se pudo cargar la deuda pendiente.");
+                    }
+
+                    const deuda = await response.json();
+
+                    debtDetailsListContainer.innerHTML = '';
+
+                    if (deuda.detalles.length === 0) {
+                        debtDetailsListContainer.innerHTML = '<div class="debt-item bg-success text-white">¡Felicidades! No tienes deudas pendientes.</div>';
+                    } else {
+                        deuda.detalles.forEach(item => {
+                            const itemHTML = `
+                                <div class="debt-item wow fadeIn" data-wow-delay="0.1s">
+                                    <div class="debt-info">
+                                        <strong>${item.concepto}</strong>
+                                    </div>
+                                    <span class="badge bg-primary text-white p-2">
+                                        $${item.monto.toFixed(2)}
+                                    </span>
+                                </div>
+                            `;
+                            debtDetailsListContainer.innerHTML += itemHTML;
+                        });
+                    }
+
+                    totalAmountDisplay.textContent = `$${deuda.total.toFixed(2)}`;
+                    amountInput.value = `${deuda.total.toFixed(2)}`;
+
+                    if (deuda.total <= 0) {
+                        submitButton.disabled = true;
+                        buttonText.textContent = "No tienes pagos pendientes";
+                        document.getElementById('payment-form').style.display = 'none';
+                        noDebtAlert.style.display = 'block';
+                    } else {
+                        submitButton.disabled = false;
+                        buttonText.textContent = "Pagar Ahora";
+                        document.getElementById('payment-form').style.display = 'block';
+                        noDebtAlert.style.display = 'none';
+                    }
+                } catch (error) {
+                    console.error(error);
+                    debtDetailsListContainer.innerHTML = '<div class="alert alert-danger">Error al cargar la deuda. Por favor, intenta de nuevo.</div>';
+                }
+            }
+
+            async function loadPaymentHistory() {
+                if (!token) return;
+
+                try {
+                    const response = await fetch("/api/pagos/mis-pagos", {
+                        headers: { "Authorization": `Bearer ${token}` }
+                    });
+
+                    if (!response.ok) {
+                        throw new Error("No se pudo cargar el historial de pagos.");
+                    }
+
+                    const payments = await response.json();
+                    const historyBody = document.getElementById('payment-history-body');
+                    historyBody.innerHTML = '';
+
+                    if (payments.length === 0) {
+                        historyBody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-3">No hay pagos registrados.</td></tr>';
+                        return;
+                    }
+
+                    payments.sort((a, b) => new Date(b.fechaCreacion) - new Date(a.fechaCreacion));
+                    payments.forEach(pago => {
+                        const statusClass = pago.estado.toUpperCase() === 'COMPLETADO' ? 'badge-success' : 'badge-warning';
+                        const row = `
+                            <tr class="wow fadeIn" data-wow-delay="0.1s">
+                                <td>${pago.numeroTransaccion.substring(0, 8)}...</td>
+                                <td>$${pago.monto.toFixed(2)}</td>
+                                <td>${pago.moneda.toUpperCase()}</td>
+                                <td><span class="badge ${statusClass}">${pago.estado}</span></td>
+                                <td>${new Date(pago.fechaCreacion).toLocaleString()}</td>
+                            </tr>
+                        `;
+                        historyBody.innerHTML += row;
+                    });
+                } catch (error) {
+                    console.error(error);
+                    const historyBody = document.getElementById('payment-history-body');
+                    historyBody.innerHTML = '<tr><td colspan="5" class="text-center text-danger py-3">Error al cargar el historial.</td></tr>';
+                }
+            }
+
+            paymentForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                buttonText.textContent = 'Procesando...';
+                spinner.style.display = 'inline-block';
+                submitButton.disabled = true;
+                successAlert.style.display = 'none';
+
+                try {
+                    await new Promise(resolve => setTimeout(resolve, 1500));
+
+                    const response = await fetch('/api/pagos/simular-pago', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify({})
+                    });
+
+                    if (response.ok) {
+                        successAlert.textContent = '¡Pago realizado con éxito!';
+                        successAlert.style.display = 'block';
+                        paymentForm.reset();
+
+                        await loadPaymentHistory();
+                        await loadPendingDebt();
+                    } else {
+
+                        let errorMessage = 'Hubo un error al procesar el pago.';
+                        try {
+                            const errorData = await response.json();
+                            errorMessage = errorData.mensaje || `Error ${response.status}`;
+                        } catch (jsonError) {
+                            errorMessage = `Error ${response.status}: ${response.statusText}. No se pudo procesar la respuesta del servidor.`;
+                        }
+                        throw new Error(errorMessage);
+                    }
+                } catch (error) {
+                    alert(error.message);
+                } finally {
+                    buttonText.textContent = 'Pagar Ahora';
+                    spinner.style.display = 'none';
+
+                }
+            });
+
+            loadPendingDebt();
+            loadPaymentHistory();
+        });
+    </script>
+    <script src="/js/script.js"></script>
+
+</body>
+
+</html> 

@@ -1,7 +1,44 @@
-# Archivos de construcción de Maven
-/target/
-*.log
-.idea/
-*.iml
-.DS_Store
-#prueba
+# ---------------------------------------------------------------- #
+# Archivos de la build de Maven y Directorios de Salida
+# ---------------------------------------------------------------- #
+/target/             # Directorio de salida de la compilación de Maven.
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-check-report.html
+dependency-check-report.xml
+
+# ---------------------------------------------------------------- #
+# Archivos de registro y caché
+# ---------------------------------------------------------------- #
+*.log                # Todos los archivos de registro.
+log/
+# Para registros específicos de Spring Boot:
+/nohup.out
+# Archivos de compilación de pruebas
+*.class
+
+# ---------------------------------------------------------------- #
+# Configuración del IDE (IntelliJ IDEA, VS Code, etc.)
+# ---------------------------------------------------------------- #
+.idea/               # Configuración de IntelliJ IDEA.
+*.iml                # Archivos de módulo de IntelliJ.
+*.ipr
+*.iws
+
+# Configuración de VS Code (Opcional, si no se comparte en equipo)
+.vscode/
+
+# ---------------------------------------------------------------- #
+# Sistema Operativo y Archivos Temporales
+# ---------------------------------------------------------------- #
+.DS_Store            # Archivos de macOS.
+Thumbs.db            # Archivos de Windows.
+
+# ---------------------------------------------------------------- #
+# Archivos de prueba o personalizados (mantener fuera del repositorio)
+# ---------------------------------------------------------------- #
+#*.log              # Ya cubierto arriba.
+#prueba             # Eliminar o comentar esta línea si no es un archivo real.

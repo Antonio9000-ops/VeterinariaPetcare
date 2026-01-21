@@ -39,7 +39,6 @@
         const token = localStorage.getItem('jwt_token');
         if (!token) { window.location.href = '/login'; return; }
 
-        // Poner la fecha actual por defecto en el campo de fecha
         document.getElementById('fechaAplicacion').value = new Date().toISOString().split('T')[0];
 
         const params = new URLSearchParams(window.location.search);

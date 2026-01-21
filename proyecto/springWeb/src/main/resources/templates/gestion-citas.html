@@ -1,123 +1,710 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Gestión de Citas</title>
+    <th:block th:replace="~{common/head :: head_piezita}"></th:block>
+    <title>PetCare - Gestion de Citas</title>
+
     <style>
-        body { font-family: sans-serif; background-color: #f9f9f9; margin: 0; padding-top: 80px; }
-        .navbar { background-color: #333; overflow: hidden; position: fixed; top: 0; width: 100%; z-index: 1000; }
-        .navbar a { float: left; display: block; color: #f2f2f2; text-align: center; padding: 14px 16px; text-decoration: none; }
-        .navbar a:hover { background-color: #ddd; color: black; }
-        .container { max-width: 1000px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        h1 { color: #333; }
-        ul { list-style: none; padding: 0; }
-        li { display: flex; justify-content: space-between; align-items: center; background: #f4f4f4; border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; flex-wrap: wrap; }
-        .cita-info { flex-grow: 1; min-width: 300px; }
-        .cita-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-        .btn { padding: 8px 12px; color: #fff; border: none; border-radius: 5px; cursor: pointer; text-decoration: none; display: inline-block; text-align: center; }
-        .btn-success { background-color: #28a745; }
-        .btn-danger { background-color: #dc3545; }
-        .btn-info { background-color: #17a2b8; }
+      .container-citas {
+        min-height: 70vh;
+        padding: 50px 0;
+      }
+
+      .cita-list {
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+      }
+
+      .cita-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid var(--bs-warning);
+      }
+
+      .citahistorial-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px 20px;
+        margin-bottom: 15px;
+        background: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        border-left: 5px solid var(--bs-secondary);
+      }
+
+      .cita-info {
+        font-size: 1.1rem;
+        line-height: 1.6;
+      }
+
+      .cita-actions button {
+        margin-left: 10px;
+        border-radius: 5px;
+        font-size: 0.9rem;
+        padding: 8px 15px;
+        transition: all 0.2s;
+      }
+
+      .cita-actions .btn-success {
+        background-color: #198754;
+        border-color: #198754;
+      }
+
+      .cita-actions .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+      }
     </style>
-</head>
-<body>
+  </head>
 
-<div class="navbar">
-    <a href="/">Inicio</a>
-</div>
+  <body>
+    <div
+      id="spinner"
+      class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
+    >
+      <div
+        class="spinner-grow text-primary"
+        style="width: 3rem; height: 3rem"
+        role="status"
+      >
+        <span class="sr-only">Cargando...</span>
+      </div>
+    </div>
+    <div class="container-fluid sticky-top">
+      <div class="container">
+        <nav
+          class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white"
+        >
+          <a th:href="@{/}" class="navbar-brand">
+            <h1>PetCare</h1>
+          </a>
+          <button
+            type="button"
+            class="navbar-toggler ms-auto me-0"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarCollapse"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto" id="nav-links-menu">
+              <a th:href="@{/}" class="nav-item nav-link">Inicio</a>
+              <a th:href="@{/gestion-citas}" class="nav-item nav-link active"
+                >Gestión Citas</a
+              >
+              <a th:href="@{/agenda}" class="nav-item nav-link">Mi Agenda</a>
+              <a th:href="@{/gestion-servicios}" class="nav-item nav-link"
+                >Gestion de Servicios</a
+              >
+              <a th:href="@{/contact}" class="nav-item nav-link"
+                >Contacto de emergencia</a
+              >
+              <a href="#" id="logout-btn-menu" class="nav-item nav-link"
+                >Cerrar Sesión</a
+              >
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="container-fluid pb-5 bg-primary hero-header">
+      <div class="container py-5">
+        <div class="row g-3 align-items-center">
+          <div class="col-lg-8 text-center text-lg-start">
+            <h1 class="display-1 mb-0 animated slideInLeft" id="hero-title">
+              Gestión de Citas
+            </h1>
+            <p class="text-white mt-3 animated slideInLeft">
+              Crear y administrar citas.
+            </p>
+          </div>
+          <div class="col-lg-4 text-center text-lg-end">
+            <button
+              class="btn btn-secondary py-3 px-5 animated slideInRight"
+              onclick="history.back()"
+            >
+              Volver Atrás <i class="fa fa-arrow-left ms-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid py-5 bg-white container-citas">
+      <div class="container">
+        <div class="d-flex justify-content-end mb-4">
+          <button
+            class="btn btn-primary px-4 py-2"
+            id="btnCrearCita"
+            data-bs-toggle="modal"
+            data-bs-target="#modalIngresarCorreo"
+          >
+            <i class="fa fa-plus me-2"></i> Crear Cita
+          </button>
+        </div>
 
-<div class="container">
-    <h1>Citas Pendientes de Aprobación</h1>
-    <ul id="citas-list"></ul>
-</div>
+        <div class="row wow fadeIn" data-wow-delay="0.3s">
+          <div class="col-12">
+            <ul id="citas-list" class="cita-list">
+              <li class="text-center text-muted py-5">
+                Cargando citas pendientes...
+              </li>
+            </ul>
 
-<script>
-    function parseJwt(token) {
-        try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
-    }
+            <br>
+            Citas Pasadas.
+            <br>
 
-    async function actualizarEstadoCita(citaId, nuevoEstado) {
-        const token = localStorage.getItem('jwt_token');
-        const confirmacion = confirm(`¿Estás seguro de que quieres cambiar el estado de esta cita a ${nuevoEstado}?`);
+            <ul id="citasHistorial-list" class="cita-list">
+              <li class="text-center text-muted py-5">
+                Cargando historial de citas...
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Modal Ingresar Correo -->
+    <div class="modal fade" id="modalIngresarCorreo" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Ingrese Correo del Usuario</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <form id="formCorreo">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Correo Electrónico</label>
+                <input
+                  type="email"
+                  name="correo"
+                  id="inputCorreo"
+                  class="form-control"
+                  placeholder="ejemplo@correo.com"
+                  required
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                Cancelar
+              </button>
+              <button type="button" class="btn btn-primary" id="btnBuscarMascotas">
+                Buscar Mascotas
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Seleccionar Mascota -->
+    <div class="modal fade" id="modalSeleccionarMascota" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Seleccione una Mascota</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div id="listaMascotas" class="list-group">
+              <p class="text-center text-muted">Cargando mascotas...</p>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+              Cancelar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Crear Mascota -->
+    <div class="modal fade" id="modalCrearMascota" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Crear Mascota</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <form id="formMascota">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input
+                  type="text"
+                  name="nombre"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Especie</label>
+                <input
+                  type="text"
+                  name="especie"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Raza</label>
+                <input type="text" name="raza" class="form-control" />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Fecha de Nacimiento</label>
+                <input
+                  type="date"
+                  name="fechaNacimiento"
+                  class="form-control"
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="btnBorrarMascota"
+              >
+                Borrar
+              </button>
+              <button type="button" class="btn btn-primary" id="btnNextMascota">
+                Siguiente
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Crear Cita -->
+    <div class="modal fade" id="modalCrearCita" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Crear Cita</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <form id="formCita">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label class="form-label">Fecha y Hora</label>
+                <input
+                  type="datetime-local"
+                  name="fechaHora"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Motivo</label>
+                <input
+                  type="text"
+                  name="motivo"
+                  class="form-control"
+                  required
+                />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                id="btnBorrarCita"
+              >
+                Borrar
+              </button>
+              <button type="button" class="btn btn-success" id="btnListoCita">
+                Listo
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"
+      ><i class="bi bi-arrow-up"></i
+    ></a>
+
+<div th:replace="~{common/footer :: footer_piezita}"></div>
+
+    <script>
+      let mascotaIdGuardada = null;
+      let duenoCorreoGuardado = null;
+
+      // IDs por defecto
+      const DUENO_ID_DEFAULT = 1;
+      const VETERINARIO_ID_DEFAULT = 2;
+
+      // Evento para buscar mascotas por correo
+      document.getElementById("btnBuscarMascotas").addEventListener("click", async () => {
+        const correo = document.getElementById("inputCorreo").value.trim();
+        
+        if (!correo) {
+          alert("Por favor ingrese un correo válido.");
+          return;
+        }
+
+        duenoCorreoGuardado = correo;
+        const listaMascotas = document.getElementById("listaMascotas");
+        listaMascotas.innerHTML = '<p class="text-center text-muted">Cargando mascotas...</p>';
+
+        try {
+          // Primero buscar el dueño por correo para obtener su ID
+          const ownerResp = await fetch(`/api/usuarios/correo/${correo}`);
+
+          if (!ownerResp.ok) {
+            if (ownerResp.status === 404) {
+              listaMascotas.innerHTML = '<p class="text-center text-warning">No se encontró un propietario con ese correo.</p>';
+            } else {
+              throw new Error("Error al buscar el dueño por correo");
+            }
+            return;
+          }
+
+          const dueno = await ownerResp.json();
+          const duenoId = dueno.id;
+
+          // Ahora obtener las mascotas usando el id del dueño
+          const response = await fetch(`/api/mascotas/dueno/${duenoId}`);
+
+          if (!response.ok) {
+            if (response.status === 404) {
+              listaMascotas.innerHTML = '<p class="text-center text-warning">No se encontraron mascotas para este propietario.</p>';
+            } else {
+              throw new Error("Error al obtener las mascotas");
+            }
+            return;
+          }
+
+          const mascotas = await response.json();
+
+          if (mascotas.length === 0) {
+            listaMascotas.innerHTML = '<p class="text-center text-warning">No hay mascotas registradas para este usuario.</p>';
+            return;
+          }
+
+          listaMascotas.innerHTML = mascotas
+            .map(
+              (mascota) => `
+                <button type="button" class="list-group-item list-group-item-action" onclick="seleccionarMascota(${mascota.id}, '${mascota.nombre}')">
+                  <strong>${mascota.nombre}</strong> - ${mascota.especie} (${mascota.raza || 'Raza no especificada'})
+                </button>
+              `
+            )
+            .join("");
+        } catch (error) {
+          listaMascotas.innerHTML = `<p class="text-center text-danger">Error: ${error.message}</p>`;
+        }
+
+        // Cerrar modal de correo y abrir modal de mascotas
+        const modalCorreo = bootstrap.Modal.getInstance(document.getElementById("modalIngresarCorreo"));
+        modalCorreo.hide();
+
+        const modalMascotas = new bootstrap.Modal(document.getElementById("modalSeleccionarMascota"));
+        modalMascotas.show();
+      });
+
+      // Función para seleccionar mascota
+      window.seleccionarMascota = function (mascotaId, nombreMascota) {
+        mascotaIdGuardada = mascotaId;
+        
+        // Cerrar modal de mascotas y abrir modal de cita
+        const modalMascotas = bootstrap.Modal.getInstance(
+          document.getElementById("modalSeleccionarMascota")
+        );
+        modalMascotas.hide();
+
+        // Limpiar formulario de cita
+        document.getElementById("formCita").reset();
+
+        const modalCita = new bootstrap.Modal(
+          document.getElementById("modalCrearCita")
+        );
+        modalCita.show();
+      };
+
+      // Borrar formulario mascota
+      document
+        .getElementById("btnBorrarMascota")
+        .addEventListener("click", () => {
+          document.getElementById("formMascota").reset();
+        });
+
+      // Next a formulario cita
+      document
+        .getElementById("btnNextMascota")
+        .addEventListener("click", async () => {
+          const form = document.getElementById("formMascota");
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+
+          const dataMascota = {
+            nombre: form.nombre.value,
+            especie: form.especie.value,
+            raza: form.raza.value,
+            fechaNacimiento: form.fechaNacimiento.value,
+            duenoId: DUENO_ID_DEFAULT,
+          };
+
+          try {
+            const res = await fetch("/api/mascotas", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(dataMascota),
+            });
+
+            const mascota = await res.json();
+            mascotaIdGuardada = mascota.id;
+
+            const modalMascota = bootstrap.Modal.getInstance(
+              document.getElementById("modalCrearMascota")
+            );
+            modalMascota.hide();
+
+            const modalCita = new bootstrap.Modal(
+              document.getElementById("modalCrearCita")
+            );
+            modalCita.show();
+          } catch (err) {
+            alert("Error al guardar la mascota: " + err.message);
+          }
+        });
+
+      // Borrar formulario cita
+      document.getElementById("btnBorrarCita").addEventListener("click", () => {
+        document.getElementById("formCita").reset();
+      });
+
+      // Listo cita
+      document
+        .getElementById("btnListoCita")
+        .addEventListener("click", async () => {
+          const form = document.getElementById("formCita");
+
+          if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+          }
+
+          if (!mascotaIdGuardada) {
+            alert("No hay mascota registrada.");
+            return;
+          }
+
+          const dataCita = {
+            fechaHora: form.fechaHora.value,
+            motivo: form.motivo.value,
+            mascotaId: mascotaIdGuardada,
+            veterinarioId: VETERINARIO_ID_DEFAULT,
+          };
+
+          try {
+            const res = await fetch("/api/citas", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(dataCita),
+            });
+
+            const cita = await res.json();
+            alert("Cita creada correctamente ");
+
+            form.reset();
+            const modalCita = bootstrap.Modal.getInstance(
+              document.getElementById("modalCrearCita")
+            );
+            modalCita.hide();
+            document.getElementById("formMascota").reset();
+            document.getElementById("formCorreo").reset();
+            mascotaIdGuardada = null;
+            duenoCorreoGuardado = null;
+          } catch (err) {
+            alert("Error al crear la cita: " + err.message);
+          }
+        });
+
+      window.actualizarEstadoCita = async function (citaId, nuevoEstado) {
+        const token = localStorage.getItem("jwt_token");
+        const confirmacion = confirm(
+          `¿Estás seguro de que quieres cambiar el estado de esta cita a ${nuevoEstado}?`
+        );
         if (!confirmacion) return;
 
         try {
-            const citaResponse = await fetch(`/api/citas/${citaId}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            const citaDTO = await citaResponse.json();
+          const citaResponse = await fetch(`/api/citas/${citaId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          const citaDTO = await citaResponse.json();
 
-            citaDTO.estado = nuevoEstado;
+          citaDTO.estado = nuevoEstado;
 
-            const response = await fetch(`/api/citas/${citaId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
-                },
-                body: JSON.stringify(citaDTO)
-            });
+          const response = await fetch(`/api/citas/${citaId}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(citaDTO),
+          });
 
-            if (response.ok) {
-                alert('Estado de la cita actualizado correctamente.');
-                window.location.reload();
-            } else {
-                throw new Error('No se pudo actualizar el estado de la cita.');
-            }
+          if (response.ok) {
+            alert("Estado de la cita actualizado correctamente.");
+            window.location.reload();
+          } else {
+            throw new Error("No se pudo actualizar el estado de la cita.");
+          }
         } catch (error) {
-            alert(`Error: ${error.message}`);
+          alert(`Error: ${error.message}`);
         }
-    }
+      };
 
-    document.addEventListener('DOMContentLoaded', async () => {
-        const token = localStorage.getItem('jwt_token');
+      document.addEventListener("DOMContentLoaded", async () => {
+        if (window.WOW) {
+          new WOW().init();
+        }
+
+        const token = localStorage.getItem("jwt_token");
+        const list = document.getElementById("citas-list");
+        const listHistorial = document.getElementById("citasHistorial-list");
+
         if (!token) {
-            window.location.href = '/login';
-            return;
+          window.location.href = "/login";
+          return;
         }
 
         const userData = parseJwt(token);
         const userRole = userData ? userData.role : null;
 
-        if (userRole !== 'VETERINARIO' && userRole !== 'ASISTENTE') {
-            alert('Acceso denegado. Esta página es solo para personal de la clínica.');
-            window.location.href = '/';
-            return;
+        if (userRole !== "VETERINARIO" && userRole !== "ASISTENTE") {
+          alert(
+            "Acceso denegado. Esta página es solo para personal de la clínica."
+          );
+          window.location.href = "/";
+          return;
         }
+
+        list.innerHTML = "";
 
         try {
-            const response = await fetch('/api/citas/pendientes', {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (!response.ok) throw new Error('No se pudieron cargar las citas.');
+          const response = await fetch("/api/citas/pendientes", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (!response.ok) throw new Error("No se pudieron cargar las citas.");
 
-            const citas = await response.json();
-            const list = document.getElementById('citas-list');
+          const citas = await response.json();
 
-            if (citas.length === 0) {
-                list.innerHTML = '<li>No hay citas pendientes en este momento.</li>';
-                return;
-            }
+          if (citas.length === 0) {
+            list.innerHTML =
+              '<li class="text-center text-muted py-3">No hay citas pendientes en este momento.</li>';
+            return;
+          }
 
-            list.innerHTML = citas.map(cita => `
-                <li>
-                    <div class="cita-info">
-                        <strong>Mascota:</strong> ${cita.mascotaNombre} <br>
-                        <strong>Fecha:</strong> ${new Date(cita.fechaHora).toLocaleString()} <br>
-                        <strong>Motivo:</strong> ${cita.motivo}
-                    </div>
-                    <div class="cita-actions">
-                        <a href="/mascota-detalle?id=${cita.mascotaId}" class="btn btn-info">Ver Ficha de Mascota</a>
-                        <button onclick="actualizarEstadoCita(${cita.id}, 'ACEPTADA')" class="btn btn-success">Aceptar</button>
-                        <button onclick="actualizarEstadoCita(${cita.id}, 'RECHAZADA')" class="btn btn-danger">Rechazar</button>
-                    </div>
-                </li>
-            `).join('');
+          list.innerHTML = citas
+            .map(
+              (cita) => `
+                    <li class="cita-item wow fadeIn" data-wow-delay="0.1s">
+                        <div class="cita-info">
+                            <strong>ID cita:</strong> ${cita.id} <br>
+                            <strong>Mascota:</strong> ${cita.mascotaNombre} <br>
+                            <strong>Fecha:</strong> ${new Date(
+                              cita.fechaHora
+                            ).toLocaleString()} <br>
+                            <strong>Motivo:</strong> ${cita.motivo}
+                            <br>
+                            <br>
+                            <strong>Estado:</strong> ${cita.estado} <br>
+                        </div>
+                        <div class="cita-actions">
+                            <button onclick="actualizarEstadoCita(${
+                              cita.id
+                            }, 'ACEPTADA')" class="btn btn-success">Aceptar</button>
+                            <button onclick="actualizarEstadoCita(${
+                              cita.id
+                            }, 'RECHAZADA')" class="btn btn-danger">Rechazar</button>
+                        </div>
+                    </li>
+                `
+            )
+            .join("");
         } catch (error) {
-            document.getElementById('citas-list').innerHTML = `<li>Error al cargar las citas: ${error.message}</li>`;
+          list.innerHTML = `<li class="text-center alert-danger py-3">Error al cargar las citas: ${error.message}</li>`;
         }
-    });
-</script>
 
-</body>
+        listHistorial.innerHTML = "";
+
+        try {
+          const response = await fetch("/api/citas/historial", {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (!response.ok) throw new Error("No se pudieron cargar las citas.");
+
+          const citas = await response.json();
+
+          if (citas.length === 0) {
+            listHistorial.innerHTML =
+              '<li class="text-center text-muted py-3">No hay citas registradas en este momento.</li>';
+            return;
+          }
+
+          listHistorial.innerHTML = citas
+            .map(
+              (cita) => `
+                    <li class="citahistorial-item wow fadeIn" data-wow-delay="0.1s">
+                        <div class="cita-info">
+                            <strong>ID cita:</strong> ${cita.id} <br>
+                            <strong>Mascota:</strong> ${cita.mascotaNombre} <br>
+                            <strong>Fecha:</strong> ${new Date(
+                              cita.fechaHora
+                            ).toLocaleString()} <br>
+                            <strong>Motivo:</strong> ${cita.motivo}
+                            <br>
+                            <br>
+                            <strong>Estado:</strong> ${cita.estado} <br>
+                        </div>
+                    </li>
+                `
+            )
+            .join("");
+        } catch (error) {
+          listHistorial.innerHTML = `<li class="text-center alert-danger py-3">Error al cargar las citas: ${error.message}</li>`;
+        }
+        
+      });
+
+    </script>
+    <script src="/js/script.js"></script>
+
+  </body>
+
 </html>

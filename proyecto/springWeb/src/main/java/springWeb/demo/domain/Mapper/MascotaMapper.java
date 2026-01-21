@@ -12,7 +12,7 @@ import springWeb.demo.domain.Modelos.Vacuna;
 @Component
 public class MascotaMapper {
 
-        public static MascotaDTO toDTO(Mascota mascota) {
+        public MascotaDTO toDTO(Mascota mascota) {
                 if (mascota == null)
                         return null;
 
@@ -36,8 +36,9 @@ public class MascotaMapper {
                                                 : List.of())
                                 .build();
         }
+        
 
-        public static Mascota toEntity(MascotaDTO dto) {
+        public  Mascota toEntity(MascotaDTO dto) {
                 if (dto == null)
                         return null;
 

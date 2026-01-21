@@ -1,84 +1,228 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Mi Agenda de Citas</title>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <th:block th:replace="~{common/head :: head_piezita}"></th:block>
+    <title>PetCare - Listado General de Mascotas</title>
     <style>
-        body { font-family: sans-serif; background-color: #f9f9f9; margin: 0; padding-top: 80px; }
-        .navbar { background-color: #333; overflow: hidden; position: fixed; top: 0; width: 100%; z-index: 1000; }
-        .navbar a { float: left; display: block; color: #f2f2f2; text-align: center; padding: 14px 16px; text-decoration: none; }
-        .navbar a:hover { background-color: #ddd; color: black; }
-        .container { max-width: 900px; margin: auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        h1 { color: #333; }
-        ul { list-style: none; padding: 0; }
-        li { background: #f4f4f4; border: 1px solid #ddd; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
-        .estado-aceptada { color: #28a745; font-weight: bold; }
+      .container-listado {
+        min-height: 70vh;
+        padding: 50px 0;
+      }
+
+      .table-custom {
+        width: 100%;
+        margin-top: 20px;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+      }
+
+      .table-custom th,
+      .table-custom td {
+        padding: 15px;
+        vertical-align: middle;
+        background: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      }
+
+      .table-custom thead th {
+        background-color: var(--bs-primary);
+        color: white;
+        border: none;
+        padding: 12px 15px;
+        font-size: 1rem;
+        text-align: left;
+      }
+
+      .table-custom tbody tr {
+        transition: all 0.2s;
+        border-left: 4px solid transparent;
+      }
+
+      .table-custom tbody tr:hover {
+        border-left: 4px solid var(--bs-secondary);
+      }
+
+      .table-custom tbody td:first-child {
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+      }
+
+      .table-custom tbody td:last-child {
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+      }
+
+      .table-custom .btn {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+        border-radius: 5px;
+      }
     </style>
-</head>
-<body>
+  </head>
 
-<div class="navbar">
-    <a href="/">Inicio</a>
-</div>
+  <body>
+    <div
+      id="spinner"
+      class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center"
+    >
+      <div
+        class="spinner-grow text-primary"
+        style="width: 3rem; height: 3rem"
+        role="status"
+      >
+        <span class="sr-only">Cargando...</span>
+      </div>
+    </div>
+    <div class="container-fluid sticky-top">
+      <div class="container">
+        <nav
+          class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white"
+        >
+          <a th:href="@{/}" class="navbar-brand">
+            <h1>PetCare</h1>
+          </a>
+          <button
+            type="button"
+            class="navbar-toggler ms-auto me-0"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarCollapse"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto" id="nav-links-menu">
+              <a th:href="@{/}" class="nav-item nav-link">Inicio</a>
+              <a th:href="@{/gestion-citas}" class="nav-item nav-link"
+                >Gestión Citas</a
+              >
+              <a th:href="@{/agenda}" class="nav-item nav-link active"
+                >Agenda</a
+              >
+              <a th:href="@{/gestion-servicios}" class="nav-item nav-link"
+                >Gestion de Servicios</a
+              >
+              <a th:href="@{/contact}" class="nav-item nav-link"
+                >Contacto de emergencia</a
+              >
+              <a href="#" id="logout-btn-menu" class="nav-item nav-link"
+                >Cerrar Sesión</a
+              >
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+    <div class="container-fluid pb-5 bg-primary hero-header">
+      <div class="container py-5">
+        <div class="row g-3 align-items-center">
+          <div class="col-lg-8 text-center text-lg-start">
+            <h1 class="display-1 mb-0 animated slideInLeft" id="hero-title">
+              Listado General de Mascotas
+            </h1>
+            <p class="text-white mt-3 animated slideInLeft">
+              Aquí se muestran todas las mascotas registradas en el sistema.
+            </p>
+          </div>
+          <div class="col-lg-4 text-center text-lg-end">
+            <button
+              class="btn btn-secondary py-3 px-5 animated slideInRight"
+              onclick="history.back()"
+            >
+              Volver Atrás <i class="fa fa-arrow-left ms-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid py-5 bg-white container-listado">
+      <div class="container">
+        <div class="row wow fadeIn" data-wow-delay="0.3s">
+          <div class="col-12">
+            <div class="table-responsive">
+              <table class="table-custom table-borderless">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Especie</th>
+                    <th>Raza</th>
+                    <th>Dueño</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="mascotas-tbody">
+                  <tr>
+                    <td colspan="5" class="text-center text-muted py-5">
+                      Cargando listado de mascotas...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div th:replace="~{common/footer :: footer_piezita}"></div>
 
-<div class="container">
-    <h1>Mi Agenda de Citas</h1>
-    <p>Aquí se muestran las citas que han sido aceptadas y asignadas a ti.</p>
-    <ul id="citas-list"></ul>
-</div>
+    <script>
+      document.addEventListener("DOMContentLoaded", async () => {
+        const token = localStorage.getItem("jwt_token");
+        if (window.WOW) {
+          new WOW().init();
+        }
 
-<script>
-    function parseJwt(token) {
-        try { return JSON.parse(atob(token.split('.')[1])); } catch (e) { return null; }
-    }
-
-    document.addEventListener('DOMContentLoaded', async () => {
-        const token = localStorage.getItem('jwt_token');
+        // Lógica de Redirección y Fetch
         if (!token) {
-            window.location.href = '/login';
-            return;
+          window.location.href = "/login";
+          return;
         }
 
-        const userData = parseJwt(token);
-        
-        const userRole = userData ? userData.role : null;
-        
-        const veterinarioId = userData ? userData.userId : null;
-
-        if ((userRole !== 'VETERINARIO' && userRole !== 'ASISTENTE') || !veterinarioId) {
-            alert('Acceso denegado.');
-            window.location.href = '/';
-            return;
-        }
+        const tbody = document.getElementById("mascotas-tbody");
+        tbody.innerHTML = "";
 
         try {
-            const response = await fetch(`/api/citas/veterinario/${veterinarioId}`, {
-                headers: { 'Authorization': `Bearer ${token}` }
-            });
-            if (!response.ok) throw new Error('No se pudieron cargar las citas.');
+          const response = await fetch(`/api/mascotas`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
 
-            const citas = await response.json();
-            const list = document.getElementById('citas-list');
-            const citasAceptadas = citas.filter(cita => cita.estado === 'ACEPTADA');
+          if (!response.ok) {
+            throw new Error(
+              "No se pudieron cargar las mascotas. Código: " + response.status
+            );
+          }
 
-            if (citasAceptadas.length === 0) {
-                list.innerHTML = '<li>No tienes citas aceptadas en tu agenda.</li>';
-                return;
-            }
+          const mascotas = await response.json();
 
-            list.innerHTML = citasAceptadas.map(cita => `
-                <li>
-                    <strong>Mascota:</strong> ${cita.mascotaNombre} <br>
-                    <strong>Fecha:</strong> ${new Date(cita.fechaHora).toLocaleString()} <br>
-                    <strong>Motivo:</strong> ${cita.motivo} <br>
-                    <strong>Estado:</strong> <span class="estado-aceptada">${cita.estado}</span>
-                </li>
-            `).join('');
+          if (mascotas.length === 0) {
+            tbody.innerHTML =
+              '<tr><td colspan="5" class="text-center text-muted py-3">No hay mascotas registradas en el sistema.</td></tr>';
+            return;
+          }
+
+          tbody.innerHTML = "";
+
+          mascotas.forEach((mascota) => {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                        <td>${mascota.nombre}</td>
+                        <td>${mascota.especie}</td>
+                        <td>${mascota.raza}</td>
+                        <td>${mascota.nombreDueno || "N/A"}</td> <td>
+                            <a href="/mascota-detalle?id=${
+                              mascota.id
+                            }" class="btn btn-outline-info border-2">Ver Ficha</a>
+                        </td>
+                    `;
+            tbody.appendChild(tr);
+          });
         } catch (error) {
-            document.getElementById('citas-list').innerHTML = `<li>Error al cargar la agenda: ${error.message}</li>`;
+          tbody.innerHTML = `<tr><td colspan="5" class="text-center alert-danger py-3">Error al cargar las mascotas: ${error.message}</td></tr>`;
         }
-    });
-</script>
+      });
 
-</body>
+    </script>
+    <script src="/js/script.js"></script>
+
+  </body>
+
 </html>

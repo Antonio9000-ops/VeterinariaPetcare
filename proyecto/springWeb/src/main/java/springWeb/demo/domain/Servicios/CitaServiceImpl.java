@@ -36,7 +36,8 @@ public class CitaServiceImpl implements CitaService {
 
         // Al agendar, el veterinario puede ser pre-seleccionado
         Usuario veterinario = usuarioRepository.findById(citaDTO.getVeterinarioId())
-                .orElseThrow(() -> new RuntimeException("Veterinario no encontrado con id " + citaDTO.getVeterinarioId()));
+                .orElseThrow(
+                        () -> new RuntimeException("Veterinario no encontrado con id " + citaDTO.getVeterinarioId()));
 
         cita.setMascota(mascota);
         cita.setVeterinario(veterinario);
@@ -82,7 +83,8 @@ public class CitaServiceImpl implements CitaService {
             if (nuevoEstado == EstadoCita.ACEPTADA) {
                 String emailVeterinario = userDetails.getUsername();
                 Usuario veterinarioAsignado = usuarioRepository.findByEmail(emailVeterinario)
-                        .orElseThrow(() -> new RuntimeException("Veterinario no encontrado con email: " + emailVeterinario));
+                        .orElseThrow(
+                                () -> new RuntimeException("Veterinario no encontrado con email: " + emailVeterinario));
                 citaExistente.setVeterinario(veterinarioAsignado);
             }
         }
@@ -103,6 +105,17 @@ public class CitaServiceImpl implements CitaService {
     public List<CitaDTO> listarCitasPorEstado(String estado) {
         EstadoCita estadoEnum = EstadoCita.valueOf(estado.toUpperCase());
         return citaRepository.findByEstado(estadoEnum).stream()
+                .map(citaMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<CitaDTO> listarCitasPorEstados(String estado1, String estado2, String estado3) {
+        EstadoCita e1 = EstadoCita.valueOf(estado1.toUpperCase());
+        EstadoCita e2 = EstadoCita.valueOf(estado2.toUpperCase());
+        EstadoCita e3 = EstadoCita.valueOf(estado3.toUpperCase());
+        java.util.List<EstadoCita> estados = java.util.Arrays.asList(e1, e2, e3);
+        return citaRepository.findByEstadoIn(estados).stream()
                 .map(citaMapper::toDTO)
                 .collect(Collectors.toList());
     }

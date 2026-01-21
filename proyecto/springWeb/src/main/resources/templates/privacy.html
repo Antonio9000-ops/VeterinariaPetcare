@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:replace="~{common/head :: head_piezita}"></th:block>
+    <title>PetCare - Politica de Privacidad</title>
+
+    <style>
+        .privacy-section {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            border-left: 5px solid var(--bs-primary);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+        .privacy-section h3 { margin-top: 1.25rem; }
+        .privacy-section p, .privacy-section li {
+            font-size: 0.95rem;
+            line-height: 1.45;
+        }
+    </style>
+</head>
+
+<body>
+<div id="spinner"
+     class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Cargando...</span>
+    </div>
+</div>
+
+<div class="container-fluid sticky-top">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
+            <a href="/" class="navbar-brand">
+                <h1>PetCare</h1>
+            </a>
+            <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto" id="nav-links-menu">
+                    <p class="nav-item nav-link text-muted">Cargando...</p>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+
+<div class="container-fluid pb-5 bg-primary hero-header">
+    <div class="container py-5">
+        <div class="row g-3 align-items-center">
+            <div class="col-lg-12 text-center text-lg-start">
+                <h1 class="display-1 mb-0 animated slideInLeft" id="hero-title">Politica de Privacidad</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid py-5 bg-white">
+    <div class="container">
+        <div class="privacy-section wow fadeInUp" data-wow-delay="0.1s">
+
+            <h1 class="text-center mb-4">Política de Privacidad de PetCare Veterinary Services</h1>
+
+            <p>En <strong>PetCare Veterinary Services</strong> (“PetCare”, “nosotros”, “nuestro”), reconocemos la importancia de proteger la información personal de nuestros usuarios, clientes y visitantes. La presente Política de Privacidad describe, de manera exhaustiva y detallada, los tipos de datos que recopilamos, los métodos empleados para su tratamiento, los fines asociados, las medidas de seguridad implementadas y los derechos que asisten a las personas titulares de la información. Esta Política ha sido redactada conforme a estándares internacionales de protección de datos, incluyendo principios aplicables del <em>GDPR</em>, <em>CCPA</em>, <em>LGPD</em> y buenas prácticas de la industria sanitaria y tecnológica.</p>
+
+            <h3 class="mt-4">1. Alcance del Tratamiento de Datos</h3>
+            <p>El tratamiento de datos personales incluye toda operación automatizada o manual relacionada con la recopilación, acceso, almacenamiento, registro, estructuración, actualización, transmisión, bloqueo, eliminación, análisis o explotación de los datos proporcionados por el Usuario. El tratamiento se realiza con fines estrictamente operativos, administrativos, clínicos, estadísticos y de mejora continua de los servicios.</p>
+
+            <h3 class="mt-4">2. Información que recopilamos</h3>
+            <p>Recopilamos tanto datos de carácter personal como datos relativos a mascotas y datos técnicos, según la interacción del Usuario con nuestras plataformas:</p>
+
+            <ul>
+                <li><strong>Datos de identificación:</strong> nombre completo, tipo y número de documento, fecha de nacimiento.</li>
+                <li><strong>Datos de contacto:</strong> dirección postal, correo electrónico, teléfonos de contacto y referencias de localización.</li>
+                <li><strong>Datos de la mascota:</strong> nombre, especie, raza, sexo, edad, historial clínico, vacunas, alergias, intervenciones quirúrgicas y tratamientos prescritos.</li>
+                <li><strong>Datos técnicos:</strong> dirección IP, identificadores de dispositivo, sistema operativo, navegador, logs de servidor, registros de sesión y métricas de uso.</li>
+                <li><strong>Datos transaccionales:</strong> registros de citas, servicios contratados, facturación, comprobantes de pago y comunicaciones emitidas mediante la plataforma.</li>
+            </ul>
+
+            <h3 class="mt-4">3. Finalidades del tratamiento</h3>
+            <p>Los datos recabados serán empleados para, entre otros fines:</p>
+            <ul>
+                <li>Gestionar, coordinar y brindar atención clínica y seguimiento veterinario.</li>
+                <li>Administrar citas, confirmar, reprogramar o cancelar turnos, y emitir recordatorios automatizados.</li>
+                <li>Emitir facturación, comprobantes y soportes administrativos necesarios para la operativa económica.</li>
+                <li>Prestar servicios de soporte, comunicación operativa y posventa.</li>
+                <li>Realizar análisis estadísticos, mejora de procesos internos y desarrollo de nuevos servicios.</li>
+                <li>Detectar y prevenir actividades fraudulentas, abusivas o que vulneren la integridad del sistema.</li>
+            </ul>
+
+            <h3 class="mt-4">4. Bases legales y legitimidad</h3>
+            <p>El tratamiento de datos se sustenta en bases legales tales como:</p>
+            <ul>
+                <li>Consentimiento explícito del titular del dato.</li>
+                <li>Ejecución de un contrato o precontrato (por ejemplo, prestación de servicios veterinarios).</li>
+                <li>Cumplimiento de una obligación legal o regulatoria.</li>
+                <li>Interés legítimo de PetCare para mejora de servicios, seguridad y prevención de fraude.</li>
+            </ul>
+
+            <h3 class="mt-4">5. Conservación y retención</h3>
+            <p>Los datos personales se conservarán por el tiempo estrictamente necesario para cumplir las finalidades para las que fueron recabados, así como por los plazos exigidos por la normativa aplicable. Las historias clínicas de mascotas serán conservadas conforme a la normativa sanitaria aplicable y buenas prácticas clínicas, pudiendo mantenerse por plazos prolongados para garantizar continuidad asistencial.</p>
+
+            <h3 class="mt-4">6. Medidas de seguridad y confidencialidad</h3>
+            <p>Implementamos medidas técnicas, administrativas y organizativas orientadas a la protección de datos, entre las cuales se incluyen:</p>
+            <ul>
+                <li>Cifrado en tránsito (TLS/SSL) y en reposo para datos sensibles.</li>
+                <li>Control de accesos por roles y privilegios mínimos necesarios (principio de menor privilegio).</li>
+                <li>Sistemas de detección de intrusiones, monitoreo continuo y registro de auditoría.</li>
+                <li>Protocolos de respuesta ante incidentes (procedimiento formal de notificación y contención).</li>
+                <li>Copia de seguridad periódica y almacenaje cifrado fuera de línea.</li>
+            </ul>
+
+            <h3 class="mt-4">7. Derechos del titular</h3>
+            <p>Los usuarios tienen reconocidos, entre otros, los siguientes derechos:</p>
+            <ul>
+                <li><strong>Acceso:</strong> solicitar confirmación y copia de los datos tratados.</li>
+                <li><strong>Rectificación:</strong> modificar datos inexactos o incompletos.</li>
+                <li><strong>Supresión:</strong> en los supuestos contemplados por la normativa, solicitar la eliminación de los datos.</li>
+                <li><strong>Oposición:</strong> oponerse al tratamiento por motivos legítimos.</li>
+                <li><strong>Limitación del tratamiento:</strong> solicitar que se limite el uso de sus datos.</li>
+                <li><strong>Portabilidad:</strong> recibir los datos facilitados en un formato estructurado y de uso común.</li>
+            </ul>
+            <p>Las solicitudes deben remitirse a través de los canales oficiales de contacto; para su tramitación podrá solicitarse documentación que acredite la identidad del solicitante.</p>
+
+            <h3 class="mt-4">8. Uso de cookies y tecnologías análogas</h3>
+            <p>Utilizamos cookies técnicas, analíticas y funcionales que permiten la operación del sitio, la medición de uso y la personalización de contenidos. El usuario puede gestionar la aceptación o rechazo de cookies desde la configuración de su navegador; la desactivación de cookies puede limitar ciertas funcionalidades del Sitio Web.</p>
+
+            <h3 class="mt-4">9. Transferencias y cesiones</h3>
+            <p>Los datos podrán ser comunicados a proveedores de servicios necesarios para la prestación de servicios (hosting, plataformas de correo, pasarelas de pago, plataformas de análisis) y a profesionales veterinarios vinculados. En todo caso, las transferencias se realizarán cumpliendo las garantías contractuales y técnicas adecuadas para la protección de los datos.</p>
+
+            <h3 class="mt-4">10. Enlaces a terceros</h3>
+            <p>El Sitio Web puede contener enlaces a terceros (redes sociales, herramientas externas, APIs). PetCare no se responsabiliza por las prácticas de privacidad ni por el contenido de sitios externos. El acceso a dichos sitios se realiza bajo la responsabilidad del usuario.</p>
+
+            <h3 class="mt-4">11. Procedimiento en caso de brecha de seguridad</h3>
+            <p>En caso de incidente de seguridad que implique violación de datos personales, PetCare activará su protocolo de gestión de brechas que incluye: identificación y contención, evaluación del riesgo para los titulares, notificación a autoridades regulatorias cuando proceda y comunicación a los usuarios afectados con recomendaciones y medidas mitigadoras.</p>
+
+            <h3 class="mt-4">12. Conservación para efectos legales y de auditoría</h3>
+            <p>Algunos datos serán retenidos por plazos adicionales cuando exista obligación legal, procedimientos judiciales, investigación interna o para la defensa de derechos e intereses de PetCare ante reclamaciones o litigios.</p>
+
+            <h3 class="mt-4">13. Menores y datos sensibles</h3>
+            <p>El Sitio Web no está orientado a la recogida intencional de datos de menores de edad. En todo caso, para el tratamiento de datos de menores será requerido el consentimiento de los padres o representantes legales conforme a la legislación aplicable. Asimismo, se evitará el tratamiento de categorías especiales de datos salvo por estricta necesidad clínica y con garantías adicionales.</p>
+
+            <h3 class="mt-4">14. Marco normativo aplicable</h3>
+            <p>Esta política se aplica conforme a la normativa nacional vigente en materia de protección de datos personales, así como a estándares internacionales y principios de privacidad reconocidos.</p>
+
+            <h3 class="mt-4">15. Actualizaciones de la política</h3>
+            <p>PetCare se reserva el derecho a actualizar esta política con el fin de adaptarla a cambios normativos, operativos o tecnológicos. La versión vigente se publicará en esta página indicando la fecha de última modificación.</p>
+
+            <h3 class="mt-4">16. Contacto</h3>
+            <p>Para ejercer derechos ARCO, presentar quejas, consultas o solicitar más información sobre esta política, puede contactarnos a:</p>
+            <p>
+                <strong>privacidad@petcarevet.com</strong> <br>
+                Tel: <strong>+51 999 999 999</strong><br>
+                Av. Bienestar Animal 123, Lima, Perú
+            </p>
+
+            <p class="mt-4"><strong>Última actualización:</strong> Noviembre 2025.</p>
+            
+
+        </div>
+    </div>
+</div>
+
+    <div th:replace="~{common/footer :: footer_piezita}"></div>
+ 
+    <script src="/js/script.js"></script>
+
+</body>
+
+</html>

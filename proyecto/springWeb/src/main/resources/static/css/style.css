@@ -1,6 +1,4 @@
-/********** Template CSS **********/
 
-/*** Spinner ***/
 #spinner {
     opacity: 0;
     visibility: hidden;
@@ -93,7 +91,7 @@
 }
 
 @media (max-width: 991.98px) {
-    .navbar .navbar-nav .nav-link  {
+    .navbar .navbar-nav .nav-link {
         margin-left: 0;
         padding: 10px 0;
     }
@@ -123,8 +121,8 @@
 .hero-header {
     margin-top: -100px;
     padding-top: 150px;
-    background: linear-gradient(rgba(0, 195, 255, 0.5), rgba(255, 255, 255, 0.5)), 
-                url(../img/nav3.png) top center no-repeat;        
+    background: linear-gradient(rgba(0, 195, 255, 0.055), rgba(255, 255, 255, 0.116)),
+        url(../img/navImage.jpg) top center no-repeat;
     background-size: cover;
 }
 
@@ -197,11 +195,11 @@
 .project-item img {
     transition: .5s;
 }
-  
+
 .project-item:hover img {
     transform: scale(1.2);
 }
-  
+
 .project-overlay {
     position: absolute;
     padding: 25px;
@@ -286,11 +284,11 @@
 .team-item img {
     transition: .5s;
 }
-  
+
 .team-item:hover img {
     transform: scale(1.2);
 }
-  
+
 .team-overlay {
     position: absolute;
     padding: 30px;
@@ -386,7 +384,7 @@
 
 /*** Newsletter ***/
 .newsletter {
-    background: url(../img/nav.jpg) ;
+    background: url(../img/nav.jpg);
     background-size: cover;
 }
 
@@ -395,19 +393,19 @@
         max-width: 100% !important;
     }
 
-    .newsletter .newsletter-text  {
+    .newsletter .newsletter-text {
         padding-right: calc(((100% - 960px) / 2) + .75rem);
     }
 }
 
 @media (min-width: 1200px) {
-    .newsletter .newsletter-text  {
+    .newsletter .newsletter-text {
         padding-right: calc(((100% - 1140px) / 2) + .75rem);
     }
 }
 
 @media (min-width: 1400px) {
-    .newsletter .newsletter-text  {
+    .newsletter .newsletter-text {
         padding-right: calc(((100% - 1320px) / 2) + .75rem);
     }
 }
@@ -415,7 +413,7 @@
 
 /*** Footer ***/
 .footer {
-    background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url(../img/footer.jpg)bottom center no-repeat;
+    background: linear-gradient(rgba(235, 235, 235, 0.158), rgba(235, 235, 235, 0.158)), url(../img/footer2.png)center no-repeat;
     background-size: cover;
 
 }
@@ -425,7 +423,7 @@
     margin-bottom: 10px;
     padding: 0;
     text-align: left;
-    color: var(--bs-dark);
+    color: black;
     font-weight: normal;
     transition: .3s;
 }
@@ -464,20 +462,20 @@
     margin-right: 15px;
     padding-right: 15px;
     border-right: 1px solid rgba(255, 255, 255, .1);
-    
+
 }
 
 .footer .footer-menu a:last-child {
     margin-right: 0;
     padding-right: 0;
     border-right: none;
-    
+
 }
 
 .footer .btn-outline-primary {
     color: #E3F2FD !important;
     border-color: #E3F2FD !important;
-    
+
 }
 
 .footer .btn-outline-primary:hover {
@@ -494,7 +492,8 @@
 
 /* Botones dentro de la lista de mascotas (Agendar / Editar) */
 .pet-actions .btn-outline-primary {
-    color: #0095ff; /* celeste claro */
+    color: #0095ff;
+    /* celeste claro */
     border-color: #0095ff;
     background-color: transparent;
 }
@@ -502,7 +501,8 @@
 .pet-actions .btn-outline-primary:hover,
 .pet-actions .btn-outline-primary:focus {
     color: #ffffff;
-    background-color: #1E88E5; /* celeste más oscuro al hover */
+    background-color: #1E88E5;
+    /* celeste más oscuro al hover */
     border-color: #1E88E5;
 }
 
@@ -511,4 +511,9 @@
     background-color: #1E88E5;
     border-color: #1E88E5;
     color: #ffffff;
+}
+
+/* Agenda page hero title font size */
+#hero-title {
+    font-size: 3rem; /* Ajusta este valor según el tamaño deseado */
 }

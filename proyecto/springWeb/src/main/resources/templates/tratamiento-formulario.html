@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Añadir Tratamiento</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Añadir Tratamiento</h1>
+        <form id="tratamiento-form">
+            <input type="hidden" id="historiaClinicaId">
+            
+            <div>
+                <label for="fecha">Fecha:</label>
+                <input type="date" id="fecha" required>
+            </div>
+            <div>
+                <label for="descripcion">Descripción del Tratamiento:</label>
+                <textarea id="descripcion" rows="4" required></textarea>
+            </div>
+            <button type="submit">Guardar Tratamiento</button>
+        </form>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('jwt_token');
+    if (!token) { window.location.href = '/login'; return; }
+
+    const params = new URLSearchParams(window.location.search);
+    const mascotaId = params.get('mascotaId');
+    if (!mascotaId) {
+        alert('ID de mascota no encontrado.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/historias/mascota/${mascotaId}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const historias = await response.json();
+        if (historias.length === 0) {
+            alert('Esta mascota no tiene una historia clínica. Por favor, cree una primero.');
+            window.location.href = `/mascota-detalle?id=${mascotaId}`;
+            return;
+        }
+        document.getElementById('historiaClinicaId').value = historias[0].id;
+    } catch (error) {
+        alert('Error al cargar la historia clínica de la mascota.');
+    }
+
+    document.getElementById('tratamiento-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const tratamientoData = {
+            fecha: document.getElementById('fecha').value,
+            descripcion: document.getElementById('descripcion').value,
+            historiaClinicaId: document.getElementById('historiaClinicaId').value
+        };
+
+        try {
+            const response = await fetch('/api/tratamientos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(tratamientoData)
+            });
+
+            if (response.ok) {
+                alert('Tratamiento añadido con éxito.');
+                window.location.href = `/mascota-detalle?id=${mascotaId}`;
+            } else {
+                throw new Error('Error al guardar el tratamiento.');
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    });
+});
+</script>
+</body>
+</html>

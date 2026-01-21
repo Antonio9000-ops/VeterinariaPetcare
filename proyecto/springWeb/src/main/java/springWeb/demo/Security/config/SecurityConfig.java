@@ -38,6 +38,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/gestion-servicios").hasAnyAuthority("VETERINARIO", "ASISTENTE")
+                        .requestMatchers("/api/items-facturables/**").hasAnyAuthority("VETERINARIO", "ASISTENTE")
                         .requestMatchers(
                                 "/", "/inicio.html", "/login", "/login.html",
                                 "/register", "/register.html", "/auth/**",
@@ -46,14 +48,30 @@ public class SecurityConfig {
                                 "/historia-formulario", "/historia-formulario.html",
                                 "/vacuna-formulario", "/vacuna-formulario.html",
                                 "/gestion-citas", "/gestion-citas.html",
-                                "/css/**", "/js/**", "/images/**", "/favicon.ico", "/img/**", "/lib/**" ,"/scss/**"
-                        ).permitAll()
+                                "/tratamiento-formulario", "/receta-formulario",
+                                "/pagos", "/pagos.html",
+                                "/contact", "/contact.html",
+                                //...
+                                "/about", "/about.html", "/error",
+                                "/css/**", "/js/**", "/images/**", "/favicon.ico", "/img/**", "/lib/**", "/scss/**")
+                        .permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/facturacion/crear")
+                        .hasAnyAuthority("VETERINARIO", "ASISTENTE")
+                        .requestMatchers(HttpMethod.GET, "/api/facturacion/cita/**")
+                        .hasAnyAuthority("DUEÑO", "VETERINARIO", "ASISTENTE")
+                        .requestMatchers(HttpMethod.PUT, "/api/facturacion/{facturaId}/pagar")
+                        .hasAnyAuthority("VETERINARIO", "ASISTENTE")
+                        .requestMatchers("/api/pagos/**").hasAuthority("DUEÑO")
 
+                        .requestMatchers(HttpMethod.POST, "/api/tratamientos", "/api/recetas")
+                        .hasAuthority("VETERINARIO")
                         .requestMatchers(HttpMethod.POST, "/api/historias", "/api/vacunas").hasAuthority("VETERINARIO")
-                        .requestMatchers(HttpMethod.GET, "/api/citas/pendientes").hasAnyAuthority("VETERINARIO", "ASISTENTE")
+
+                        .requestMatchers(HttpMethod.GET, "/api/citas/pendientes")
+                        .hasAnyAuthority("VETERINARIO", "ASISTENTE")
                         .requestMatchers(HttpMethod.PUT, "/api/citas/**").hasAnyAuthority("VETERINARIO", "ASISTENTE")
 
-                        .requestMatchers("/api/mascotas/dueno/**").hasAuthority("DUEÑO")
+                        .requestMatchers("/api/mascotas/dueno/**").hasAnyAuthority("DUEÑO", "ASISTENTE", "VETERINARIO")
                         .requestMatchers("/api/mascotas/**").hasAnyAuthority("DUEÑO", "ASISTENTE", "VETERINARIO")
 
                         .requestMatchers("/api/citas/veterinario/**").hasAnyAuthority("VETERINARIO", "ASISTENTE")
@@ -61,13 +79,14 @@ public class SecurityConfig {
 
                         .requestMatchers("/api/historias/**").hasAnyAuthority("DUEÑO", "VETERINARIO")
                         .requestMatchers("/api/vacunas/**").hasAnyAuthority("DUEÑO", "VETERINARIO")
+
                         .requestMatchers("/api/usuarios/**").permitAll()
 
-                        .anyRequest().authenticated()
-                )
+                        .anyRequest().authenticated())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(new JwtAuthFilter(jwtService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthFilter(jwtService, usuarioRepository),
+                        UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
@@ -79,8 +98,10 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
+
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:8080", "http://127.0.0.1:5500"));
+        configuration.setAllowedOrigins(
+                Arrays.asList("http://localhost:8080", "http://127.0.0.1:5500", "http://localhost:8092"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);

@@ -12,6 +12,7 @@ public interface CitaService {
     Optional<CitaDTO> obtenerCitaPorId(Long id);
     void cancelarCita(Long id);
     List<CitaDTO> listarCitasPorEstado(String estado);
+    List<CitaDTO> listarCitasPorEstados(String estado1, String estado2, String estado3);
 
     // Firma del metodo actualizada para incluir el ID y los detalles del usuario
     CitaDTO actualizarCita(Long citaId, CitaDTO citaDTO, UserDetails userDetails);

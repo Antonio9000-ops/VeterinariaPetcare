@@ -63,9 +63,28 @@ public String mostrarPaginaVacunaFormulario(@RequestParam("mascotaId") Long masc
     return "vacuna-formulario";
 }
 
-    // --- MÉTODO NUEVO QUE SOLUCIONA EL PROBLEMA ---
+   
     @GetMapping("/gestion-citas")
     public String mostrarPaginaGestionCitas() {
         return "gestion-citas";
+    }
+     @GetMapping("/tratamiento-formulario")
+    public String mostrarPaginaTratamientoFormulario(@RequestParam("mascotaId") Long mascotaId, Model model) {
+        model.addAttribute("mascotaId", mascotaId);
+        return "tratamiento-formulario";
+    }
+
+    @GetMapping("/receta-formulario")
+    public String mostrarPaginaRecetaFormulario(@RequestParam("mascotaId") Long mascotaId, Model model) {
+        model.addAttribute("mascotaId", mascotaId);
+        return "receta-formulario";
+    }
+    @GetMapping("/pagos")
+    public String mostrarPaginaPagos() {
+    return "pagos"; 
+    }
+    @GetMapping("/gestion-servicios")
+    public String mostrarPaginaGestionServicios() {
+        return "gestion-servicios";
     }
 }

@@ -2,47 +2,20 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8">
+    <th:block th:replace="~{common/head :: head_piezita}"></th:block>
     <title>PetCare - Login</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Formulario de inicio de sesión para el sistema de la clínica veterinaria" name="description">
-
-    <!-- Favicon -->
-    <link th:href="@{/img/favicon.ico}" rel="icon">
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Space+Grotesk&display=swap" rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link th:href="@{/lib/animate/animate.min.css}" rel="stylesheet">
-    <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link th:href="@{/css/style.css}" rel="stylesheet">
 
 </head>
 
 <body>
-<!-- Spinner Start (Conservado) -->
 <div id="spinner"
-     class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+    class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
     <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
         <span class="sr-only">Loading...</span>
     </div>
 </div>
-<!-- Spinner End -->
 
 
-<!-- Navbar Start (Conservado con links Thymeleaf) -->
 <div class="container-fluid sticky-top">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
@@ -63,10 +36,7 @@
         </nav>
     </div>
 </div>
-<!-- Navbar End -->
 
-
-<!-- Hero Start (Adaptado para la página de Login) -->
 <div class="container-fluid pb-5 bg-primary hero-header">
     <div class="container py-5">
         <div class="row g-3 align-items-center">
@@ -84,10 +54,7 @@
         </div>
     </div>
 </div>
-<!-- Hero End -->
 
-
-<!-- Login Form Start (El contenido central que reemplaza el Contacto) -->
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="row justify-content-center">
@@ -117,10 +84,7 @@
         </div>
     </div>
 </div>
-<!-- Login Form End -->
 
-
-<!-- Newsletter Start (Conservado) -->
 <div class="container-fluid bg-primary newsletter p-0">
     <div class="container p-0">
         <div class="row g-0 align-items-center">
@@ -143,106 +107,18 @@
         </div>
     </div>
 </div>
-<!-- Newsletter End -->
 
-
-<!-- Footer Start (Conservado con links Thymeleaf) -->
-<div class="container-fluid footer pt-5">
-    <div class="container py-5">
-        <div class="row g-5">
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-                <a th:href="@{/index}" class="d-inline-block mb-3">
-                    <h1 class="text">PetCare</h1>
-                </a>
-                <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                    amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
-                    clita duo justo et tempor</p>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
-                <h5 class="text-white mb-4">Contáctanos</h5>
-                <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                <div class="d-flex pt-2">
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-twitter"></i></a>
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-youtube"></i></a>
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-instagram"></i></a>
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
-                <h5 class="text-white mb-4">Enlaces Populares</h5>
-                <a class="btn btn-link" th:href="@{/about}">Acerca de Nosotros</a>
-                <a class="btn btn-link" th:href="@{/contact}">Contáctanos</a>
-                <a class="btn btn-link" href="#!">Política de Privacidad</a>
-                <a class="btn btn-link" href="#!">Términos &amp; Condiciones</a>
-                <a class="btn btn-link" href="#!">Carrera</a>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
-                <h5 class="text-white mb-4">Nuestros Servicios</h5>
-                <a class="btn btn-link" th:href="@{/service}">Diseño Interior</a>
-                <a class="btn btn-link" th:href="@{/service}">Planificación de Proyectos</a>
-                <a class="btn btn-link" th:href="@{/service}">Renovación</a>
-                <a class="btn btn-link" th:href="@{/service}">Implementación</a>
-                <a class="btn btn-link" th:href="@{/service}">Diseño de Paisajes</a>
-            </div>
-        </div>
-    </div>
-    <div class="container wow fadeIn" data-wow-delay="0.1s">
-        <div class="copyright">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" href="#!">Your Site Name</a>, All Right Reserved.
-                    Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>. Distributed by
-                    <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <div class="footer-menu">
-                        <a th:href="@{/index}">Home</a>
-                        <a href="#!">Cookies</a>
-                        <a href="#!">Ayuda</a>
-                        <a href="#!">FAQs</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Footer End -->
-
-
-<!-- Back to Top (Conservado) -->
-<a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-
-
-<!-- JavaScript Libraries (Rutas Thymeleaf) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script th:src="@{/lib/wow/wow.min.js}"></script>
-<script th:src="@{/lib/easing/easing.min.js}"></script>
-<script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
-<script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
-<script th:src="@{/js/main.js}"></script>
-
-<!-- Script de Funcionalidad de Login (Conservado) -->
+<div th:replace="~{common/footer :: footer_piezita}"></div>
+ 
 <script>
-    // Inicializar WOW para animaciones (consistente con el resto de la plantilla)
     new WOW().init();
 
     function parseJwt(token) {
         try {
-            // Decodificación Base64 URL-safe y parseo del payload
             const base64Url = token.split('.')[1];
             const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
             return JSON.parse(atob(base64));
         } catch (e) {
-            console.error("Error al parsear JWT:", e);
             return null;
         }
     }
@@ -252,7 +128,7 @@
         const email = document.getElementById('email').value;
         const contraseña = document.getElementById('contraseña').value;
         const errorMessageDiv = document.getElementById('error-message');
-        errorMessageDiv.style.display = 'none'; // Ocultar mensaje previo
+        errorMessageDiv.style.display = 'none';
 
         try {
             const response = await fetch('/auth/login', {
@@ -264,10 +140,9 @@
             if (response.ok) {
                 const data = await response.json();
 
-                // Almacenamiento del token (manteniendo tu lógica original)
                 localStorage.setItem('jwt_token', data.token);
+                document.cookie = `jwt_token=${data.token}; path=/; SameSite=Strict`;
 
-                // ✨ LÓGICA DE REDIRECCIÓN BASADA EN ROL
                 const userData = parseJwt(data.token);
                 if (!userData || !userData.role) {
                     errorMessageDiv.textContent = "Error: El token no contiene el rol del usuario.";
@@ -281,10 +156,9 @@
                         break;
                     case 'VETERINARIO':
                     case 'ASISTENTE':
-                        window.location.href = '/agenda'; // O la página principal para el personal
+                        window.location.href = '/';
                         break;
                     default:
-                        // Redirección por defecto si el rol no es reconocido
                         window.location.href = '/';
                         break;
                 }
@@ -294,12 +168,12 @@
                 errorMessageDiv.style.display = 'block';
             }
         } catch (error) {
-            console.error("Error en la solicitud de login:", error);
             errorMessageDiv.textContent = 'Error de conexión. Inténtalo de nuevo.';
             errorMessageDiv.style.display = 'block';
         }
     });
 </script>
+<script src="/js/script.js"></script>
 </body>
 
 </html>

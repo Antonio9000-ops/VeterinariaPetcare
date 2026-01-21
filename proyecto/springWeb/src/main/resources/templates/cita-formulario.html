@@ -1,83 +1,191 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Agendar Cita</title>
+    <th:block th:replace="~{common/head :: head_piezita}"></th:block>
+    <title>PetCare - Agendar Cita</title>
+
     <style>
-        body { font-family: sans-serif; background-color: #f4f4f4; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .form-container { background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 100%; max-width: 500px; }
-        h1 { text-align: center; }
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background-color: #007bff; color: #fff; border: none; border-radius: 4px; font-size: 1em; cursor: pointer; }
-    </style>
-</head>
-<body>
-<div class="form-container">
-    <h1>Agendar Nueva Cita</h1>
-    <form id="cita-form">
-        <div class="form-group">
-            <label for="fechaHora">Fecha y Hora:</label>
-            <input type="datetime-local" id="fechaHora" required>
-        </div>
-        <div class="form-group">
-            <label for="motivo">Motivo de la Cita:</label>
-            <input type="text" id="motivo" required>
-        </div>
-        
-        <input type="hidden" id="veterinarioId" value="1"> 
-        <button type="submit">Agendar</button>
-    </form>
-</div>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const token = localStorage.getItem('jwt_token');
-        if (!token) { window.location.href = '/auth/login'; return; }
-
-        const params = new URLSearchParams(window.location.search);
-        const mascotaId = params.get('mascotaId');
-        if (!mascotaId) {
-            alert('ID de mascota no encontrado.');
-            window.location.href = '/mascotas';
-            return;
+        .container-citas {
+            min-height: 70vh;
+            padding: 50px 0;
         }
 
-        const form = document.getElementById('cita-form');
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
+        .form-container-custom {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
 
-            const citaData = {
-                fechaHora: document.getElementById('fechaHora').value,
-                motivo: document.getElementById('motivo').value,
-                estado: 'PROGRAMADA', // Estado por defecto
-                mascotaId: mascotaId,
-                veterinarioId: document.getElementById('veterinarioId').value
-            };
+        #form-title {
+            margin-bottom: 25px;
+            color: var(--bs-primary);
+        }
 
-            try {
-                const response = await fetch('/api/citas', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify(citaData)
-                });
+        .form-floating label {
+            color: #6c757d;
+        }
 
-                if (response.ok) {
-                    alert('Cita agendada con éxito!');
-                    window.location.href = `/mascota-detalle?id=${mascotaId}`;
-                } else {
-                    alert('Error al agendar la cita.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error de conexión.');
+        .message-container {
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        .message-container.alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .message-container.alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Cargando...</span>
+        </div>
+    </div>
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
+                <a th:href="@{/}" class="navbar-brand">
+                    <h1>PetCare</h1>
+                </a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                        data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto" id="nav-links-menu">
+                        <p class="nav-item nav-link text-muted">Cargando opciones...</p>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <div class="container-fluid pb-5 bg-primary hero-header">
+        <div class="container py-5">
+            <div class="row g-3 align-items-center">
+                <div class="col-lg-6 text-center text-lg-start">
+                    <h1 class="display-3 mb-0 text-white" id="hero-title">Agendar Nueva Cita</h1>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid py-5 container-citas">
+        <div class="container py-5">
+            <div class="form-container-custom wow fadeIn" data-wow-delay="0.3s">
+                <h2 class="text-center" id="form-title">Agendar Cita</h2>
+                
+                <div id="message-container" class="my-3 message-container" role="alert" style="display: none;"></div>
+
+                <form id="cita-form">
+                    <input type="hidden" id="mascotaIdInput">
+                    <input type="hidden" id="veterinarioId" value="1"> 
+
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="datetime-local" class="form-control" id="fechaHora" placeholder="Fecha y Hora" required>
+                                <label for="fechaHora">Fecha y Hora:</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="motivo" placeholder="Motivo de la Cita" required>
+                                <label for="motivo">Motivo de la Cita:</label>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary w-100 py-3">Agendar Cita</button>
+                            <a href="/mascotas" class="btn btn-outline-secondary w-100 py-2 mt-2" id="btn-cancel">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<div th:replace="~{common/footer :: footer_piezita}"></div>
+
+    <script>
+        function showMessage(type, message) {
+            const container = document.getElementById('message-container');
+            container.textContent = message;
+            container.style.display = 'block';
+            container.className = `my-3 message-container alert-${type}`;
+        }
+        
+        document.addEventListener('DOMContentLoaded', async () => {
+            new WOW().init();
+
+            const token = localStorage.getItem('jwt_token');
+
+            const params = new URLSearchParams(window.location.search);
+            const mascotaId = params.get('mascotaId');
+            
+            if (!mascotaId) {
+                showMessage('danger', 'Error: ID de mascota no encontrado. Redirigiendo...');
+                setTimeout(() => { window.location.href = '/mascotas'; }, 2000);
+                return;
             }
+            
+            document.getElementById('mascotaIdInput').value = mascotaId;
+            document.getElementById('btn-cancel').href = `/mascota-detalle?id=${mascotaId}`;
+
+            const form = document.getElementById('cita-form');
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+                document.getElementById('message-container').style.display = 'none';
+
+                const citaData = {
+                    fechaHora: document.getElementById('fechaHora').value,
+                    motivo: document.getElementById('motivo').value,
+                    estado: 'PROGRAMADA',
+                    mascotaId: mascotaId,
+                    veterinarioId: document.getElementById('veterinarioId').value
+                };
+
+                try {
+                    const response = await fetch('/api/citas', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(citaData)
+                    });
+
+                    if (response.ok) {
+                        showMessage('success', '¡Cita agendada con éxito! Redirigiendo...');
+                        setTimeout(() => {
+                            window.location.href = `/mascota-detalle?id=${mascotaId}`;
+                        }, 1500);
+                    
+                    } else {
+                        const errorData = await response.json();
+                        const errorMessage = errorData.message || 'Error al agendar la cita. Verifique la fecha/hora.';
+                        showMessage('danger', `Error: ${errorMessage}`);
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    showMessage('danger', 'Error de conexión con el servidor. Inténtelo de nuevo.');
+                }
+            });
         });
-    });
-</script>
+    </script>
+    <script src="/js/script.js"></script>
+
 </body>
+
 </html>

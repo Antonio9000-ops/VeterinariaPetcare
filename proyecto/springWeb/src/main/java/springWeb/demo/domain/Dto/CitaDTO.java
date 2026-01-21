@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import springWeb.demo.domain.Modelos.EstadoCita;
+import springWeb.demo.domain.Modelos.EstadoPago;
 
 @Data
 @NoArgsConstructor
@@ -25,4 +26,6 @@ public class CitaDTO {
 
     private Long veterinarioId;
     private String veterinarioNombre;
+     private Long facturaId;
+    private EstadoPago estadoPago;
 }

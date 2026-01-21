@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Añadir Receta</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Añadir Receta</h1>
+        <form id="receta-form">
+            <input type="hidden" id="historiaClinicaId">
+            
+            <div>
+                <label for="medicamento">Medicamento:</label>
+                <input type="text" id="medicamento" required>
+            </div>
+            <div>
+                <label for="dosis">Dosis:</label>
+                <input type="text" id="dosis" required>
+            </div>
+            <div>
+                <label for="duracion">Duración:</label>
+                <input type="text" id="duracion" placeholder="Ej: 7 días" required>
+            </div>
+            <button type="submit">Guardar Receta</button>
+        </form>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('jwt_token');
+    if (!token) { window.location.href = '/login'; return; }
+
+    const params = new URLSearchParams(window.location.search);
+    const mascotaId = params.get('mascotaId');
+    if (!mascotaId) {
+        alert('ID de mascota no encontrado.');
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/historias/mascota/${mascotaId}`, {
+            headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const historias = await response.json();
+        if (historias.length === 0) {
+            alert('Esta mascota no tiene una historia clínica. Por favor, cree una primero.');
+            window.location.href = `/mascota-detalle?id=${mascotaId}`;
+            return;
+        }
+        document.getElementById('historiaClinicaId').value = historias[0].id;
+    } catch (error) {
+        alert('Error al cargar la historia clínica de la mascota.');
+    }
+
+    document.getElementById('receta-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const recetaData = {
+            medicamento: document.getElementById('medicamento').value,
+            dosis: document.getElementById('dosis').value,
+            duracion: document.getElementById('duracion').value,
+            historiaClinicaId: document.getElementById('historiaClinicaId').value
+        };
+
+        try {
+            const response = await fetch('/api/recetas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(recetaData)
+            });
+
+            if (response.ok) {
+                alert('Receta añadida con éxito.');
+                window.location.href = `/mascota-detalle?id=${mascotaId}`;
+            } else {
+                throw new Error('Error al guardar la receta.');
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    });
+});
+</script>
+</body>
+</html>

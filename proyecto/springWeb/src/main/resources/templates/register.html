@@ -2,35 +2,10 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8">
+    <th:block th:replace="~{common/head :: head_piezita}"></th:block>
     <title>PetCare - Registro</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Formulario de registro para el sistema de la clínica veterinaria" name="description">
-
-    <!-- Favicon -->
-    <link th:href="@{/img/favicon.ico}" rel="icon">
-
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Space+Grotesk&display=swap" rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
-    <link th:href="@{/lib/animate/animate.min.css}" rel="stylesheet">
-    <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
-
-    <!-- Customized Bootstrap Stylesheet -->
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
-    <link th:href="@{/css/style.css}" rel="stylesheet">
 
     <style>
-        /* Estilos específicos para centrar el formulario de registro */
         .register-wrapper {
             display: flex;
             align-items: center;
@@ -48,7 +23,6 @@
         .form-group {
             margin-bottom: 1.5rem;
         }
-        /* Estilos para mensajes de error/éxito (reemplazo de alert()) */
         .message-container {
             padding: 10px;
             border-radius: 5px;
@@ -69,17 +43,13 @@
 </head>
 
 <body>
-<!-- Spinner Start -->
 <div id="spinner"
      class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
     <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
         <span class="sr-only">Loading...</span>
     </div>
 </div>
-<!-- Spinner End -->
 
-
-<!-- Navbar Start (Adaptado con Register activo) -->
 <div class="container-fluid sticky-top">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
@@ -100,10 +70,7 @@
         </nav>
     </div>
 </div>
-<!-- Navbar End -->
 
-
-<!-- Hero Start (Adaptado para la página de Registro) -->
 <div class="container-fluid pb-5 bg-primary hero-header">
     <div class="container py-5">
         <div class="row g-3 align-items-center">
@@ -121,10 +88,7 @@
         </div>
     </div>
 </div>
-<!-- Hero End -->
 
-
-<!-- Registration Form Start -->
 <div class="container-fluid py-5">
     <div class="container py-5">
         <div class="row justify-content-center">
@@ -132,7 +96,6 @@
                 <div class="form-container wow fadeIn" data-wow-delay="0.3s">
                     <h2 class="mb-4 text-center text-primary">Regístrate en el Sistema</h2>
 
-                    <!-- Contenedor para mensajes de éxito/error (reemplazo de alert) -->
                     <div id="message-container" class="message-container" style="display: none;"></div>
 
                     <form id="register-form">
@@ -172,10 +135,7 @@
         </div>
     </div>
 </div>
-<!-- Registration Form End -->
 
-
-<!-- Newsletter Start (Conservado) -->
 <div class="container-fluid bg-primary newsletter p-0">
     <div class="container p-0">
         <div class="row g-0 align-items-center">
@@ -198,94 +158,9 @@
         </div>
     </div>
 </div>
-<!-- Newsletter End -->
 
+    <div th:replace="~{common/footer :: footer_piezita}"></div>
 
-<!-- Footer Start (Conservado con links Thymeleaf) -->
-<div class="container-fluid footer pt-5">
-    <div class="container py-5">
-        <div class="row g-5">
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-                <a th:href="@{/index}" class="d-inline-block mb-3">
-                    <h1 class="text">PetCare</h1>
-                </a>
-                <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                    amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
-                    clita duo justo et tempor</p>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
-                <h5 class="text-white mb-4">Contáctanos</h5>
-                <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                <div class="d-flex pt-2">
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-twitter"></i></a>
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-youtube"></i></a>
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-instagram"></i></a>
-                    <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                            class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
-                <h5 class="text-white mb-4">Enlaces Populares</h5>
-                <a class="btn btn-link" th:href="@{/about}">Acerca de Nosotros</a>
-                <a class="btn btn-link" th:href="@{/contact}">Contáctanos</a>
-                <a class="btn btn-link" href="#!">Política de Privacidad</a>
-                <a class="btn btn-link" href="#!">Términos &amp; Condiciones</a>
-                <a class="btn btn-link" href="#!">Carrera</a>
-            </div>
-            <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
-                <h5 class="text-white mb-4">Nuestros Servicios</h5>
-                <a class="btn btn-link" th:href="@{/service}">Diseño Interior</a>
-                <a class="btn btn-link" th:href="@{/service}">Planificación de Proyectos</a>
-                <a class="btn btn-link" th:href="@{/service}">Renovación</a>
-                <a class="btn btn-link" th:href="@{/service}">Implementación</a>
-                <a class="btn btn-link" th:href="@{/service}">Diseño de Paisajes</a>
-            </div>
-        </div>
-    </div>
-    <div class="container wow fadeIn" data-wow-delay="0.1s">
-        <div class="copyright">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" href="#!">Your Site Name</a>, All Right Reserved.
-                    Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>. Distributed by
-                    <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    <div class="footer-menu">
-                        <a th:href="@{/index}">Home</a>
-                        <a href="#!">Cookies</a>
-                        <a href="#!">Ayuda</a>
-                        <a href="#!">FAQs</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Footer End -->
-
-
-<!-- Back to Top (Conservado) -->
-<a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-
-
-<!-- JavaScript Libraries (Rutas Thymeleaf) -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script th:src="@{/lib/wow/wow.min.js}"></script>
-<script th:src="@{/lib/easing/easing.min.js}"></script>
-<script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
-<script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
-<script th:src="@{/js/main.js}"></script>
-
-<!-- Script de Funcionalidad de Registro -->
 <script>
     new WOW().init();
 
@@ -295,7 +170,7 @@
         const messageContainer = document.getElementById('message-container');
         messageContainer.style.display = 'none';
         messageContainer.classList.remove('message-success', 'message-error');
-        messageContainer.textContent = ''; // Limpiar mensaje anterior
+        messageContainer.textContent = '';
 
         const registerData = {
             nombre: document.getElementById('nombre').value,
@@ -304,13 +179,11 @@
             rol: document.getElementById('rol').value
         };
 
-        // Simular un loading (opcional, pero mejora la UX)
         const submitButton = event.target.querySelector('button[type="submit"]');
         submitButton.textContent = 'Registrando...';
         submitButton.disabled = true;
 
         try {
-            // Usamos la ruta sugerida /auth/register
             const response = await fetch('/auth/register', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -322,14 +195,12 @@
                 messageContainer.classList.add('message-success');
                 messageContainer.style.display = 'block';
 
-                // Redirigir después de 2 segundos
                 setTimeout(() => {
                     window.location.href = '/login';
                 }, 2000);
 
             } else {
                 const errorText = await response.text();
-                // Intenta parsear el error si tu backend envía un mensaje útil
                 let errorMessage = 'Error en el registro. El email puede que ya esté en uso o la contraseña no es válida.';
                 try {
                     const errorJson = JSON.parse(errorText);

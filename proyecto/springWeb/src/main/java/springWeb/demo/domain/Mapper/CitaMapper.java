@@ -19,6 +19,9 @@ public class CitaMapper {
                 .mascotaNombre(cita.getMascota() != null ? cita.getMascota().getNombre() : null)
                 .veterinarioId(cita.getVeterinario() != null ? cita.getVeterinario().getId() : null)
                 .veterinarioNombre(cita.getVeterinario() != null ? cita.getVeterinario().getNombre() : null)
+             
+                .estadoPago(cita.getEstadoPago())
+                .facturaId(cita.getFactura() != null ? cita.getFactura().getId() : null)
                 .build();
     }
 
@@ -30,7 +33,6 @@ public class CitaMapper {
                 .fechaHora(dto.getFechaHora())
                 .motivo(dto.getMotivo())
                 .estado(dto.getEstado())
-                // Relaciones se asignan después en el Service
                 .mascota(null)
                 .veterinario(null)
                 .build();

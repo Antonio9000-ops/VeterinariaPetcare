@@ -45,6 +45,11 @@ public class CitaController {
         return citaService.listarCitasPorEstado("PROGRAMADA");
     }
 
+    @GetMapping("/historial")
+    public List<CitaDTO> listarCitasHistorial() {
+        return citaService.listarCitasPorEstados("ACEPTADA", "RECHAZADA", "COMPLETADA");
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CitaDTO> obtenerCitaPorId(@PathVariable Long id) {
         return citaService.obtenerCitaPorId(id)
@@ -53,7 +58,8 @@ public class CitaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CitaDTO> actualizarCita(@PathVariable Long id, @RequestBody CitaDTO citaDTO, @AuthenticationPrincipal UserDetails userDetails) {
+    public ResponseEntity<CitaDTO> actualizarCita(@PathVariable Long id, @RequestBody CitaDTO citaDTO,
+            @AuthenticationPrincipal UserDetails userDetails) {
         CitaDTO actualizada = citaService.actualizarCita(id, citaDTO, userDetails);
         return ResponseEntity.ok(actualizada);
     }
