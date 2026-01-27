@@ -2,27 +2,8 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="utf-8">
+    <th:block th:replace="~{common/head :: head_piezita}"></th:block>
     <title>PetCare - Inicio</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
-
-    <link th:href="@{/img/favicon.ico}" rel="icon">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Space+Grotesk&display=swap" rel="stylesheet">
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <link th:href="@{/lib/animate/animate.min.css}" rel="stylesheet">
-    <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
-
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-
-    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -88,13 +69,13 @@
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
-                    <h1 class="mb-5"><span class="text-uppercase text-primary bg-light px-2">Historia</span> de Nuestra
+                    <h1 class="mb-5"><span class="text-uppercase text-primary bg-light px-2">Histsoria</span> de Nuestra
                         Creación</h1>
                     <p class="mb-4">El Hospital Veterinario PetCare nació en 2025 con
                         la visión de ofrecer una atención médica de calidad, compasiva y avanzada a las mascotas de
                         nuestra comunidad. Desde nuestros humildes comienzos como un pequeño consultorio, hemos crecido
                         hasta convertirnos en un centro de referencia que combina tecnología moderna con un profundo
-                        amor por los animales.</p>
+                        amor por los animsdasales.</p>
 
                     <p class="mb-5">Nuestro compromiso es garantizar que cada mascota reciba el mejor cuidado posible en
                         cada etapa de su vida. Nos enorgullece ser un equipo dedicado a la prevención, el diagnóstico y
@@ -202,7 +183,7 @@
                         <img class="img-fluid w-100" th:src="@{/img/team-4.jpg}" alt="">
                         <div class="team-overlay">
                             <small class="mb-2">Veterinario</small>
-                            <h4 class="lh-base text-light">Alexander Bell</h4>
+                            <h4 class="lh-base text-light">Alexandsser Bell</h4>
                         </div>
                     </div>
                 </div>
@@ -210,165 +191,9 @@
         </div>
     </div>
 
-    <div class="container-fluid footer pt-5">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-                    <a th:href="@{/index}" class="d-inline-block mb-3">
-                        <h1 class="text">PetCare</h1>
-                    </a>
-                    <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                        amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
-                        clita duo justo et tempor</p>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
-                    <h5 class="text-white mb-4">Contáctanos</h5>
-                    <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                                class="fab fa-twitter"></i></a>
-                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                                class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                                class="fab fa-youtube"></i></a>
-                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                                class="fab fa-instagram"></i></a>
-                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                                class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
-                    <h5 class="text-white mb-4">Enlaces Populares</h5>
-                    <a class="btn btn-link" th:href="@{/about}">Acerca de Nosotros</a>
-                    <a class="btn btn-link" th:href="@{/contact}">Contáctanos</a>
-                    <a class="btn btn-link" th:href="@{/privacy}">Política de Privacidad</a>
-                    <a class="btn btn-link" th:href="@{/terms}">Términos &amp; Condiciones</a>
-                    <a class="btn btn-link" href="#!">Carrera</a>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
-                    <h5 class="text-white mb-4">Nuestros Servicios</h5>
-                    <a class="btn btn-link" th:href="@{/service}">Diseño Interior</a>
-                    <a class="btn btn-link" th:href="@{/service}">Planificación de Proyectos</a>
-                    <a class="btn btn-link" th:href="@{/service}">Renovación</a>
-                    <a class="btn btn-link" th:href="@{/service}">Implementación</a>
-                    <a class="btn btn-link" th:href="@{/service}">Diseño de Paisajes</a>
-                </div>
-            </div>
-        </div>
-        <div class="container wow fadeIn" data-wow-delay="0.1s">
-            <div class="copyright">
-                <div class="row">
+<div th:replace="~{common/footer :: footer_piezita}"></div>
 
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a th:href="@{/index}">Home</a>
-                            <a href="#!">Cookies</a>
-                            <a href="#!">Ayuda</a>
-                            <a href="#!">FAQs</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script th:src="@{/lib/wow/wow.min.js}"></script>
-    <script th:src="@{/lib/easing/easing.min.js}"></script>
-    <script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
-    <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
-
-<script th:src="@{/js/main.js}"></script>
-
-
-<script>
-    function parseJwt(token) {
-        try {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            return JSON.parse(atob(base64));
-        } catch (e) {
-            return null;
-        }
-    }
-
-    function configurarInterfazUsuario() {
-        const token = localStorage.getItem('jwt_token');
-        const navLinksMenu = document.getElementById('nav-links-menu');
-        const navItemClass = 'nav-item nav-link';
-
-        if (token) {
-            const userData = parseJwt(token);
-            const userRole = userData ? userData.role : 'USER';
-            const userName = userData ? userData.nombre : 'Usuario';
-
-            const tituloPrincipal = document.getElementById('titulo-principal');
-            const bienvenidaSeccion = document.getElementById('bienvenida-seccion');
-            const mensajeHeader = document.getElementById('mensaje-bienvenida-header');
-            const mensajeParrafo = bienvenidaSeccion ? bienvenidaSeccion.querySelector('p') : null;
-
-            if (tituloPrincipal) tituloPrincipal.style.display = 'none';
-            
-            if (mensajeHeader && mensajeParrafo) {
-    
-    if (userRole === 'DUEÑO') {
-        mensajeHeader.textContent = `Bienvenido ${userName}`;
-        mensajeParrafo.textContent = 'Aquí puede gestionar la información y las citas de sus mascotas.';
-    } 
-    
-    else if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
-        mensajeHeader.textContent = `Bienvenido ${userRole} ${userName}`; 
-        mensajeParrafo.textContent = 'Acceda a las herramientas de gestión de citas, mascotas y servicios.';
-    }
-    
-    else {
-        mensajeHeader.textContent = `Bienvenido ${userName}`;
-        mensajeParrafo.textContent = 'Gestione su cuenta y la de sus mascotas.';
-    }
-
-    bienvenidaSeccion.classList.remove('d-none');
-}
-
-            let menuHTML = `<a href="/" class="${navItemClass} active">Inicio</a>`;
-            if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
-                menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
-                menuHTML += `<a href="/agenda" class="${navItemClass}">Agenda</a>`;
-                menuHTML += `<a href="/gestion-servicios" class="${navItemClass}">Gestión de Servicios</a>`;
-            } else {
-                menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
-                menuHTML += `<a href="/pagos" class="${navItemClass}">Mis Pagos</a>`;
-                menuHTML += `<a href="/mascota-formulario" class="${navItemClass}">Añadir Nueva Mascota</a>`;
-            }
-            menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
-            menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
-            
-            if (navLinksMenu) navLinksMenu.innerHTML = menuHTML;
-
-        } else {
-            let menuHTML = `<a href="/" class="${navItemClass} active">Inicio</a>
-                            <a href="/contact" class="${navItemClass}">Contacto de emergencia</a>
-                            <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`;
-            if (navLinksMenu) navLinksMenu.innerHTML = menuHTML;
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        configurarInterfazUsuario();
-
-        document.addEventListener('click', (e) => {
-            if (e.target && e.target.id === 'logout-btn-menu') {
-                e.preventDefault();
-                localStorage.removeItem('jwt_token');
-                window.location.href = '/';
-            }
-        });
-    });
-</script>
+<script src="/js/script.js"></script>
 </body>
 
 </html>

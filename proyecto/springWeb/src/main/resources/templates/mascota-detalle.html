@@ -2,28 +2,8 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
+    <th:block th:replace="~{common/head :: head_piezita}"></th:block>
     <title>PetCare - Detalle de Mascota</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Detalle, historial y citas de una mascota específica" name="description">
-
-    <link th:href="@{/img/favicon.ico}" rel="icon">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Space+Grotesk&family=Inter:wght@400;600;700&display=swap"
-        rel="stylesheet">
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <link th:href="@{/lib/animate/animate.min.css}" rel="stylesheet">
-    <link th:href="@{/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
-
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-
-    <link th:href="@{/css/style.css}" rel="stylesheet">
 
     <style>
         :root {
@@ -311,74 +291,6 @@
         </div>
     </div>
 
-    <div class="container-fluid footer pt-5">
-        <div class="container py-5">
-            <div class="row g-5">
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.1s">
-                    <a th:href="@{/index}" class="d-inline-block mb-3">
-                        <h1 class="text">PetCare</h1>
-                    </a>
-                    <p class="mb-0">Tempor erat elitr rebum at clita. Diam dolor diam ipsum et tempor sit. Aliqu diam
-                        amet diam et eos labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus
-                        clita duo justo et tempor</p>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.3s">
-                    <h5 class="text-white mb-4">Contáctanos</h5>
-                    <p><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
-                    <p><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
-                    <p><i class="fa fa-envelope me-3"></i>info@example.com</p>
-                    <div class="d-flex pt-2">
-                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                                class="fab fa-twitter"></i></a>
-                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                                class="fab fa-facebook-f"></i></a>
-                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                                class="fab fa-youtube"></i></a>
-                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                                class="fab fa-instagram"></i></a>
-                        <a class="btn btn-outline-primary btn-square border-2 me-2" href="#!"><i
-                                class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.5s">
-                    <h5 class="text-white mb-4">Enlaces Populares</h5>
-                    <a class="btn btn-link" th:href="@{/about}">Acerca de Nosotros</a>
-                    <a class="btn btn-link" th:href="@{/contact}">Contáctanos</a>
-                    <a class="btn btn-link" href="#!">Política de Privacidad</a>
-                    <a class="btn btn-link" href="#!">Términos &amp; Condiciones</a>
-                    <a class="btn btn-link" href="#!">Carrera</a>
-                </div>
-                <div class="col-md-6 col-lg-3 wow fadeIn" data-wow-delay="0.7s">
-                    <h5 class="text-white mb-4">Nuestros Servicios</h5>
-                    <a class="btn btn-link" th:href="@{/service}">Diseño Interior</a>
-                    <a class="btn btn-link" th:href="@{/service}">Planificación de Proyectos</a>
-                    <a class="btn btn-link" th:href="@{/service}">Renovación</a>
-                    <a class="btn btn-link" th:href="@{/service}">Implementación</a>
-                    <a class="btn btn-link" th:href="@{/service}">Diseño de Paisajes</a>
-                </div>
-            </div>
-        </div>
-        <div class="container wow fadeIn" data-wow-delay="0.1s">
-            <div class="copyright">
-                <div class="row">
-                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="#!">Your Site Name</a>, All Right Reserved.
-                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>. Distributed by
-                        <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
-                    </div>
-                    <div class="col-md-6 text-center text-md-end">
-                        <div class="footer-menu">
-                            <a th:href="@{/index}">Home</a>
-                            <a href="#!">Cookies</a>
-                            <a href="#!">Ayuda</a>
-                            <a href="#!">FAQs</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div id="facturaModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -398,17 +310,7 @@
         </div>
     </div>
 
-    <a href="#!" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script th:src="@{/lib/wow/wow.min.js}"></script>
-    <script th:src="@{/lib/easing/easing.min.js}"></script>
-    <script th:src="@{/lib/waypoints/waypoints.min.js}"></script>
-    <script th:src="@{/lib/owlcarousel/owl.carousel.min.js}"></script>
-
-    <script th:src="@{/js/main.js}"></script>
+    <div th:replace="~{common/footer :: footer_piezita}"></div>
 
     <script>
         const token = localStorage.getItem('jwt_token');
@@ -730,5 +632,5 @@
         window.cancelarCita = cancelarCita;
     </script>
 </body>
-
+ 
 </html>

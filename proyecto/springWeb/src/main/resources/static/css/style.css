@@ -1,6 +1,4 @@
-/********** Template CSS **********/
 
-/*** Spinner ***/
 #spinner {
     opacity: 0;
     visibility: hidden;
@@ -123,8 +121,8 @@
 .hero-header {
     margin-top: -100px;
     padding-top: 150px;
-    background: linear-gradient(rgba(0, 195, 255, 0.5), rgba(255, 255, 255, 0.5)),
-        url(../img/nav3.png) top center no-repeat;
+    background: linear-gradient(rgba(0, 195, 255, 0.055), rgba(255, 255, 255, 0.116)),
+        url(../img/navImage.jpg) top center no-repeat;
     background-size: cover;
 }
 
@@ -415,7 +413,7 @@
 
 /*** Footer ***/
 .footer {
-    background: linear-gradient(rgba(235, 235, 235, 0.158), rgba(235, 235, 235, 0.158)), url(../img/footer2.png)bottom center no-repeat;
+    background: linear-gradient(rgba(235, 235, 235, 0.158), rgba(235, 235, 235, 0.158)), url(../img/footer2.png)center no-repeat;
     background-size: cover;
 
 }
@@ -513,4 +511,9 @@
     background-color: #1E88E5;
     border-color: #1E88E5;
     color: #ffffff;
+}
+
+/* Agenda page hero title font size */
+#hero-title {
+    font-size: 3rem; /* Ajusta este valor según el tamaño deseado */
 }

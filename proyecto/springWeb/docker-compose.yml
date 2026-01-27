@@ -1,0 +1,42 @@
+services:
+  # Servicio de la Aplicación
+  app:
+    # Usamos una imagen de Maven para poder ejecutar "mvn spring-boot:run"
+    image: maven:3.9.6-eclipse-temurin-21-alpine
+    container_name: spring_petcare_app
+    working_dir: /app
+    ports:
+      - "8092:8092"
+    volumes:
+      # ESTO ES LO IMPORTANTE:
+      # Conecta tu carpeta actual con el contenedor.
+      # Si editas código en Arch, cambia dentro del contenedor al instante.
+      - ./:/app
+      # Evita que el contenedor pise tu carpeta local de dependencias
+      - maven-repo:/root/.m2
+    command: mvn spring-boot:run
+    environment:
+      # Sobrescribimos la conexión a la DB para usar el contenedor 'db' en vez de localhost
+      - SPRING_DATASOURCE_URL=jdbc:mysql://db:3306/clinica_db?allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_OUTPUT_ANSI_ENABLED=ALWAYS
+    tty: true
+    depends_on:
+      - db
+
+  # Servicio de Base de Datos
+  db:
+    image: mysql:8.0
+    container_name: spring_petcare_db
+    ports:
+      - "3307:3306" # Mapeamos al 3307 en tu PC para que no choque si ya tienes MySQL instalado
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: clinica_db
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+volumes:
+  mysql-data:
+  maven-repo:
