@@ -9,18 +9,21 @@ function setupNavbar(token) {
     const userData = token ? parseJwt(token) : null;
     const navItemClass = 'nav-item nav-link';
     
-    // Iniciamos el menú vacío para reemplazar el "Cargando..."
     let menuHTML = `<a href="/" class="${navItemClass}">Inicio</a>`;
 
     if (userData) {
         const userRole = userData.role;
-        if (userRole === 'VETERINARIO' || userRole === 'ASISTENTE') {
+        if (userRole === 'VETERINARIO') {
             menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
             menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
             menuHTML += `<a href="/gestion-servicios" class="${navItemClass}">Gestion de Servicios</a>`;
-        } else {
+        
+        } else if (userRole === 'DUEÑO') {
             menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
             menuHTML += `<a href="/pagos" class="${navItemClass}">Mis Pagos</a>`;
+        
+        } else {
+            
         }
         menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
         menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
