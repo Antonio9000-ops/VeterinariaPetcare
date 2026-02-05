@@ -1,69 +1,130 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Añadir a Historia Clínica</title>
-    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <th:block th:replace="~{common/head :: head_piezita}"></th:block>
+    <title>PetCare - Añadir Historia Clínica</title>
 </head>
+
 <body>
-<div class="navbar">
-    <a href="/">Inicio</a>
-</div>
-<div class="form-container">
-    <h1>Añadir Registro a Historia Clínica</h1>
-    <form id="history-form">
-        <div class="form-group">
-            <label for="descripcion">Descripción (Diagnóstico, Tratamiento, Notas):</label>
-            <textarea id="descripcion" required></textarea>
+    <div id="spinner"
+        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" style="width: 3rem; height: 3rem;" role="status">
+            <span class="sr-only">Cargando...</span>
         </div>
-        <button type="submit">Guardar Registro</button>
-    </form>
-</div>
+    </div>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const token = localStorage.getItem('jwt_token');
-        if (!token) { window.location.href = '/login'; return; }
+    <div class="container-fluid sticky-top">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light border-bottom border-2 border-white">
+                <a th:href="@{/}" class="navbar-brand">
+                    <h1>PetCare</h1>
+                </a>
+                <button type="button" class="navbar-toggler ms-auto me-0" data-bs-toggle="collapse"
+                    data-bs-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto" id="nav-links-menu">
+                        <a th:href="@{/}" class="nav-item nav-link">Inicio</a>
+                        <!-- Agrega más enlaces según sea necesario -->
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
 
-        const params = new URLSearchParams(window.location.search);
-        const mascotaId = params.get('mascotaId');
-        if (!mascotaId) {
-            alert('ID de mascota no encontrado.');
-            window.history.back();
-            return;
-        }
+    <div class="container-fluid pb-5 bg-primary hero-header">
+        <div class="container py-5">
+            <div class="row g-3 align-items-center">
+                <div class="col-lg-12 text-center text-lg-start">
+                    <h1 class="display-1 mb-0 animated slideInLeft">Añadir a Historia Clínica</h1>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        const form = document.getElementById('history-form');
-        form.addEventListener('submit', async (event) => {
-            event.preventDefault();
+    <div class="container-fluid py-5 container-citas">
+        <div class="container py-5">
+            <div class="form-container-custom wow fadeIn" data-wow-delay="0.3s">
+                <h2 class="text-center" id="form-title">Nuevo Registro</h2>
 
-            const historyData = {
-                descripcion: document.getElementById('descripcion').value,
-                mascotaId: mascotaId,
+                <div id="message-container" class="my-3 message-container" role="alert" style="display: none;"></div>
 
-            };
+                <form id="history-form">
+                    <input type="hidden" id="mascotaIdInput">
 
-            try {
-                const response = await fetch('/api/historias', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify(historyData)
-                });
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" id="descripcion" placeholder="Descripción"
+                                  style="height: 200px" required></textarea>
+                        <label for="descripcion">Descripción (Diagnóstico, Tratamiento, Notas):</label>
+                    </div>
 
-                if (response.ok) {
-                    alert('Registro añadido con éxito.');
-                    window.location.href = `/mascota-detalle?id=${mascotaId}`;
-                } else {
-                    throw new Error('No se pudo guardar el registro.');
-                }
-            } catch (error) {
-                alert(`Error: ${error.message}`);
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-primary w-100 py-3">Guardar Registro</button>
+                            <a href="#" id="btn-cancel" class="btn btn-outline-secondary w-100 py-2 mt-2">Cancelar</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="~{common/footer :: footer_piezita}"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('jwt_token');
+            if (!token) {
+                window.location.href = '/login';
+                return;
             }
+
+            const params = new URLSearchParams(window.location.search);
+            const mascotaId = params.get('mascotaId');
+
+            if (!mascotaId) {
+                alert('ID de mascota no encontrado. Redirigiendo...');
+                window.history.back();
+                return;
+            }
+
+            document.getElementById('mascotaIdInput').value = mascotaId;
+            document.getElementById('btn-cancel').href = `/mascota-detalle?id=${mascotaId}`;
+
+            const form = document.getElementById('history-form');
+            form.addEventListener('submit', async (event) => {
+                event.preventDefault();
+
+                const historyData = {
+                    descripcion: document.getElementById('descripcion').value,
+                    mascotaId: mascotaId
+                };
+
+                try {
+                    const response = await fetch('/api/historias', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(historyData)
+                    });
+
+                    if (response.ok) {
+                        alert('Registro añadido con éxito.');
+                        window.location.href = `/mascota-detalle?id=${mascotaId}`;
+                    } else {
+                        const errorData = await response.json();
+                        alert(`Error: ${errorData.message || 'No se pudo guardar el registro.'}`);
+                    }
+                } catch (error) {
+                    alert(`Error de conexión: ${error.message}`);
+                }
+            });
         });
-    });
-</script>
+    </script>
+
+    <script src="/js/script.js"></script>
 </body>
 </html>
