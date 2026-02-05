@@ -4,193 +4,7 @@
 <head>
     <th:block th:replace="~{common/head :: head_piezita}"></th:block>
     <title>PetCare - Detalle de Mascota</title>
-
-    <style>
-        :root {
-            --bs-primary: #1280e0;
-            --bs-success: #198754;
-            --bs-warning: #ffc107;
-            --bs-info: #0dcaf0;
-            --bs-secondary: #6c757d;
-        }
-
-        .container-detalle {
-            min-height: 70vh;
-            padding: 50px 0;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .pet-header {
-            background-color: var(--bs-primary);
-            color: white;
-            padding: 30px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        .pet-header h1 {
-            color: white;
-            font-weight: 700;
-            font-size: 2.5rem;
-            margin-bottom: 5px;
-        }
-
-        .pet-header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-
-        #actions {
-            margin-bottom: 30px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        #actions a,
-        #actions button {
-            transition: transform 0.2s, box-shadow 0.2s;
-            font-size: 0.95rem;
-        }
-
-        .section {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            margin-bottom: 30px;
-            border-left: 5px solid var(--bs-primary);
-        }
-
-        .section h2 {
-            color: var(--bs-primary);
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            padding-bottom: 5px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .section ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .section li {
-            padding: 10px 0;
-            border-bottom: 1px dashed #f0f0f0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .section li:last-child {
-            border-bottom: none;
-        }
-
-        .btn-factura {
-            background-color: var(--bs-primary);
-            color: white;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1050;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-            animation: fadeIn 0.3s;
-        }
-
-        .modal-content {
-            background-color: #fefefe;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 90%;
-            max-width: 600px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            animation: slideDown 0.3s;
-        }
-
-        .modal-header {
-            padding: 15px 0;
-            border-bottom: 1px solid #dee2e6;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .modal-header h2 {
-            margin: 0;
-            color: var(--bs-primary);
-            border-bottom: none;
-        }
-
-        .close-btn {
-            color: #aaa;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-
-        .close-btn:hover,
-        .close-btn:focus {
-            color: #333;
-        }
-
-        .modal-body {
-            padding: 20px 0;
-        }
-
-        #items-facturables-list .item-facturable {
-            margin: 10px 0;
-            padding: 5px;
-            border-bottom: 1px dotted #ccc;
-        }
-
-        #items-facturables-list label {
-            margin-left: 10px;
-            font-weight: 500;
-        }
-
-        .modal-footer {
-            padding: 15px 0 0;
-            text-align: right;
-            border-top: 1px solid #dee2e6;
-        }
-
-        /* Animaciones */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes slideDown {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-    </style>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -387,7 +201,7 @@
                         navLinksMenu.innerHTML += `<a href="/gestion-servicios" class="${navItemClass}">Gestion de Servicios</a>`;
                         navLinksMenu.innerHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
                         navLinksMenu.innerHTML += `<a href="#" id="logout-btn" class="${navItemClass}">Cerrar Sesión</a>`;
-                        
+
 
                     } else {
                         navLinksMenu.innerHTML += `<a href="/mascotas" class="${navItemClass} active">Mis Mascotas</a>`;
@@ -632,5 +446,5 @@
         window.cancelarCita = cancelarCita;
     </script>
 </body>
- 
+
 </html>

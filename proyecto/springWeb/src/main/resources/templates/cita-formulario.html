@@ -37,7 +37,7 @@
             <div class="row g-3 align-items-center">
                 <div class="col-lg-6 text-center text-lg-start">
                     <h1 class="display-3 mb-0 text-white" id="hero-title">Agendar Nueva Cita</h1>
-                    
+
                 </div>
             </div>
         </div>
@@ -46,12 +46,12 @@
         <div class="container py-5">
             <div class="form-container-custom wow fadeIn" data-wow-delay="0.3s">
                 <h2 class="text-center" id="form-title">Agendar Cita</h2>
-                
+
                 <div id="message-container" class="my-3 message-container" role="alert" style="display: none;"></div>
 
                 <form id="cita-form">
                     <input type="hidden" id="mascotaIdInput">
-                    <input type="hidden" id="veterinarioId" value="1"> 
+                    <input type="hidden" id="veterinarioId" value="1">
 
                     <div class="row g-3">
                         <div class="col-12">
@@ -84,7 +84,7 @@
             container.style.display = 'block';
             container.className = `my-3 message-container alert-${type}`;
         }
-        
+
         document.addEventListener('DOMContentLoaded', async () => {
             new WOW().init();
 
@@ -92,13 +92,13 @@
 
             const params = new URLSearchParams(window.location.search);
             const mascotaId = params.get('mascotaId');
-            
+
             if (!mascotaId) {
                 showMessage('danger', 'Error: ID de mascota no encontrado. Redirigiendo...');
                 setTimeout(() => { window.location.href = '/mascotas'; }, 2000);
                 return;
             }
-            
+
             document.getElementById('mascotaIdInput').value = mascotaId;
             document.getElementById('btn-cancel').href = `/mascota-detalle?id=${mascotaId}`;
 
@@ -130,7 +130,7 @@
                         setTimeout(() => {
                             window.location.href = `/mascota-detalle?id=${mascotaId}`;
                         }, 1500);
-                    
+
                     } else {
                         const errorData = await response.json();
                         const errorMessage = errorData.message || 'Error al agendar la cita. Verifique la fecha/hora.';

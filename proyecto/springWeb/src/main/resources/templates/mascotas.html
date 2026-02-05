@@ -4,64 +4,7 @@
 <head>
     <th:block th:replace="~{common/head :: head_piezita}"></th:block>
     <title>PetCare - Mis Mascotas</title>
-
-    <style>
-        .container-mascotas {
-            min-height: 70vh;
-            padding: 50px 0;
-        }
-
-
-        .pet-list {
-            list-style: none;
-            padding: 0;
-            margin-top: 20px;
-        }
-
-        .pet-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            margin-bottom: 15px;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            border-left: 5px solid var(--bs-primary);
-        }
-
-        .pet-info {
-            font-size: 1.1rem;
-        }
-
-        .pet-actions a,
-        .pet-actions button {
-            margin-left: 10px;
-            border-radius: 5px;
-            font-size: 0.9rem;
-            padding: 8px 15px;
-            transition: all 0.2s;
-        }
-
-        .error-message {
-            padding: 15px;
-            margin-top: 20px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-
-        .error-message.alert-danger {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-        .error-message.alert-success {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-    </style>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -123,7 +66,7 @@
 
 
 <div th:replace="~{common/footer :: footer_piezita}"></div>
- 
+
     <script>
         function showMessage(message, type = 'danger') {
             const errorMessageDiv = document.getElementById('error-message');

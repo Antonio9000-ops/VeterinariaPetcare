@@ -2,62 +2,10 @@
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
   <head>
     <th:block th:replace="~{common/head :: head_piezita}"></th:block>
-    <title>PetCare - Listado General de Mascotas</title>
-    <style>
-      .container-listado {
-        min-height: 70vh;
-        padding: 50px 0;
-      }
+    <title>PetCare - Listado General de Mascotas
 
-      .table-custom {
-        width: 100%;
-        margin-top: 20px;
-        border-collapse: separate;
-        border-spacing: 0 10px;
-      }
+    </title>
 
-      .table-custom th,
-      .table-custom td {
-        padding: 15px;
-        vertical-align: middle;
-        background: #ffffff;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-      }
-
-      .table-custom thead th {
-        background-color: var(--bs-primary);
-        color: white;
-        border: none;
-        padding: 12px 15px;
-        font-size: 1rem;
-        text-align: left;
-      }
-
-      .table-custom tbody tr {
-        transition: all 0.2s;
-        border-left: 4px solid transparent;
-      }
-
-      .table-custom tbody tr:hover {
-        border-left: 4px solid var(--bs-secondary);
-      }
-
-      .table-custom tbody td:first-child {
-        border-top-left-radius: 6px;
-        border-bottom-left-radius: 6px;
-      }
-
-      .table-custom tbody td:last-child {
-        border-top-right-radius: 6px;
-        border-bottom-right-radius: 6px;
-      }
-
-      .table-custom .btn {
-        padding: 8px 15px;
-        font-size: 0.9rem;
-        border-radius: 5px;
-      }
-    </style>
   </head>
 
   <body>

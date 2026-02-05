@@ -4,26 +4,7 @@
 <head>
     <th:block th:replace="~{common/head :: head_piezita}"></th:block>
     <title>PetCare - Formulario de Mascota</title>
-
-    <style>
-        .form-container-custom {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 30px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        #form-title {
-            margin-bottom: 25px;
-            color: var(--bs-primary);
-        }
-
-        .form-floating label {
-            color: #6c757d;
-        }
-    </style>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -153,7 +134,7 @@
             menuHTML =
                 `<a href="/" class="${navItemClass}">Inicio</a>
                  <a href="/contact" class="${navItemClass}">Contacto de emergencia</a>
-                 <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`; 
+                 <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`;
         }
 
         if (navLinksMenu) {

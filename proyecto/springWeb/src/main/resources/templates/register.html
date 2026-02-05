@@ -5,41 +5,7 @@
     <th:block th:replace="~{common/head :: head_piezita}"></th:block>
     <title>PetCare - Registro</title>
 
-    <style>
-        .register-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 50px 15px;
-        }
-        .form-container {
-            background: #ffffff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            max-width: 450px;
-            width: 100%;
-        }
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        .message-container {
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 1rem;
-            text-align: center;
-        }
-        .message-success {
-            color: #155724;
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-        }
-        .message-error {
-            color: #721c24;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-        }
-    </style>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 
 <body>

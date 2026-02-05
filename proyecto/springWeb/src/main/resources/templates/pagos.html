@@ -4,45 +4,7 @@
 <head>
     <th:block th:replace="~{common/head :: head_piezita}"></th:block>
     <title>PetCare - Pagos</title>
-
-    <style>
-        .spinner-border {
-            display: none;
-        }
-
-        .container-pagos {
-            min-height: 70vh;
-            padding: 50px 0;
-        }
-
-        .debt-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 20px;
-            margin-bottom: 10px;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-            border-left: 5px solid var(--bs-primary);
-        }
-
-        .total-amount-box {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            background-color: var(--bs-light);
-            border: 1px solid var(--bs-gray-300);
-        }
-
-        .card-header-styled {
-            background-color: var(--bs-primary);
-            color: #fff;
-            padding: 15px;
-            border-top-left-radius: 0.5rem;
-            border-top-right-radius: 0.5rem;
-        }
-    </style>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -176,174 +138,178 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+    // --- Selección de Elementos del DOM ---
+    const paymentForm = document.getElementById('payment-form');
+    const submitButton = document.getElementById('submit-button');
+    const buttonText = document.getElementById('button-text');
+    const spinner = submitButton.querySelector('.spinner-border');
+    const successAlert = document.getElementById('payment-success-alert');
+    const debtDetailsListContainer = document.getElementById('debt-details-list');
+    const totalAmountDisplay = document.getElementById('total-amount-display');
+    const amountInput = document.getElementById('amount');
+    const noDebtAlert = document.getElementById('no-debt-alert');
+    const historyBody = document.getElementById('payment-history-body');
+    const token = localStorage.getItem('jwt_token');
 
-            const paymentForm = document.getElementById('payment-form');
-            const submitButton = document.getElementById('submit-button');
-            const buttonText = document.getElementById('button-text');
-            const spinner = submitButton.querySelector('.spinner-border');
-            const successAlert = document.getElementById('payment-success-alert');
+    // Inicializa la librería de animaciones WOW.js
+    new WOW().init();
 
-            const debtDetailsListContainer = document.getElementById('debt-details-list');
-            const totalAmountDisplay = document.getElementById('total-amount-display');
-            const amountInput = document.getElementById('amount');
-            const noDebtAlert = document.getElementById('no-debt-alert');
+    /**
+     * Carga y muestra la deuda pendiente del usuario.
+     */
+    async function loadPendingDebt() {
+        if (!token) return;
 
-            const token = localStorage.getItem('jwt_token');
-
-            new WOW().init();
-
-
->>>>>>> Antonio
-            async function loadPendingDebt() {
-                if (!token) return;
-
-                try {
-                    const response = await fetch("/api/facturacion/deuda-pendiente", {
-                        headers: { "Authorization": `Bearer ${token}` }
-                    });
-
-                    if (!response.ok) {
-                        throw new Error("No se pudo cargar la deuda pendiente.");
-                    }
-
-                    const deuda = await response.json();
-
-                    debtDetailsListContainer.innerHTML = '';
-
-                    if (deuda.detalles.length === 0) {
-                        debtDetailsListContainer.innerHTML = '<div class="debt-item bg-success text-white">¡Felicidades! No tienes deudas pendientes.</div>';
-                    } else {
-                        deuda.detalles.forEach(item => {
-                            const itemHTML = `
-                                <div class="debt-item wow fadeIn" data-wow-delay="0.1s">
-                                    <div class="debt-info">
-                                        <strong>${item.concepto}</strong>
-                                    </div>
-                                    <span class="badge bg-primary text-white p-2">
-                                        $${item.monto.toFixed(2)}
-                                    </span>
-                                </div>
-                            `;
-                            debtDetailsListContainer.innerHTML += itemHTML;
-                        });
-                    }
-
-                    totalAmountDisplay.textContent = `$${deuda.total.toFixed(2)}`;
-                    amountInput.value = `${deuda.total.toFixed(2)}`;
-
-                    if (deuda.total <= 0) {
-                        submitButton.disabled = true;
-                        buttonText.textContent = "No tienes pagos pendientes";
-                        document.getElementById('payment-form').style.display = 'none';
-                        noDebtAlert.style.display = 'block';
-                    } else {
-                        submitButton.disabled = false;
-                        buttonText.textContent = "Pagar Ahora";
-                        document.getElementById('payment-form').style.display = 'block';
-                        noDebtAlert.style.display = 'none';
-                    }
-                } catch (error) {
-                    console.error(error);
-                    debtDetailsListContainer.innerHTML = '<div class="alert alert-danger">Error al cargar la deuda. Por favor, intenta de nuevo.</div>';
-                }
-            }
-
-            async function loadPaymentHistory() {
-                if (!token) return;
-
-                try {
-                    const response = await fetch("/api/pagos/mis-pagos", {
-                        headers: { "Authorization": `Bearer ${token}` }
-                    });
-
-                    if (!response.ok) {
-                        throw new Error("No se pudo cargar el historial de pagos.");
-                    }
-
-                    const payments = await response.json();
-                    const historyBody = document.getElementById('payment-history-body');
-                    historyBody.innerHTML = '';
-
-                    if (payments.length === 0) {
-                        historyBody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-3">No hay pagos registrados.</td></tr>';
-                        return;
-                    }
-
-                    payments.sort((a, b) => new Date(b.fechaCreacion) - new Date(a.fechaCreacion));
-                    payments.forEach(pago => {
-                        const statusClass = pago.estado.toUpperCase() === 'COMPLETADO' ? 'badge-success' : 'badge-warning';
-                        const row = `
-                            <tr class="wow fadeIn" data-wow-delay="0.1s">
-                                <td>${pago.numeroTransaccion.substring(0, 8)}...</td>
-                                <td>$${pago.monto.toFixed(2)}</td>
-                                <td>${pago.moneda.toUpperCase()}</td>
-                                <td><span class="badge ${statusClass}">${pago.estado}</span></td>
-                                <td>${new Date(pago.fechaCreacion).toLocaleString()}</td>
-                            </tr>
-                        `;
-                        historyBody.innerHTML += row;
-                    });
-                } catch (error) {
-                    console.error(error);
-                    const historyBody = document.getElementById('payment-history-body');
-                    historyBody.innerHTML = '<tr><td colspan="5" class="text-center text-danger py-3">Error al cargar el historial.</td></tr>';
-                }
-            }
-
-            paymentForm.addEventListener('submit', async (e) => {
-                e.preventDefault();
-
-                buttonText.textContent = 'Procesando...';
-                spinner.style.display = 'inline-block';
-                submitButton.disabled = true;
-                successAlert.style.display = 'none';
-
-                try {
-                    await new Promise(resolve => setTimeout(resolve, 1500));
-
-                    const response = await fetch('/api/pagos/simular-pago', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify({})
-                    });
-
-                    if (response.ok) {
-                        successAlert.textContent = '¡Pago realizado con éxito!';
-                        successAlert.style.display = 'block';
-                        paymentForm.reset();
-
-                        await loadPaymentHistory();
-                        await loadPendingDebt();
-                    } else {
-
-                        let errorMessage = 'Hubo un error al procesar el pago.';
-                        try {
-                            const errorData = await response.json();
-                            errorMessage = errorData.mensaje || `Error ${response.status}`;
-                        } catch (jsonError) {
-                            errorMessage = `Error ${response.status}: ${response.statusText}. No se pudo procesar la respuesta del servidor.`;
-                        }
-                        throw new Error(errorMessage);
-                    }
-                } catch (error) {
-                    alert(error.message);
-                } finally {
-                    buttonText.textContent = 'Pagar Ahora';
-                    spinner.style.display = 'none';
-
-<<<<<<< HEAD
-
-=======
->>>>>>> Antonio
-                }
+        try {
+            const response = await fetch("/api/facturacion/deuda-pendiente", {
+                headers: { "Authorization": `Bearer ${token}` }
             });
 
-            loadPendingDebt();
-            loadPaymentHistory();
-        });
+            if (!response.ok) {
+                throw new Error("No se pudo cargar la deuda pendiente.");
+            }
+
+            const deuda = await response.json();
+            debtDetailsListContainer.innerHTML = '';
+
+            if (deuda.detalles.length === 0) {
+                debtDetailsListContainer.innerHTML = '<div class="debt-item bg-success text-white p-3 rounded">¡Felicidades! No tienes deudas pendientes.</div>';
+            } else {
+                deuda.detalles.forEach(item => {
+                    const itemHTML = `
+                        <div class="debt-item wow fadeIn" data-wow-delay="0.1s">
+                            <div class="debt-info">
+                                <strong>${item.concepto}</strong>
+                            </div>
+                            <span class="badge bg-primary text-white p-2">
+                                $${item.monto.toFixed(2)}
+                            </span>
+                        </div>
+                    `;
+                    debtDetailsListContainer.innerHTML += itemHTML;
+                });
+            }
+
+            totalAmountDisplay.textContent = `$${deuda.total.toFixed(2)}`;
+            amountInput.value = `${deuda.total.toFixed(2)}`;
+
+            // Controla la visibilidad del formulario de pago
+            if (deuda.total <= 0) {
+                submitButton.disabled = true;
+                buttonText.textContent = "No tienes pagos pendientes";
+                paymentForm.style.display = 'none';
+                noDebtAlert.style.display = 'block';
+            } else {
+                submitButton.disabled = false;
+                buttonText.textContent = "Pagar Ahora";
+                paymentForm.style.display = 'block';
+                noDebtAlert.style.display = 'none';
+            }
+        } catch (error) {
+            console.error(error);
+            debtDetailsListContainer.innerHTML = '<div class="alert alert-danger">Error al cargar la deuda. Por favor, intenta de nuevo.</div>';
+        }
+    }
+
+    /**
+     * Carga y muestra el historial de pagos del usuario.
+     */
+    async function loadPaymentHistory() {
+        if (!token) return;
+
+        try {
+            const response = await fetch("/api/pagos/mis-pagos", {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+
+            if (!response.ok) {
+                throw new Error("No se pudo cargar el historial de pagos.");
+            }
+
+            const payments = await response.json();
+            historyBody.innerHTML = '';
+
+            if (payments.length === 0) {
+                historyBody.innerHTML = '<tr><td colspan="5" class="text-center text-muted py-3">No hay pagos registrados.</td></tr>';
+                return;
+            }
+
+            // Ordena los pagos del más reciente al más antiguo
+            payments.sort((a, b) => new Date(b.fechaCreacion) - new Date(a.fechaCreacion));
+
+            payments.forEach(pago => {
+                const statusClass = pago.estado.toUpperCase() === 'COMPLETADO' ? 'badge-success' : 'badge-warning';
+                const row = `
+                    <tr class="wow fadeIn" data-wow-delay="0.1s">
+                        <td>${pago.numeroTransaccion.substring(0, 8)}...</td>
+                        <td>$${pago.monto.toFixed(2)}</td>
+                        <td>${pago.moneda.toUpperCase()}</td>
+                        <td><span class="badge ${statusClass}">${pago.estado}</span></td>
+                        <td>${new Date(pago.fechaCreacion).toLocaleString()}</td>
+                    </tr>
+                `;
+                historyBody.innerHTML += row;
+            });
+        } catch (error) {
+            console.error(error);
+            historyBody.innerHTML = '<tr><td colspan="5" class="text-center text-danger py-3">Error al cargar el historial.</td></tr>';
+        }
+    }
+
+    /**
+     * Maneja el envío del formulario de pago.
+     */
+    paymentForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        buttonText.textContent = 'Procesando...';
+        spinner.style.display = 'inline-block';
+        submitButton.disabled = true;
+        successAlert.style.display = 'none';
+
+        try {
+            // Simula un pequeño retraso para la UX
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            const response = await fetch('/api/pagos/simular-pago', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({})
+            });
+
+            if (response.ok) {
+                successAlert.textContent = '¡Pago realizado con éxito!';
+                successAlert.style.display = 'block';
+                paymentForm.reset();
+                // Recarga el historial y la deuda para reflejar el cambio
+                await loadPaymentHistory();
+                await loadPendingDebt();
+            } else {
+                let errorMessage = 'Hubo un error al procesar el pago.';
+                try {
+                    const errorData = await response.json();
+                    errorMessage = errorData.mensaje || `Error ${response.status}`;
+                } catch (jsonError) {
+                    errorMessage = `Error ${response.status}: ${response.statusText}. No se pudo procesar la respuesta del servidor.`;
+                }
+                throw new Error(errorMessage);
+            }
+        } catch (error) {
+            alert(error.message); // Muestra una alerta simple con el error
+        } finally {
+            // Restaura el estado del botón
+            buttonText.textContent = 'Pagar Ahora';
+            spinner.style.display = 'none';
+        }
+    });
+
+    loadPendingDebt();
+    loadPaymentHistory();
+});
+
     </script>
     <script src="/js/script.js"></script>
 

@@ -4,51 +4,7 @@
 <head>
     <th:block th:replace="~{common/head :: head_piezita}"></th:block>
     <title>PetCare - Gestion de servicios</title>
-
-    <style>
-        .container-gestion {
-            min-height: 70vh;
-            padding: 50px 0;
-        }
-
-        .table-custom-items {
-            width: 100%;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .table-custom-items thead {
-            background-color: var(--bs-primary);
-            color: white;
-        }
-
-        .table-custom-items th {
-            padding: 15px;
-            font-size: 1rem;
-            text-align: left;
-        }
-
-        .table-custom-items td {
-            padding: 15px;
-            vertical-align: middle;
-        }
-
-        .table-custom-items .btn-sm {
-            padding: 5px 10px;
-            font-size: 0.85rem;
-            margin-right: 5px;
-        }
-
-        .table-custom-items .btn-warning {
-            color: #212529;
-        }
-
-        .modal-content {
-            border-radius: 10px;
-        }
-    </style>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 
 <body>

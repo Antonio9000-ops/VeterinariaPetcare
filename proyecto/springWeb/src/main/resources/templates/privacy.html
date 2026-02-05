@@ -5,20 +5,7 @@
     <th:block th:replace="~{common/head :: head_piezita}"></th:block>
     <title>PetCare - Politica de Privacidad</title>
 
-    <style>
-        .privacy-section {
-            background: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            border-left: 5px solid var(--bs-primary);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
-        }
-        .privacy-section h3 { margin-top: 1.25rem; }
-        .privacy-section p, .privacy-section li {
-            font-size: 0.95rem;
-            line-height: 1.45;
-        }
-    </style>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -158,14 +145,14 @@
             </p>
 
             <p class="mt-4"><strong>Última actualización:</strong> Noviembre 2025.</p>
-            
+
 
         </div>
     </div>
 </div>
 
     <div th:replace="~{common/footer :: footer_piezita}"></div>
- 
+
     <script src="/js/script.js"></script>
 
 </body>

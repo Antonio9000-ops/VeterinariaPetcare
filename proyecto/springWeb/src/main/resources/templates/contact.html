@@ -4,39 +4,7 @@
 <head>
     <th:block th:replace="~{common/head :: head_piezita}"></th:block>
     <title>PetCare - Contacto de Emergencia</title>
-
-    <style>
-        .map-container {
-            border-radius: 0.5rem;
-            overflow: hidden;
-            height: 400px;
-            border: 1px solid var(--bs-primary);
-        }
-
-        .map-container iframe {
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-        
-        .spinner-border {
-            display: none;
-        }
-
-        .contact-info-card {
-            background-color: var(--bs-light);
-            border-left: 5px solid var(--bs-primary);
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-        .contact-info-card:hover {
-            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
-            transform: translateY(-2px);
-        }
-
-    </style>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 </head>
 
 <body>
@@ -82,9 +50,9 @@
                 <p class="fs-4 fw-medium text-primary">Atención 24/7</p>
                 <h1 class="display-5 mb-5">Llámanos ante cualquier emergencia</h1>
             </div>
-            
+
             <div class="row g-4">
-                
+
                 <div class="col-lg-4 col-md-6 wow fadeIn" data-wow-delay="0.1s">
                     <div class="contact-info-card text-center">
                         <i class="fa fa-phone-alt fa-3x text-primary mb-3"></i>
@@ -147,7 +115,7 @@
         </div>
     </div>
     <div th:replace="~{common/footer :: footer_piezita}"></div>
- 
+
 
     <script src="/js/script.js"></script>
 

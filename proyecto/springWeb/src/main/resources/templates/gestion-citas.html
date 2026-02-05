@@ -5,65 +5,7 @@
     <th:block th:replace="~{common/head :: head_piezita}"></th:block>
     <title>PetCare - Gestion de Citas</title>
 
-    <style>
-      .container-citas {
-        min-height: 70vh;
-        padding: 50px 0;
-      }
-
-      .cita-list {
-        list-style: none;
-        padding: 0;
-        margin-top: 20px;
-      }
-
-      .cita-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 20px;
-        margin-bottom: 15px;
-        background: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        border-left: 5px solid var(--bs-warning);
-      }
-
-      .citahistorial-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 20px;
-        margin-bottom: 15px;
-        background: #ffffff;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        border-left: 5px solid var(--bs-secondary);
-      }
-
-      .cita-info {
-        font-size: 1.1rem;
-        line-height: 1.6;
-      }
-
-      .cita-actions button {
-        margin-left: 10px;
-        border-radius: 5px;
-        font-size: 0.9rem;
-        padding: 8px 15px;
-        transition: all 0.2s;
-      }
-
-      .cita-actions .btn-success {
-        background-color: #198754;
-        border-color: #198754;
-      }
-
-      .cita-actions .btn-danger {
-        background-color: #dc3545;
-        border-color: #dc3545;
-      }
-    </style>
+    <link th:href="@{/css/style.css}" rel="stylesheet">
   </head>
 
   <body>
@@ -368,7 +310,7 @@
       // Evento para buscar mascotas por correo
       document.getElementById("btnBuscarMascotas").addEventListener("click", async () => {
         const correo = document.getElementById("inputCorreo").value.trim();
-        
+
         if (!correo) {
           alert("Por favor ingrese un correo válido.");
           return;
@@ -437,7 +379,7 @@
       // Función para seleccionar mascota
       window.seleccionarMascota = function (mascotaId, nombreMascota) {
         mascotaIdGuardada = mascotaId;
-        
+
         // Cerrar modal de mascotas y abrir modal de cita
         const modalMascotas = bootstrap.Modal.getInstance(
           document.getElementById("modalSeleccionarMascota")
@@ -699,7 +641,7 @@
         } catch (error) {
           listHistorial.innerHTML = `<li class="text-center alert-danger py-3">Error al cargar las citas: ${error.message}</li>`;
         }
-        
+
       });
 
     </script>
