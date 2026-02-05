@@ -1,9 +1,8 @@
-
 #spinner {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .5s ease-out, visibility 0s linear .5s;
-    z-index: 99999;
+/* 1. VARIABLES Y ESTILOS GLOBALES           */
+/* ========================================= */
+
+/* -- Variables de Color Personalizadas -- */
 }
 
 #spinner.show {
