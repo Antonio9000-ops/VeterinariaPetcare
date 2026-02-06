@@ -242,12 +242,12 @@
             document.getElementById('message-container').style.display = 'none';
 
             const mascotaData = {
-                nombre: document.getElementById('nombre').value,
-                especie: document.getElementById('especie').value,
-                raza: document.getElementById('raza').value,
-                fechaNacimiento: document.getElementById('fechaNacimiento').value,
-                duenoId: userData.userId
-            };
+    nombre: document.getElementById('nombre').value,
+    especie: document.getElementById('especie').value,
+    raza: document.getElementById('raza').value,
+    fechaNacimiento: document.getElementById('fechaNacimiento').value,
+    usuarioId: userData.userId 
+};
 
             const currentPetId = idInput.value;
             const isEditing = !!currentPetId;

@@ -36,8 +36,8 @@ public class MascotaController {
     }
 
     @GetMapping("/usuario/{usuarioId}")
-    public List<MascotaDTO> listarMascotasPorDueño(@PathVariable Long usuarioId) {
-        return mascotaService.listarMascotasPorDueño(usuarioId);
+    public List<MascotaDTO> listarMascotasPorUsuario(@PathVariable Long usuarioId) {
+        return mascotaService.listarMascotasPorUsuario(usuarioId);
     }
 
     @GetMapping("/{id}")
