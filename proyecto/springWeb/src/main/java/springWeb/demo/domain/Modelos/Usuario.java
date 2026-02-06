@@ -33,7 +33,7 @@ public class Usuario implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Rol rol;
 
-    @OneToMany(mappedBy = "dueno", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
     @JsonManagedReference("usuario-mascota")
     @ToString.Exclude
     private List<Mascota> mascotas;
@@ -42,7 +42,6 @@ public class Usuario implements UserDetails {
     @JsonManagedReference("usuario-cita")
     @ToString.Exclude
     private List<Cita> citasAsignadas;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -62,7 +61,6 @@ public class Usuario implements UserDetails {
         return email;
     }
 
-    
     @Override
     public boolean isAccountNonExpired() {
         return true;

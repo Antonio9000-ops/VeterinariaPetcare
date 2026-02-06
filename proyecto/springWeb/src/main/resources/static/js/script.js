@@ -17,19 +17,18 @@ function setupNavbar(token) {
             menuHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
             menuHTML += `<a href="/agenda" class="${navItemClass}">Mi Agenda</a>`;
             menuHTML += `<a href="/gestion-servicios" class="${navItemClass}">Gestion de Servicios</a>`;
-        
-        } else if (userRole === 'DUEÑO') {
+        } 
+        if (userRole === 'USUARIO') {
             menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
             menuHTML += `<a href="/pagos" class="${navItemClass}">Mis Pagos</a>`;
-        
-        } else {
-            
+        } 
+        if (userRole === 'ASISTENTE') {
         }
         menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
         menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
     } else {
         menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>
-                     <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`;
+                    <a href="/login" class="${navItemClass}">Iniciar Sesión</a>`;
     }
     navLinksMenu.innerHTML = menuHTML;
 }

@@ -22,8 +22,9 @@ public class MascotaMapper {
                                 .especie(mascota.getEspecie())
                                 .raza(mascota.getRaza())
                                 .fechaNacimiento(mascota.getFechaNacimiento())
-                                .duenoId(mascota.getDueno() != null ? mascota.getDueno().getId() : null)
-                                .duenoNombre(mascota.getDueno() != null ? mascota.getDueno().getNombre() : null)
+                                // Cambios aquí:
+                                .usuarioId(mascota.getUsuario() != null ? mascota.getUsuario().getId() : null)
+                                .usuarioNombre(mascota.getUsuario() != null ? mascota.getUsuario().getNombre() : null)
                                 .citasIds(mascota.getCitas() != null
                                                 ? mascota.getCitas().stream().map(Cita::getId).toList()
                                                 : List.of())
@@ -36,16 +37,15 @@ public class MascotaMapper {
                                                 : List.of())
                                 .build();
         }
-        
 
-        public  Mascota toEntity(MascotaDTO dto) {
+        public Mascota toEntity(MascotaDTO dto) {
                 if (dto == null)
                         return null;
 
-                Usuario dueno = null;
-                if (dto.getDuenoId() != null) {
-                        dueno = new Usuario();
-                        dueno.setId(dto.getDuenoId());
+                Usuario usuario = null;
+                if (dto.getUsuarioId() != null) {
+                        usuario = new Usuario();
+                        usuario.setId(dto.getUsuarioId());
                 }
 
                 return Mascota.builder()
@@ -54,11 +54,10 @@ public class MascotaMapper {
                                 .especie(dto.getEspecie())
                                 .raza(dto.getRaza())
                                 .fechaNacimiento(dto.getFechaNacimiento())
-                                .dueno(dueno)
+                                .usuario(usuario)
                                 .citas(null)
                                 .historiaClinica(null)
                                 .vacunas(null)
                                 .build();
         }
-
 }

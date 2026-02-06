@@ -38,10 +38,10 @@ public class MascotaServiceImpl implements MascotaService {
     }
 
     @Override
-    public List<MascotaDTO> listarMascotasPorDueño(Long duenoId) {
-        return mascotaRepository.findByDuenoId(duenoId)
+    public List<MascotaDTO> listarMascotasPorDueño(Long usuarioId) {
+        // Cambio puntual: de findByDuenoId a findByUsuarioId
+        return mascotaRepository.findByUsuarioId(usuarioId)
                 .stream()
-
                 .map(mascotaMapper::toDTO)
                 .toList();
     }

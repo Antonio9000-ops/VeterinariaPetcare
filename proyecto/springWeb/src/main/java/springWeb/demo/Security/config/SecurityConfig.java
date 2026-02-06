@@ -51,17 +51,17 @@ public class SecurityConfig {
                                 "/tratamiento-formulario", "/receta-formulario",
                                 "/pagos", "/pagos.html",
                                 "/contact", "/contact.html",
-                                //...
+                                // ...
                                 "/about", "/about.html", "/error",
                                 "/css/**", "/js/**", "/images/**", "/favicon.ico", "/img/**", "/lib/**", "/scss/**")
                         .permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/facturacion/crear")
                         .hasAnyAuthority("VETERINARIO", "ASISTENTE")
                         .requestMatchers(HttpMethod.GET, "/api/facturacion/cita/**")
-                        .hasAnyAuthority("DUEÑO", "VETERINARIO", "ASISTENTE")
+                        .hasAnyAuthority("USUARIO", "VETERINARIO", "ASISTENTE")
                         .requestMatchers(HttpMethod.PUT, "/api/facturacion/{facturaId}/pagar")
                         .hasAnyAuthority("VETERINARIO", "ASISTENTE")
-                        .requestMatchers("/api/pagos/**").hasAuthority("DUEÑO")
+                        .requestMatchers("/api/pagos/**").hasAuthority("USUARIO")
 
                         .requestMatchers(HttpMethod.POST, "/api/tratamientos", "/api/recetas")
                         .hasAuthority("VETERINARIO")
@@ -71,14 +71,15 @@ public class SecurityConfig {
                         .hasAnyAuthority("VETERINARIO", "ASISTENTE")
                         .requestMatchers(HttpMethod.PUT, "/api/citas/**").hasAnyAuthority("VETERINARIO", "ASISTENTE")
 
-                        .requestMatchers("/api/mascotas/dueno/**").hasAnyAuthority("DUEÑO", "ASISTENTE", "VETERINARIO")
-                        .requestMatchers("/api/mascotas/**").hasAnyAuthority("DUEÑO", "ASISTENTE", "VETERINARIO")
+                        .requestMatchers("/api/mascotas/usuario/**")
+                        .hasAnyAuthority("USUARIO", "ASISTENTE", "VETERINARIO")
+                        .requestMatchers("/api/mascotas/**").hasAnyAuthority("USUARIO", "ASISTENTE", "VETERINARIO")
 
                         .requestMatchers("/api/citas/veterinario/**").hasAnyAuthority("VETERINARIO", "ASISTENTE")
-                        .requestMatchers("/api/citas/**").hasAnyAuthority("DUEÑO", "VETERINARIO", "ASISTENTE")
+                        .requestMatchers("/api/citas/**").hasAnyAuthority("USUARIO", "VETERINARIO", "ASISTENTE")
 
-                        .requestMatchers("/api/historias/**").hasAnyAuthority("DUEÑO", "VETERINARIO")
-                        .requestMatchers("/api/vacunas/**").hasAnyAuthority("DUEÑO", "VETERINARIO")
+                        .requestMatchers("/api/historias/**").hasAnyAuthority("USUARIO", "VETERINARIO")
+                        .requestMatchers("/api/vacunas/**").hasAnyAuthority("USUARIO", "VETERINARIO")
 
                         .requestMatchers("/api/usuarios/**").permitAll()
 

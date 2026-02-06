@@ -14,7 +14,7 @@ public interface MascotaService {
 
     MascotaDTO registrarMascota(MascotaDTO mascotaDTO);
 
-    List<MascotaDTO> listarMascotasPorDueño(Long duenoId);
+    List<MascotaDTO> listarMascotasPorDueño(Long usuarioId);
 
     Optional<MascotaDTO> obtenerMascotaPorId(Long id);
 

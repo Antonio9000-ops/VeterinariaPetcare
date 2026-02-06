@@ -12,5 +12,6 @@ public interface FacturaRepository extends JpaRepository<Factura, Long> {
 
     Optional<Factura> findByCitaId(Long citaId);
 
-    List<Factura> findByCita_Mascota_DuenoAndEstadoPago(Usuario dueno, EstadoPago estadoPago);
+    // Cambio puntual: de _Dueno a _Usuario
+    List<Factura> findByCita_Mascota_UsuarioAndEstadoPago(Usuario usuario, EstadoPago estadoPago);
 }

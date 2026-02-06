@@ -12,9 +12,9 @@ import springWeb.demo.domain.Modelos.Pago;
 import springWeb.demo.domain.Modelos.Usuario;
 import springWeb.demo.domain.Repositorios.FacturaRepository;
 import springWeb.demo.domain.Repositorios.PagoRepository;
-import springWeb.demo.domain.Servicios.interfaces.FacturacionService; 
-import springWeb.demo.domain.Dto.PagoDTO; 
-import springWeb.demo.domain.Mapper.PagoMapper; 
+import springWeb.demo.domain.Servicios.interfaces.FacturacionService;
+import springWeb.demo.domain.Dto.PagoDTO;
+import springWeb.demo.domain.Mapper.PagoMapper;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -30,8 +30,9 @@ public class PagoController {
 
     private final PagoRepository pagoRepository;
     private final FacturacionService facturacionService;
-    private final FacturaRepository facturaRepository; 
-    private final PagoMapper pagoMapper; 
+    private final FacturaRepository facturaRepository;
+    private final PagoMapper pagoMapper;
+
     @PostMapping("/simular-pago")
     @Transactional
     public ResponseEntity<Map<String, String>> simulatePayment(@AuthenticationPrincipal Usuario usuario) {
@@ -51,29 +52,30 @@ public class PagoController {
                 .fechaCreacion(LocalDateTime.now())
                 .usuario(usuario)
                 .build();
-        
+
         pagoRepository.save(pago);
 
         // --- LÓGICA ACTUALIZADA ---
         // 1. Buscar todas las facturas pendientes del usuario
-        List<Factura> facturasPendientes = facturaRepository.findByCita_Mascota_DuenoAndEstadoPago(usuario, EstadoPago.PENDIENTE);
+        List<Factura> facturasPendientes = facturaRepository.findByCita_Mascota_UsuarioAndEstadoPago(usuario,
+                EstadoPago.PENDIENTE);
 
         // 2. Marcar cada una como pagada usando el servicio
         for (Factura factura : facturasPendientes) {
             facturacionService.marcarFacturaComoPagada(factura.getId());
         }
-       
+
         return ResponseEntity.ok(Map.of("mensaje", "Pago realizado exitosamente"));
     }
-   
+
     @GetMapping("/mis-pagos")
     public ResponseEntity<List<PagoDTO>> getMyPayments(@AuthenticationPrincipal Usuario usuario) {
         List<Pago> pagos = pagoRepository.findByUsuarioId(usuario.getId());
-        
+
         List<PagoDTO> pagosDto = pagos.stream()
-                                      .map(pagoMapper::toDto)
-                                      .collect(Collectors.toList());
-                                      
+                .map(pagoMapper::toDto)
+                .collect(Collectors.toList());
+
         return ResponseEntity.ok(pagosDto);
     }
 }
