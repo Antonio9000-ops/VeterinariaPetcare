@@ -639,6 +639,7 @@ progress {
     padding-left: var(--bs-gutter-x, 0.75rem);
     margin-right: auto;
     margin-left: auto
+
 }
 
 @media(min-width: 576px) {
@@ -4496,6 +4497,7 @@ fieldset:disabled .btn {
     flex-wrap: inherit;
     align-items: center;
     justify-content: space-between
+
 }
 
 .navbar-brand {
@@ -7345,7 +7347,7 @@ fieldset:disabled .btn {
 }
 
 .border-bottom {
-    border-bottom: 1px solid #dee2e6 !important
+    border-bottom: 1px solid #dee2e6
 }
 
 .border-bottom-0 {
