@@ -1,5 +1,6 @@
 package springWeb.demo.Controlador;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springWeb.demo.domain.Dto.UsuarioDTO;
 import springWeb.demo.domain.Servicios.interfaces.UsuarioService;
+import springWeb.demo.domain.exception.ResourceNotFoundException;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -24,7 +26,7 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping("/registro")
-    public ResponseEntity<UsuarioDTO> registrarUsuario(@RequestBody UsuarioDTO usuarioDTO) {
+    public ResponseEntity<UsuarioDTO> registrarUsuario(@Valid @RequestBody UsuarioDTO usuarioDTO) {
         UsuarioDTO nuevoUsuario = usuarioService.registrarUsuario(usuarioDTO);
         return new ResponseEntity<>(nuevoUsuario, HttpStatus.CREATED);
     }
@@ -56,23 +58,14 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public ResponseEntity<UsuarioDTO> loginUsuario(@RequestBody Map<String, String> loginData) {
-        try {
-            String email = loginData.get("email");
-            String contraseña = loginData.get("contraseña");
+        String email = loginData.get("email");
+        String contraseña = loginData.get("contraseña");
 
-            //simplemente se llama al metodo para verificar
-             usuarioService.verificarUsuario(email, contraseña);
+        usuarioService.verificarUsuario(email, contraseña);
 
-            // Convertir a DTO para la respuesta (igual que en registro)
-            UsuarioDTO usuarioDTO = usuarioService.buscarPorEmail(email)
-                    .orElseThrow(() -> new RuntimeException("Error al convertir usuario"));
+        UsuarioDTO usuarioDTO = usuarioService.buscarPorEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado para el correo indicado"));
 
-            return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
-
-        } catch (RuntimeException e) {
-            //usamos el constructor que solo toma el httpStatus
-             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-        }
+        return new ResponseEntity<>(usuarioDTO, HttpStatus.OK);
     }
-
 }

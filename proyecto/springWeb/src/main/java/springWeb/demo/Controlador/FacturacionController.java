@@ -1,5 +1,6 @@
 package springWeb.demo.Controlador;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +26,9 @@ public class FacturacionController {
     }
 
     @PostMapping("/crear")
-    public ResponseEntity<?> crearFactura(@RequestBody FacturaRequestDTO request) {
-        try {
-            Factura nuevaFactura = facturacionService.crearFacturaParaCita(request.getCitaId(), request.getItemIds());
-            return ResponseEntity.status(HttpStatus.CREATED).body(nuevaFactura);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public ResponseEntity<Factura> crearFactura(@Valid @RequestBody FacturaRequestDTO request) {
+        Factura nuevaFactura = facturacionService.crearFacturaParaCita(request.getCitaId(), request.getItemIds());
+        return ResponseEntity.status(HttpStatus.CREATED).body(nuevaFactura);
     }
 
     @GetMapping("/cita/{citaId}")
@@ -42,12 +39,8 @@ public class FacturacionController {
     }
 
     @PutMapping("/{facturaId}/pagar")
-    public ResponseEntity<?> marcarComoPagada(@PathVariable Long facturaId) {
-        try {
-            Factura facturaPagada = facturacionService.marcarFacturaComoPagada(facturaId);
-            return ResponseEntity.ok(facturaPagada);
-        } catch (RuntimeException e) {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Factura> marcarComoPagada(@PathVariable Long facturaId) {
+        Factura facturaPagada = facturacionService.marcarFacturaComoPagada(facturaId);
+        return ResponseEntity.ok(facturaPagada);
     }
 }
