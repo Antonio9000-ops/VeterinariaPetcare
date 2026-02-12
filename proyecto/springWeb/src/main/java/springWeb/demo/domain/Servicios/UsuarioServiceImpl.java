@@ -3,12 +3,16 @@ package springWeb.demo.domain.Servicios;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import springWeb.demo.domain.Dto.UsuarioDTO;
 import springWeb.demo.domain.Mapper.UsuarioMapper;
 import springWeb.demo.domain.Modelos.Usuario;
 import springWeb.demo.domain.Repositorios.UsuarioRepository;
 import springWeb.demo.domain.Servicios.interfaces.UsuarioService;
+import springWeb.demo.domain.exception.BusinessRuleException;
+import springWeb.demo.domain.exception.ResourceNotFoundException;
+import springWeb.demo.domain.exception.UnauthorizedException;
 
 @Service
 @RequiredArgsConstructor
@@ -16,16 +20,18 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
     private final UsuarioMapper usuarioMapper;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public UsuarioDTO registrarUsuario(UsuarioDTO usuarioDTO) {
-        // Convertir DTO a entidad
+        if (usuarioRepository.findByEmail(usuarioDTO.getEmail()).isPresent()) {
+            throw new BusinessRuleException("Ya existe un usuario registrado con ese correo");
+        }
+
         Usuario usuario = usuarioMapper.toEntity(usuarioDTO);
+        usuario.setContraseña(passwordEncoder.encode(usuarioDTO.getContraseña()));
 
-        // Guardar en BD
         Usuario nuevoUsuario = usuarioRepository.save(usuario);
-
-        // Convertir de vuelta a DTO
         return usuarioMapper.toDTO(nuevoUsuario);
     }
 
@@ -51,22 +57,21 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void eliminarUsuario(Long id) {
+        if (!usuarioRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Usuario no encontrado con id: " + id);
+        }
         usuarioRepository.deleteById(id);
     }
 
     @Override
     public Usuario verificarUsuario(String email, String contraseña) {
-        // Buscar usuario por email
         Usuario usuario = usuarioRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Usuario no encontrado"));
 
-        // Verificar contraseña directamente en la entidad
-        if (!usuario.getContraseña().equals(contraseña)) {
-            throw new RuntimeException("Contraseña incorrecta");
+        if (!passwordEncoder.matches(contraseña, usuario.getContraseña())) {
+            throw new UnauthorizedException("Credenciales incorrectas");
         }
 
-        // Retornar la entidad Usuario completa (con contraseña)
         return usuario;
     }
-
 }

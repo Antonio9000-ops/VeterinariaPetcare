@@ -51,6 +51,8 @@ public class SecurityConfig {
                                 "/tratamiento-formulario", "/receta-formulario",
                                 "/pagos", "/pagos.html",
                                 "/contact", "/contact.html",
+                                "/privacy", "/privacy.html",
+                                "/terms", "/terms.html",
                                 // ...
                                 "/about", "/about.html", "/error",
                                 "/css/**", "/js/**", "/images/**", "/favicon.ico", "/img/**", "/lib/**", "/scss/**")
@@ -81,7 +83,13 @@ public class SecurityConfig {
                         .requestMatchers("/api/historias/**").hasAnyAuthority("USUARIO", "VETERINARIO")
                         .requestMatchers("/api/vacunas/**").hasAnyAuthority("USUARIO", "VETERINARIO")
 
-                        .requestMatchers("/api/usuarios/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/usuarios/registro", "/api/usuarios/login").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/usuarios/{id}", "/api/usuarios/correo/{email}")
+                        .hasAnyAuthority("USUARIO", "VETERINARIO", "ASISTENTE")
+                        .requestMatchers(HttpMethod.GET, "/api/usuarios")
+                        .hasAnyAuthority("VETERINARIO", "ASISTENTE")
+                        .requestMatchers(HttpMethod.DELETE, "/api/usuarios/**")
+                        .hasAuthority("VETERINARIO")
 
                         .anyRequest().authenticated())
                 .sessionManagement(session -> session

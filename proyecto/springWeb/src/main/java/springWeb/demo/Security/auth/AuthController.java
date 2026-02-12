@@ -1,5 +1,6 @@
 package springWeb.demo.Security.auth;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,13 +15,13 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/register")
-    public ResponseEntity<Usuario> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<Usuario> register(@Valid @RequestBody RegisterRequest request) {
         Usuario nuevo = authService.registrar(request);
         return new ResponseEntity<>(nuevo, HttpStatus.CREATED);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest request) {
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody AuthRequest request) {
         AuthResponse response = authService.login(request);
         return ResponseEntity.ok(response);
     }
