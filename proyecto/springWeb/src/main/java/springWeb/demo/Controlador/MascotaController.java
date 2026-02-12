@@ -35,9 +35,9 @@ public class MascotaController {
         return new ResponseEntity<>(nuevaMascota, HttpStatus.CREATED);
     }
 
-    @GetMapping("/dueno/{duenoId}")
-    public List<MascotaDTO> listarMascotasPorDueño(@PathVariable Long duenoId) {
-        return mascotaService.listarMascotasPorDueño(duenoId);
+    @GetMapping("/usuario/{usuarioId}")
+    public List<MascotaDTO> listarMascotasPorUsuario(@PathVariable Long usuarioId) {
+        return mascotaService.listarMascotasPorUsuario(usuarioId);
     }
 
     @GetMapping("/{id}")

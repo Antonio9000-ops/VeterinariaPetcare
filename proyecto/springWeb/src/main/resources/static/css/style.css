@@ -20,7 +20,6 @@
     z-index: 99;
 }
 
-/*** Button ***/
 .btn {
     transition: .5s;
 }
@@ -51,7 +50,6 @@
 }
 
 
-/*** Navbar ***/
 .sticky-top {
     top: -150px;
     transition: .5s;
@@ -117,7 +115,6 @@
 }
 
 
-/*** Hero Header ***/
 .hero-header {
     margin-top: -100px;
     padding-top: 150px;
@@ -173,7 +170,6 @@
 }
 
 
-/*** About ***/
 .about-img {
     position: relative;
     overflow: hidden;
@@ -191,7 +187,6 @@
 }
 
 
-/*** Project ***/
 .project-item img {
     transition: .5s;
 }
@@ -215,8 +210,6 @@
     z-index: 1;
 }
 
-
-/*** Service ***/
 .service-item {
     position: relative;
     padding: 30px 25px;
@@ -280,7 +273,6 @@
 }
 
 
-/*** Our Team ***/
 .team-item img {
     transition: .5s;
 }
@@ -312,7 +304,6 @@
 }
 
 
-/*** Testimonial ***/
 .testimonial-img {
     position: relative;
     padding: 45px 0 45px 90px;
@@ -382,7 +373,6 @@
 }
 
 
-/*** Newsletter ***/
 .newsletter {
     background: url(../img/nav.jpg);
     background-size: cover;
@@ -410,8 +400,6 @@
     }
 }
 
-
-/*** Footer ***/
 .footer {
     background: linear-gradient(rgba(235, 235, 235, 0.158), rgba(235, 235, 235, 0.158)), url(../img/footer2.png)center no-repeat;
     background-size: cover;
@@ -490,10 +478,8 @@
     border-color: #E3F2FD !important;
 }
 
-/* Botones dentro de la lista de mascotas (Agendar / Editar) */
 .pet-actions .btn-outline-primary {
     color: #0095ff;
-    /* celeste claro */
     border-color: #0095ff;
     background-color: transparent;
 }
@@ -502,18 +488,16 @@
 .pet-actions .btn-outline-primary:focus {
     color: #ffffff;
     background-color: #1E88E5;
-    /* celeste más oscuro al hover */
     border-color: #1E88E5;
 }
 
-/* Opción alternativa: botones sólidos azules */
 .pet-actions .btn-primary {
     background-color: #1E88E5;
     border-color: #1E88E5;
     color: #ffffff;
 }
 
-/* Agenda page hero title font size */
 #hero-title {
-    font-size: 3rem; /* Ajusta este valor según el tamaño deseado */
+    font-size: 3rem;
 }
+

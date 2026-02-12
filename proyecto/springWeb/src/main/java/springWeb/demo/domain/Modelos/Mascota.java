@@ -37,9 +37,9 @@ public class Mascota {
     private LocalDate fechaNacimiento;
 
     @ManyToOne
-    @JoinColumn(name = "dueno_id")
+    @JoinColumn(name = "usuario_id")
     @JsonBackReference("usuario-mascota")
-    private Usuario dueno;
+    private Usuario usuario;
 
     @OneToMany(mappedBy = "mascota")
     @JsonManagedReference("mascota-cita")

@@ -367,58 +367,6 @@
             showCustomMessage(message, 'info');
         }
 
-
-        function setupNavbar(userData) {
-            const navLinksMenu = document.getElementById('nav-links-menu');
-            const logoutBtn = document.getElementById('logout-btn');
-            const navItemClass = 'nav-item nav-link';
-
-            if (navLinksMenu) {
-                navLinksMenu.innerHTML = '';
-
-                navLinksMenu.innerHTML += `<a href="/" class="${navItemClass}">Inicio</a>`;
-
-                if (userData) {
-                    const role = userData.role;
-
-                    if (role === 'VETERINARIO' || role === 'ASISTENTE') {
-                        navLinksMenu.innerHTML += `<a href="/gestion-citas" class="${navItemClass}">Gestión Citas</a>`;
-                        navLinksMenu.innerHTML += `<a href="/agenda" class="${navItemClass}">Agenda</a>`;
-                        navLinksMenu.innerHTML += `<a href="/gestion-servicios" class="${navItemClass}">Gestion de Servicios</a>`;
-                        navLinksMenu.innerHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
-                        navLinksMenu.innerHTML += `<a href="#" id="logout-btn" class="${navItemClass}">Cerrar Sesión</a>`;
-                        
-
-                    } else {
-                        navLinksMenu.innerHTML += `<a href="/mascotas" class="${navItemClass} active">Mis Mascotas</a>`;
-                        navLinksMenu.innerHTML += `<a href="/mascota-formulario" class="${navItemClass}">Añadir Nueva Mascota</a>`;
-                        navLinksMenu.innerHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
-                        navLinksMenu.innerHTML += `<a href="#" id="logout-btn" class="${navItemClass}">Cerrar Sesión</a>`;
-
-                    }
-
-                    if (logoutBtn) {
-                        navLinksMenu.appendChild(logoutBtn);
-                    }
-
-                } else {
-                    navLinksMenu.innerHTML += `
-                    <a href="/contact" class="${navItemClass}">Contacto de emergencia</a>
-                    <a href="/login" class="${navItemClass}">Iniciar Sesión</a>
-                `;
-                }
-            }
-
-            if (logoutBtn) {
-                logoutBtn.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    localStorage.removeItem('jwt_token');
-                    customAlert('Has cerrado la sesión.');
-                    window.location.href = '/';
-                });
-            }
-        }
-
         async function openFacturaModal(citaId) {
             guardarFacturaBtn.dataset.citaId = citaId;
 
@@ -631,6 +579,7 @@
         window.openFacturaModal = openFacturaModal;
         window.cancelarCita = cancelarCita;
     </script>
+    <script src="/js/script.js"></script>
 </body>
- 
+
 </html>

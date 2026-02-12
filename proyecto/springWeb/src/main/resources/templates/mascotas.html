@@ -183,9 +183,9 @@
             const duenoId = userData.userId;
 
             try {
-                const response = await fetch(`/api/mascotas/dueno/${duenoId}`, {
+                const response = await fetch(`/api/mascotas/usuario/${duenoId}`, {
                     headers: { 'Authorization': `Bearer ${token}` }
-                });
+            });
 
                 if (!response.ok) {
                     const errorData = await response.json();

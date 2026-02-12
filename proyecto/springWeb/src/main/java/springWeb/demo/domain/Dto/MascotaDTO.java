@@ -20,12 +20,12 @@ public class MascotaDTO {
     private LocalDate fechaNacimiento;
 
     // 👇 en lugar de exponer todo el Usuario dueño
-    private Long duenoId;
-    private String duenoNombre;
+    private Long usuarioId;
+    private String usuarioNombre;
 
     // 👇 no mandamos toda la cita, historia o vacuna, solo lo esencial
     private List<Long> citasIds;
     private List<Long> historiaClinicaIds;
     private List<Long> vacunasIds;
-    private String nombreDueno;
+    private String nombreUsuario;
 }

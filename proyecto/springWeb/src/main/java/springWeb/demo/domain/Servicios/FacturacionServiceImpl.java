@@ -28,16 +28,16 @@ public class FacturacionServiceImpl implements FacturacionService {
 
     @Override
     public DeudaTotalDTO getDeudaPendiente(Usuario usuario) {
-        List<Factura> facturasPendientes = facturaRepository.findByCita_Mascota_DuenoAndEstadoPago(usuario, EstadoPago.PENDIENTE);
+        List<Factura> facturasPendientes = facturaRepository.findByCita_Mascota_UsuarioAndEstadoPago(usuario,
+                EstadoPago.PENDIENTE);
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         List<DeudaDetalleDTO> detalles = facturasPendientes.stream()
                 .map(factura -> new DeudaDetalleDTO(
                         "Factura para " + factura.getCita().getMascota().getNombre() +
-                        " (" + factura.getFechaEmision().format(formatter) + ")",
-                        factura.getTotal()
-                ))
+                                " (" + factura.getFechaEmision().format(formatter) + ")",
+                        factura.getTotal()))
                 .collect(Collectors.toList());
 
         BigDecimal total = detalles.stream()
