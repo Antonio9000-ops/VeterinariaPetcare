@@ -22,8 +22,6 @@ function setupNavbar(token) {
             menuHTML += `<a href="/mascotas" class="${navItemClass}">Mis Mascotas</a>`;
             menuHTML += `<a href="/pagos" class="${navItemClass}">Mis Pagos</a>`;
         } 
-        if (userRole === 'ASISTENTE') {
-        }
         menuHTML += `<a href="/contact" class="${navItemClass}">Contacto de emergencia</a>`;
         menuHTML += `<a href="#" id="logout-btn-menu" class="${navItemClass}">Cerrar Sesión</a>`;
     } else {

@@ -10,6 +10,8 @@ import springWeb.demo.domain.Repositorios.CitaRepository;
 import springWeb.demo.domain.Repositorios.FacturaRepository;
 import springWeb.demo.domain.Repositorios.ItemFacturableRepository;
 import springWeb.demo.domain.Servicios.interfaces.FacturacionService;
+import springWeb.demo.domain.exception.BusinessRuleException;
+import springWeb.demo.domain.exception.ResourceNotFoundException;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -51,19 +53,19 @@ public class FacturacionServiceImpl implements FacturacionService {
     @Transactional
     public Factura crearFacturaParaCita(Long citaId, List<Long> itemIds) {
         Cita cita = citaRepository.findById(citaId)
-                .orElseThrow(() -> new RuntimeException("Cita no encontrada con ID: " + citaId));
+                .orElseThrow(() -> new ResourceNotFoundException("Cita no encontrada con ID: " + citaId));
 
         if (facturaRepository.findByCitaId(citaId).isPresent()) {
-            throw new IllegalStateException("La cita ya tiene una factura generada.");
+            throw new BusinessRuleException("La cita ya tiene una factura generada.");
         }
 
         List<ItemFacturable> items = itemFacturableRepository.findAllById(itemIds);
         if (items.size() != itemIds.size()) {
-            throw new RuntimeException("Algunos de los items facturables no fueron encontrados.");
+            throw new ResourceNotFoundException("Algunos de los items facturables no fueron encontrados.");
         }
 
         BigDecimal total = items.stream()
-                .map(ItemFacturable::getPrecio) // Esto ahora funcionará correctamente
+                .map(ItemFacturable::getPrecio)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
         Factura nuevaFactura = Factura.builder()
@@ -91,7 +93,7 @@ public class FacturacionServiceImpl implements FacturacionService {
     @Transactional
     public Factura marcarFacturaComoPagada(Long facturaId) {
         Factura factura = facturaRepository.findById(facturaId)
-                .orElseThrow(() -> new RuntimeException("Factura no encontrada con ID: " + facturaId));
+                .orElseThrow(() -> new ResourceNotFoundException("Factura no encontrada con ID: " + facturaId));
 
         factura.setEstadoPago(EstadoPago.PAGADO);
         factura.getCita().setEstadoPago(EstadoPago.PAGADO);

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import springWeb.demo.domain.Modelos.Usuario;
 import springWeb.demo.domain.Repositorios.UsuarioRepository;
 import springWeb.demo.Security.jwt.JwtService;
+import springWeb.demo.domain.exception.BusinessRuleException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,10 @@ public class AuthService {
     private final JwtService jwtService;
 
     public Usuario registrar(RegisterRequest request) {
+        if (usuarioRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new BusinessRuleException("Ya existe un usuario registrado con ese correo");
+        }
+
         Usuario usuario = Usuario.builder()
                 .nombre(request.getNombre())
                 .email(request.getEmail())
